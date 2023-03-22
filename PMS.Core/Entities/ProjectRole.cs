@@ -7,6 +7,6 @@ namespace PMS.Core.Entities
         public int EmployeeId {get;set;}
         public string Role {get;set;}
         public Project Project {get;set;}
-        public ICollection<Employee> Employees {get;set;}
+        public Employee Employee {get;set;}
     }
 }
