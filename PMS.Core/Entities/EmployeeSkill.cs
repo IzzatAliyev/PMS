@@ -6,5 +6,7 @@ namespace PMS.Core.Entities
         public int EmployeeId {get;set;}
         public int SkillId {get;set;}
         public int Level {get;set;}
+        public Employee Employee {get;set;}
+        public Skill Skill {get;set;}
     }
 }
