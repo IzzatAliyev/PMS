@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Web.Models;
+using System.Web;
 
 namespace PMS.Web.Controllers;
 
@@ -15,11 +16,12 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
-    }
+        bool loggedin = true;
+        if (!loggedin)
+        {
+           return RedirectToAction("Login", "Auth");
+        }
 
-    public IActionResult Privacy()
-    {
         return View();
     }
 
