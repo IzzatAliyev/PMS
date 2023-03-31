@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PMS.Core.Interfaces;
+using PMS.Infrastructure.Interfaces;
 using PMS.Infrastructure.Data;
 
 namespace PMS.Infrastructure

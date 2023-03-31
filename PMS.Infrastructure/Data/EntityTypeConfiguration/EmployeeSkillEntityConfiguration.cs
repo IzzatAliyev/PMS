@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PMS.Core.Entities;
-
+using PMS.Infrastructure.Entities;
 
 namespace PMS.Infrastructure.Data.EntityTypeConfiguration
 {
