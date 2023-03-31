@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Board";
+}
+
+<div class=boardmenu>
+	@Html.Partial("_TopBarPartial")
+	<div class=inprogressselection>
+		<div class="rectangle_4"></div>
+		<div class=inprogresssel><span class="in_progress">In progress</span>
+			<div class=inprogressadd>
+				<span class="material-symbols-outlined">
+					add
+				</span>
+			</div>
+			<div class=inprogressmore>
+				<span class="material-symbols-outlined">
+					more_horiz
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class=doneselection>
+		<div class="rectangle_5"></div>
+		<div class=donesel><span class="done">Done</span>
+			<div class=doneadd>
+				<span class="material-symbols-outlined">
+					add
+				</span>
+			</div>
+			<div class=donemore>
+				<span class="material-symbols-outlined">
+					more_horiz
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class=todoselection>
+		<div class="rectangle_3"></div><span class="to_do">To do</span>
+		<div class=todoadd>
+			<span class="material-symbols-outlined">
+				add
+			</span>
+		</div>
+		<div class=todomore>
+			<span class="material-symbols-outlined">
+				more_horiz
+			</span>
+		</div>
+		@Html.Partial("_TilePartial")
+	</div>
+</div>

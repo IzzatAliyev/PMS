@@ -21,8 +21,12 @@ public class HomeController : Controller
         {
            return RedirectToAction("Login", "Auth");
         }
+        else
+        {
+            return RedirectToAction("Index", "Dashboard");
+        }
 
-        return View();
+        // return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

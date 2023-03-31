@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
-    public class DashboardController : Controller
+    public class BoardController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public DashboardController(ILogger<HomeController> logger)
+        public BoardController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }

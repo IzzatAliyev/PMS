@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class=boardmenu>
+		<h1>Analytics Page</h1>
+
+	<div class="container">
+		<div class="card blue">
+			<h2>Visitors</h2>
+			<span class="icon"><i class="fa fa-users"></i></span>
+			<p>12,345</p>
+		</div>
+
+		<div class="card green">
+			<h2>Pageviews</h2>
+			<span class="icon"><i class="fa fa-eye"></i></span>
+			<p>23,456</p>
+		</div>
+<div class="card orange">
+			<h2>Bounce Rate</h2>
+			<span class="icon"><i class="fa fa-exclamation-triangle"></i></span>
+			<p>45%</p>
+		</div>
+
+		<div class="card">
+			<h2>Average Time on Site</h2>
+			<span class="icon"><i class="fa fa-clock-o"></i></span>
+			<p>01:23</p>
+		</div>
+
+		<div class="card">
+			<h2>New Visitors</h2>
+			<span class="icon"><i class="fa fa-user-plus"></i></span>
+			<p>56%</p>
+		</div>
+
+		<div class="card">
+			<h2>Returning Visitors</h2>
+			<span class="icon"><i class="fa fa-repeat"></i></span>
+			<p>44%</p>
+		</div>
+	</div>
+</div>
+
+<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			margin: 0;
+			font-size: 24px;
+			font-weight: normal;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 25px auto;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			border-radius: 5px;
+			overflow: hidden;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			justify-content: space-between;
+		}
+
+		.card {
+			flex-basis: calc(33.33% - 20px);
+			margin-bottom: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			border-radius: 5px;
+			padding: 20px;
+			box-sizing: border-box;
+			position: relative;
+		}
+
+		.card h2 {
+			margin-top: 0;
+			font-size: 20px;
+			font-weight: normal;
+		}
+
+		.card .icon {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			font-size: 36px;
+			color: #ccc;
+		}
+
+		.card:hover {
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+		}
+
+		.card.blue {
+			background-color: #2c3e50;
+			color: #fff;
+		}
+
+		.card.blue .icon {
+			color: #fff;
+		}
+
+		.card.green {
+			background-color: #27ae60;
+			color: #fff;
+		}
+
+		.card.green .icon {
+			color: #fff;
+		}
+
+		.card.orange {
+			background-color: #e67e22;
+			color: #fff;
+		}
+
+		.card.orange .icon {
+			color: #fff;
+		}
+	</style>

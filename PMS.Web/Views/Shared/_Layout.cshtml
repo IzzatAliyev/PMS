@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool loggedin = true;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,7 +20,19 @@
 <body>
     <div class="container-fluid">
         <main role="main">
-            @RenderBody()
+            @{
+                if (!loggedin)
+                {
+                    @RenderBody()
+                }
+                else
+                {
+                    <div class=pms>
+                        @Html.Partial("_SideBarPartial")
+                        @RenderBody()
+                    </div>
+                }
+            }
         </main>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
