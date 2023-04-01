@@ -4,200 +4,167 @@
 
 <div class=boardmenu>
 	@Html.Partial("_TopBarPartial")
-	<div class=inprogressselection>
+	<div class=todoselection>
 		<div class="rectangle_3">
-			<div class=inprogresssel><span class="in_progress">In progress</span>
-				<div class=inprogressadd>
+			<div class="title">
+				<span class="names">To do</span>
+				<div class=add>
 					<span class="material-symbols-outlined">
 						add
 					</span>
 				</div>
-				<div class=inprogressmore>
+				<div class=more>
 					<span class="material-symbols-outlined">
 						more_horiz
 					</span>
 				</div>
+			</div>
+			<div class="list">
+				@{
+					for (int i = 0; i < 10; i++)
+					{
+						@Html.Partial("_TilePartial")
+					}
+				}
+			</div>
+		</div>
+	</div>
+	<div class=inprogressselection>
+		<div class="rectangle_3">
+			<div class="title">
+				<span class="names">In progress</span>
+				<div class=add>
+					<span class="material-symbols-outlined">
+						add
+					</span>
+				</div>
+				<div class=more>
+					<span class="material-symbols-outlined">
+						more_horiz
+					</span>
+				</div>
+			</div>
+			<div class="list">
+				@{
+					for (int i = 0; i < 4; i++)
+					{
+						@Html.Partial("_TilePartial")
+					}
+				}
 			</div>
 		</div>
 	</div>
 	<div class=doneselection>
 		<div class="rectangle_3">
-			<div class=donesel><span class="done">Done</span>
-				<div class=doneadd>
+			<div class="title">
+				<span class="names">Done</span>
+				<div class=add>
 					<span class="material-symbols-outlined">
 						add
 					</span>
 				</div>
-				<div class=donemore>
+				<div class=more>
 					<span class="material-symbols-outlined">
 						more_horiz
 					</span>
 				</div>
 			</div>
-		</div>
-
-	</div>
-	<div class=todoselection>
-		<div class="rectangle_3">
-			<span class="to_do">To do</span>
-			<div class=todoadd>
-				<span class="material-symbols-outlined">
-					add
-				</span>
-			</div>
-			<div class=todomore>
-				<span class="material-symbols-outlined">
-					more_horiz
-				</span>
-			</div>
-			@{
-				for (int i = 0; i < 10; i++)
-				{
-					@Html.Partial("_TilePartial")
+			<div class="list">
+				@{
+					for (int i = 0; i < 2; i++)
+					{
+						@Html.Partial("_TilePartial")
+					}
 				}
-			}
+			</div>
 		</div>
 	</div>
 </div>
 
 <style>
-	.inprogressselection { 
-	width:360px;
-	height:840px;
-	position:inherit;
-	left:384px;
-	top:157px;
-}
+	.inprogressselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 384px;
+		top: 157px;
+	}
 
-.rectangle_3 { 
-	background-color:rgba(238.00000101327896, 242.00000077486038, 245.00000059604645, 1);
-	width:360px;
-	height:820px;
-	position:inherit;
-	left:0px;
-	top:0px;
-	border-top-left-radius:10px;
-	border-top-right-radius:10px;
-	border-bottom-left-radius:10px;
-	border-bottom-right-radius:10px;
-}
+	.rectangle_3 {
+		background-color: rgba(238.00000101327896, 242.00000077486038, 245.00000059604645, 1);
+		width: 360px;
+		height: 820px;
+		position: inherit;
+		left: 0px;
+		top: 0px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
 
-.inprogresssel { 
-	width:311px;
-	height:24px;
-	position:inherit;
-	left:25px;
-	top:24px;
-}
+	.list {
+		margin-top: 25px;
+		height: 700px;
+		overflow-y: scroll;
+	}
 
-.in_progress { 
-	color:rgba(0, 0, 0, 1);
-	width:90px;
-	height:24px;
-	position:inherit;
-	left:0px;
-	top:0px;
-	font-family:Poppins;
-	text-align:left;
-	font-size:16px;
-	letter-spacing:0;
-}
+	..list::-webkit-scrollbar-thumb {
+		background-color: #ececec;
+		border-radius: 10px;
+	}
 
-.inprogressadd { 
-	width:14px;
-	height:14px;
-	position:inherit;
-	left:265px;
-	top:3px;
-}
+	.list::-webkit-scrollbar {
+		width: 0.1em;
+		background-color: #F5F5F5;
+	}
 
-.inprogressmore { 
-	width:16px;
-	height:2px;
-	position:inherit;
-	left:295px;
-	top:3px;
-}
+	.doneselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 768px;
+		top: 157px;
+	}
 
-.doneselection { 
-	width:360px;
-	height:840px;
-	position:inherit;
-	left:768px;
-	top:157px;
-}
+	.todoselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 0px;
+		top: 157px;
+	}
 
-.donesel { 
-	width:311px;
-	height:24px;
-	position:inherit;
-	left:26px;
-	top:19px;
-}
+	.title {
+		position: relative;
+		height: 60px;
+	}
 
-.done { 
-	color:rgba(0, 0, 0, 1);
-	width:42px;
-	height:24px;
-	position:inherit;
-	left:0px;
-	top:5px;
-	font-family:Poppins;
-	text-align:left;
-	font-size:16px;
-	letter-spacing:0;
-}
+	.names {
+		color: rgba(0, 0, 0, 1);
+		width: 45px;
+		height: 24px;
+		position: relative;
+		left: 24px;
+		top: 24px;
+		font-family: Poppins;
+		text-align: left;
+		font-size: 16px;
+		letter-spacing: 0;
+	}
 
-.doneadd { 
-	width:14px;
-	height:14px;
-	position:inherit;
-	left:265px;
-	top:3px;
-}
+	.add {
+		width: 14px;
+		height: 14px;
+		position: relative;
+		left: 289px;
+	}
 
-.donemore { 
-	width:16px;
-	height:2px;
-	position:inherit;
-	left:295px;
-	top:3px;
-}
-
-.todoselection { 
-	width:360px;
-	height:840px;
-	position:inherit;
-	left:0px;
-	top:157px;
-}
-
-.to_do { 
-	color:rgba(0, 0, 0, 1);
-	width:45px;
-	height:24px;
-	position:inherit;
-	left:24px;
-	top:24px;
-	font-family:Poppins;
-	text-align:left;
-	font-size:16px;
-	letter-spacing:0;
-}
-
-.todoadd { 
-	width:14px;
-	height:14px;
-	position:inherit;
-	left:289px;
-	top:25px;
-}
-
-.todomore { 
-	width:16px;
-	height:2px;
-	position:inherit;
-	left:319px;
-	top:25px;
-}
+	.more {
+		width: 16px;
+		height: 2px;
+		position: relative;
+		left: 319px;
+		bottom: 15px;
+	}
 </style>
