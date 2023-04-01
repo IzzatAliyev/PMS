@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using PMS.Core.Entities;
+using PMS.Infrastructure.Entities;
 
-namespace PMS.Core.Interfaces
+namespace PMS.Infrastructure.Interfaces
 {
     public interface IPMSDbContext: IDisposable
     {

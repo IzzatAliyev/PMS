@@ -1,0 +1,252 @@
+﻿<div class=sidebar>
+    <div class="rectangle_1"></div>
+    <a class="projectname" asp-area="" asp-controller="Dashboard" asp-action="Index">
+        <div class=projecticon>
+            <span class="material-symbols-outlined">
+                grain
+            </span>
+        </div><span class="projectnametext">PMS</span>
+    </a>
+    <a class="dashboard" asp-area="" asp-controller="Dashboard" asp-action="Index">
+        <div class=dashboardicon>
+            <span class="material-symbols-outlined">
+                grid_view
+            </span>
+        </div><span class="dashboardtext">Dashboard</span>
+    </a>
+    <a class="boardbar" asp-area="" asp-controller="Board" asp-action="Index">
+        <div class=boardicon>
+            <span class="material-symbols-outlined">
+                space_dashboard
+            </span>
+        </div><span class="boardtext">Board</span>
+        <span class="icon"><i class="fa fa-clock-o"></i></span>
+    </a>
+    <a class="analytics" asp-area="" asp-controller="Analytics" asp-action="Index">
+        <div class=analyticsicon>
+            <span class="material-symbols-outlined">
+                database
+            </span>
+        </div><span class="analyticstext">Analytics</span>
+    </a>
+    <a class="settings" asp-area="" asp-controller="Settings" asp-action="Index">
+        <div class=settingsicon>
+            <span class="material-symbols-outlined">
+                settings
+            </span>
+        </div><span class="settingstext">Settings</span>
+    </a>
+    <div class="logout pointer">
+        <div class=logouticon>
+            <span class="material-symbols-outlined">
+                logout
+            </span>
+        </div><span class="logouttext">Log out</span>
+    </div>
+</div>
+
+<style>
+    .sidebar { 
+	width:224px;
+	height:1024px;
+	position:inherit;
+	left:0px;
+	top:0px;
+}
+
+.rectangle_1 { 
+	box-shadow:7px -1px 12px rgba(0, 0, 0, 0.10999999940395355);
+	background-color:rgba(255, 255, 255, 1);
+	width:224px;
+	height:1024px;
+	position:inherit;
+	left:0px;
+	top:0px;
+}
+
+.projectname { 
+	width:139px;
+	height:24px;
+	position:inherit;
+	left:43px;
+	top:32px;
+}
+
+.projecticon { 
+	width:24px;
+	height:24px;
+	position:inherit;
+	left:0px;
+	top:0px;
+}
+
+.projectnametext { 
+	color:rgba(0, 0, 0, 1);
+	width:99px;
+	height:24px;
+	position:inherit;
+	left:40px;
+	top:0px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:16px;
+	letter-spacing:0;
+}
+
+.dashboard { 
+  width: 130px;
+  height: 24px;
+  position: inherit;
+  top: 114px;
+  padding-left: 100%;
+  padding-bottom: 35px;
+}
+.dashboard:hover,
+.dashboardtext:hover,
+.boardbar:hover,
+.boardtext:hover,
+.analytics:hover,
+.analyticstext:hover,
+.settings:hover,
+.settingstext:hover,
+.logout:hover{
+  background-color: #e5e5e5;
+  color: black;
+}
+
+.dashboardicon {
+  width: 24px;
+  height: 24px;
+  position: inherit;
+  left: 43px;
+  top: 5px;
+}
+
+.dashboardtext { 
+	color:rgba(111.5625, 111.5625, 111.5625, 1);
+	width:90px;
+	height:24px;
+	position:inherit;
+	left:80px;
+	top:5px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:16px;
+	letter-spacing:0;
+}
+
+.boardbar { 
+	width:89px;
+	height:24px;
+	position:inherit;
+	top:175px;
+  padding-left: 100%;
+  padding-bottom: 35px;
+}
+
+.boardicon { 
+	width:24px;
+	height:24px;
+	position:inherit;
+  left:43px;	
+  top:5px;
+}
+
+.boardtext { 
+	color:rgba(111.5625, 111.5625, 111.5625, 1);
+	width:49px;
+	height:24px;
+	position:inherit;
+	left:80px;
+	top:5px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:16px;
+	letter-spacing:0;
+}
+
+.analytics { 
+	width:115px;
+	height:24px;
+	position:inherit;
+	top:235px;
+  padding-left: 100%;
+  padding-bottom: 35px;
+}
+
+.analyticsicon { 
+	width:24px;
+	height:24px;
+	position:inherit;
+	left:43px;
+	top:5px;
+}
+.analyticstext { 
+	color:rgba(111.5625, 111.5625, 111.5625, 1);
+	width:75px;
+	height:24px;
+	position:inherit;
+	left:80px;
+	top:5px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:16px;
+	letter-spacing:0;
+}
+
+.settings { 
+	width:106px;
+	height:24px;
+	position:inherit;
+	top:296px;
+  padding-left: 100%;
+  padding-bottom: 35px;
+}
+.settingsicon { 
+	width:24px;
+	height:24px;
+	position:inherit;
+	left:43px;
+	top:5px;
+}
+.settingstext { 
+	color:rgba(111.5625, 111.5625, 111.5625, 1);
+	width:66px;
+	height:24px;
+	position:inherit;
+	left:80px;
+	top:5px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:16px;
+	letter-spacing:0;
+}
+
+.logout { 
+	width:96px;
+	height:24px;
+	position:inherit;
+	top:916px;
+  padding-left: 100%;
+  padding-bottom: 35px;
+}
+.logouticon { 
+	width:19px;
+	height:18px;
+	position:inherit;
+	left:46px;
+	top:3px;
+}
+.logouttext { 
+	color:rgba(0, 0, 0, 1);
+	width:59px;
+	height:24px;
+	position:inherit;
+	left:80px;
+	top:3px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:16px;
+	letter-spacing:0;
+}
+</style>

@@ -8,6 +8,7 @@
 
    <ItemGroup>
     <ProjectReference Include="..\PMS.Infrastructure\PMS.Infrastructure.csproj" />
+    <ProjectReference Include="..\PMS.Service\PMS.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace PMS.Core.Entities
+namespace PMS.Infrastructure.Entities
 {
     public class Employee
     {

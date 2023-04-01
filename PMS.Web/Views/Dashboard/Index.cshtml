@@ -1,0 +1,118 @@
+﻿@{
+	ViewData["Title"] = "Dashboard";
+}
+
+<div class=boardmenu>
+	@Html.Partial("_TopBarPartial")
+	<div class="container">
+		<div class="employees">
+			<h1>Employees</h1>
+			<div class="list">
+				<ul>
+					@{
+						for (int i = 0; i < 40; i++)
+						{
+							<a asp-area="" asp-controller="Employee" asp-action="Index">
+								@Html.Partial("_EmployeePartial")
+							</a>
+						}
+					}
+				</ul>
+			</div>
+		</div>
+
+		<div class="projects">
+			<h1>Projects</h1>
+			<div class="list">
+				<ul>
+					@{
+						for (int i = 0; i < 100; i++)
+						{
+							<a asp-area="" asp-controller="Project" asp-action="Index">
+								@Html.Partial("_ProjectPartial")
+							</a>
+						}
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	h1 {
+		margin: 0;
+		font-size: 24px;
+		font-weight: normal;
+	}
+
+	.list {
+		margin-top: 25px;
+		height: 690px;
+		overflow-y: scroll;
+	}
+
+	.list::-webkit-scrollbar-thumb {
+		background-color: #ececec;
+		border-radius: 10px;
+	}
+
+	.list::-webkit-scrollbar {
+		width: 0.3em;
+		background-color: #F5F5F5;
+	}
+
+	.container {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		max-width: 1200px;
+		margin: 140px auto;
+		padding: 20px;
+		background-color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border-radius: 5px;
+		overflow: hidden;
+	}
+
+	.employees {
+		flex-basis: calc(50% - 10px);
+		margin-right: 20px;
+		margin-bottom: 20px;
+		background-color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border-radius: 5px;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+
+	.employees h2 {
+		margin-top: 0;
+		font-size: 20px;
+		font-weight: normal;
+		margin-bottom: 10px;
+	}
+
+	.projects {
+		flex-basis: calc(50% - 10px);
+		margin-bottom: 20px;
+		background-color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border-radius: 5px;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+
+	.projects h2 {
+		margin-top: 0;
+		font-size: 20px;
+		font-weight: normal;
+		margin-bottom: 10px;
+	}
+
+	.projects ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+</style>

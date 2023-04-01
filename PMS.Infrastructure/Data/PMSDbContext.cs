@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using PMS.Core.Interfaces;
-using PMS.Core.Entities;
+using PMS.Infrastructure.Interfaces;
+using PMS.Infrastructure.Entities;
 
 namespace PMS.Infrastructure.Data
 {
