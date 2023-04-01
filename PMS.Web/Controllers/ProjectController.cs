@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
-    public class AnalyticsController : Controller
+    public class ProjectController : Controller
     {
-        private readonly ILogger<AnalyticsController> _logger;
+        private readonly ILogger<ProjectController> _logger;
 
-        public AnalyticsController(ILogger<AnalyticsController> logger)
+        public ProjectController(ILogger<ProjectController> logger)
         {
             _logger = logger;
         }

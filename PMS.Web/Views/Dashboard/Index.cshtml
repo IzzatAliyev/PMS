@@ -5,43 +5,36 @@
 <div class=boardmenu>
 	@Html.Partial("_TopBarPartial")
 	<div class="container">
-		<div class="employee">
-			<h2>Employees</h2>
-			<ul>
-				<li>
-					<div class="avatar" style="background-image: url('https://randomuser.me/api/portraits/men/11.jpg')">
-					</div>
-					<span>John Smith</span>
-				</li>
-				<li>
-					<div class="avatar"
-						style="background-image: url('https://randomuser.me/api/portraits/women/11.jpg')"></div>
-					<span>Jane Doe</span>
-				</li>
-				<li>
-					<div class="avatar" style="background-image: url('https://randomuser.me/api/portraits/men/22.jpg')">
-					</div>
-					<span>Mark Johnson</span>
-				</li>
-			</ul>
+		<div class="employees">
+			<h1>Employees</h1>
+			<div class="list">
+				<ul>
+					@{
+						for (int i = 0; i < 40; i++)
+						{
+							<a asp-area="" asp-controller="Employee" asp-action="Index">
+								@Html.Partial("_EmployeePartial")
+							</a>
+						}
+					}
+				</ul>
+			</div>
 		</div>
 
-		<div class="project">
-			<h2>Projects</h2>
-			<ul>
-				<li>
-					<span>Project A</span>
-					<span class="status in-progress">In Progress</span>
-				</li>
-				<li>
-					<span>Project B</span>
-					<span class="status complete">Complete</span>
-				</li>
-				<li>
-					<span>Project C</span>
-					<span class="status delayed">Delayed</span>
-				</li>
-			</ul>
+		<div class="projects">
+			<h1>Projects</h1>
+			<div class="list">
+				<ul>
+					@{
+						for (int i = 0; i < 100; i++)
+						{
+							<a asp-area="" asp-controller="Project" asp-action="Index">
+								@Html.Partial("_ProjectPartial")
+							</a>
+						}
+					}
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>
@@ -56,22 +49,16 @@
 		flex-wrap: wrap;
 	}
 
-	.header {
-		background-color: #333;
-		color: #fff;
-		padding: 20px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 999;
-	}
-
 	h1 {
 		margin: 0;
 		font-size: 24px;
 		font-weight: normal;
+	}
+
+	.list {
+		margin-top: 25px;
+		height: 500px;
+		overflow-y: scroll;
 	}
 
 	.container {
@@ -87,7 +74,7 @@
 		overflow: hidden;
 	}
 
-	.employee {
+	.employees {
 		flex-basis: calc(50% - 10px);
 		margin-right: 20px;
 		margin-bottom: 20px;
@@ -98,35 +85,14 @@
 		box-sizing: border-box;
 	}
 
-	.employee h2 {
+	.employees h2 {
 		margin-top: 0;
 		font-size: 20px;
 		font-weight: normal;
 		margin-bottom: 10px;
 	}
 
-	.employee ul {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-
-	.employee li {
-		margin-bottom: 5px;
-	}
-
-	.employee .avatar {
-		display: inline-block;
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		margin-right: 10px;
-		background-color: #ccc;
-		background-position: center;
-		background-size: cover;
-	}
-
-	.project {
+	.projects {
 		flex-basis: calc(50% - 10px);
 		margin-bottom: 20px;
 		background-color: #fff;
@@ -136,43 +102,16 @@
 		box-sizing: border-box;
 	}
 
-	.project h2 {
+	.projects h2 {
 		margin-top: 0;
 		font-size: 20px;
 		font-weight: normal;
 		margin-bottom: 10px;
 	}
 
-	.project ul {
+	.projects ul {
 		margin: 0;
 		padding: 0;
 		list-style: none;
-	}
-
-	.project li {
-		margin-bottom: 5px;
-	}
-
-	.project .status {
-		display: inline-block;
-		padding: 5px 10px;
-		border-radius: 20px;
-		font-size: 12px;
-		font-weight: bold;
-		text-transform: uppercase;
-		margin-right: 10px;
-		color: #fff;
-	}
-
-	.project .status.in-progress {
-		background-color: #fbbd08;
-	}
-
-	.project .status.complete {
-		background-color: #21ba45;
-	}
-
-	.project .status.delayed {
-		background-color: #db2828;
 	}
 </style>
