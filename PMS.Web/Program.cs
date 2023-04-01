@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Razor;
 using PMS.Infrastructure;
 using PMS.Infrastructure.Data;
 
@@ -13,6 +14,20 @@ namespace PMS.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddStorage(builder.Configuration);
 
+            builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.SetDefaultCulture("en");
+                options.AddSupportedUICultures("en", "uk", "de");
+                options.AddSupportedCultures("en", "uk", "de");
+                options.FallBackToParentUICultures = false;
+            });
+
+            builder.Services.AddControllersWithViews()
+            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+            .AddDataAnnotationsLocalization();
+
             var app = builder.Build();
             await app.DatabaseEnsureCreated();
 
@@ -25,6 +40,7 @@ namespace PMS.Web
             }
 
             // app.UseHttpsRedirection();
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();

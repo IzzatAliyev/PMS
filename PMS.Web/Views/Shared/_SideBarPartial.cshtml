@@ -1,4 +1,9 @@
-﻿<div class=sidebar>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+
+<div class=sidebar>
     <div class="rectangle_1"></div>
     <a class="projectname" asp-area="" asp-controller="Dashboard" asp-action="Index">
         <div class=projecticon>
@@ -12,14 +17,14 @@
             <span class="material-symbols-outlined">
                 grid_view
             </span>
-        </div><span class="dashboardtext">Dashboard</span>
+        </div><span class="dashboardtext">@Localizer["HeaderDashboard"]</span>
     </a>
     <a class="boardbar" asp-area="" asp-controller="Board" asp-action="Index">
         <div class=boardicon>
             <span class="material-symbols-outlined">
                 space_dashboard
             </span>
-        </div><span class="boardtext">Board</span>
+        </div><span class="boardtext">@Localizer["HeaderBoard"]</span>
         <span class="icon"><i class="fa fa-clock-o"></i></span>
     </a>
     <a class="analytics" asp-area="" asp-controller="Analytics" asp-action="Index">
@@ -27,21 +32,21 @@
             <span class="material-symbols-outlined">
                 database
             </span>
-        </div><span class="analyticstext">Analytics</span>
+        </div><span class="analyticstext">@Localizer["HeaderAnalytics"]</span>
     </a>
     <a class="settings" asp-area="" asp-controller="Settings" asp-action="Index">
         <div class=settingsicon>
             <span class="material-symbols-outlined">
                 settings
             </span>
-        </div><span class="settingstext">Settings</span>
+        </div><span class="settingstext">@Localizer["HeaderSettings"]</span>
     </a>
     <div class="logout pointer">
         <div class=logouticon>
             <span class="material-symbols-outlined">
                 logout
             </span>
-        </div><span class="logouttext">Log out</span>
+        </div><span class="logouttext">@Localizer["HeaderLogout"]</span>
     </div>
 </div>
 
@@ -124,7 +129,7 @@
 
 .dashboardtext { 
 	color:rgba(111.5625, 111.5625, 111.5625, 1);
-	width:90px;
+	width:110px;
 	height:24px;
 	position:inherit;
 	left:80px;
