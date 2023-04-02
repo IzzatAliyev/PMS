@@ -15,5 +15,10 @@ namespace PMS.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult GetTasksById()
+        {
+            return View();
+        }
     }
 }
