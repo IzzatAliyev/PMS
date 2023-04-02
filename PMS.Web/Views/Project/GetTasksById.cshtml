@@ -1,17 +1,25 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
 	ViewData["Title"] = "Project";
 }
 
 <div class=boardmenu>
+	<div class="motiv">
+		<span>To all our dedicated employees: Thank you for your hard work and contributions to our company's success. Let's continue to work together with passion, enthusiasm, and a commitment to excellence. Remember the impact of your work and stay motivated towards your goals. You are valued and appreciated. <span style="float: right;margin-top: 30px;margin-right: 30px; ">Sincerely, <i>Izzat Aliyev</i></span></span>
+	</div>
+	@Html.Partial("_PopUpAddTask")
 	<div class=todoselection>
 		<div class="rectangle_3">
 			<div class="title">
-				<span class="names">todo</span>
-				<div class=add>
+				<span class="names">@Localizer["HeaderTodo"]</span>
+				<div class="add pointer" id="add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
-				</div>
+				</div>  
 				<div class=more>
 					<span class="material-symbols-outlined">
 						more_horiz
@@ -31,8 +39,8 @@
 	<div class=inprogressselection>
 		<div class="rectangle_3">
 			<div class="title">
-				<span class="names">in progress</span>
-				<div class=add>
+				<span class="names">@Localizer["HeaderInProgress"]</span>
+				<div class="add pointer">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -56,8 +64,8 @@
 	<div class=doneselection>
 		<div class="rectangle_3">
 			<div class="title">
-				<span class="names">done</span>
-				<div class=add>
+				<span class="names">@Localizer["HeaderDone"]</span>
+				<div class="add pointer">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -81,89 +89,129 @@
 </div>
 
 <style>
-.inprogressselection {
-width: 360px;
-height: 840px;
-position: inherit;
-left: 384px;
-top: 157px;
-}
+	.inprogressselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 384px;
+		top: 157px;
+	}
 
-.rectangle_3 {
-background-color: var(--third-color);
-width: 360px;
-height: 820px;
-position: inherit;
-left: 0px;
-top: 0px;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
-}
+	.rectangle_3 {
+		background-color: var(--third-color);
+		width: 360px;
+		height: 820px;
+		position: inherit;
+		left: 0px;
+		top: 0px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
 
-.list {
-margin-top: 25px;
-height: 700px;
-overflow-y: scroll;
-}
+	.list {
+		margin-top: 25px;
+		height: 700px;
+		overflow-y: scroll;
+	}
 
-..list::-webkit-scrollbar-thumb {
-background-color: var(--secondary-color);
-border-radius: 10px;
-}
+	..list::-webkit-scrollbar-thumb {
+		background-color: var(--secondary-color);
+		border-radius: 10px;
+	}
 
-.list::-webkit-scrollbar {
-width: 0.1em;
-background-color: var(--primary-color);
-}
+	.list::-webkit-scrollbar {
+		width: 0.1em;
+		background-color: var(--primary-color);
+	}
 
-.doneselection {
-width: 360px;
-height: 840px;
-position: inherit;
-left: 768px;
-top: 157px;
-}
+	.doneselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 768px;
+		top: 157px;
+	}
 
-.todoselection {
-width: 360px;
-height: 840px;
-position: inherit;
-left: 0px;
-top: 157px;
-}
+	.todoselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 0px;
+		top: 157px;
+	}
 
-.title {
-position: relative;
-height: 60px;
-}
+	.title {
+		position: relative;
+		height: 60px;
+	}
 
-.names {
-color: var(--text-color);
-width: 45px;
-height: 24px;
-position: relative;
-left: 24px;
-top: 24px;
-font-family: Poppins;
-text-align: left;
-font-size: 16px;
-letter-spacing: 0;
-}
+	.names {
+		color: var(--text-color);
+		width: 45px;
+		height: 24px;
+		position: relative;
+		left: 24px;
+		top: 24px;
+		font-family: Poppins;
+		text-align: left;
+		font-size: 16px;
+		letter-spacing: 0;
+	}
 
-.add {
-width: 14px;
-height: 14px;
-position: relative;
-left: 289px;
-}
+	.add {
+		width: 25px;
+		height: 25px;
+		position: relative;
+		left: 289px;
+	}
 
-.more {
-width: 16px;
-height: 2px;
-position: relative;
-left: 319px;
-bottom: 15px;
-}
+	.more {
+		width: 25px;
+		height: 25px;
+		position: relative;
+		left: 319px;
+		bottom: 25px;
+	}
+
+	.motiv {
+		width: 0;
+		height: 15px;
+		background-color: var(--secondary-color);
+		color: var(--default-color);
+		padding: 10px;
+		font-size: 21px;
+		line-height: 35px;
+		transition: height 10s;
+		overflow: hidden;
+	}
+
+	.motiv.loaded {
+		width: 1150px;
+		height: 150px;
+	}
 </style>
+
+<script>
+	window.onload = function() {
+			document.querySelector('.motiv').classList.add('loaded');
+	}
+    var addTaskButton = document.getElementById("add-task-button");
+    var addTaskForm = document.getElementById("add-task-form");
+    var closeButton = document.getElementById("close-button");
+
+    addTaskButton.onclick = function () {
+        addTaskForm.style.display = "block";
+    }
+
+    closeButton.onclick = function() {
+  addTaskForm.style.display = "none";
+}
+
+    addTaskForm.onsubmit = function () {
+        // Handle form submission here
+        addTaskForm.style.display = "none";
+        return false;
+    }
+</script>

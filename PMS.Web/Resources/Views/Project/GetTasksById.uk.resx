@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HeaderTitle" xml:space="preserve">
-    <value>Planke</value>
+  <data name="HeaderTodo" xml:space="preserve">
+    <value>Зробити</value>
+    <comment/>
+  </data>
+  <data name="HeaderInProgress" xml:space="preserve">
+    <value>В процессі</value>
+    <comment/>
+  </data>
+  <data name="HeaderDone" xml:space="preserve">
+    <value>Зроблено</value>
     <comment/>
   </data>
 </root>
