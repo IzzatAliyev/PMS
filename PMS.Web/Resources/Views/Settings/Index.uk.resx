@@ -129,4 +129,16 @@
     <value>Зберегти</value>
     <comment/>
   </data>
+  <data name="HeaderColor" xml:space="preserve">
+    <value>Виберіть колір фону:</value>
+    <comment/>
+  </data>
+  <data name="HeaderLight" xml:space="preserve">
+    <value>Світлий</value>
+    <comment/>
+  </data>
+  <data name="HeaderDark" xml:space="preserve">
+    <value>Темний</value>
+    <comment/>
+  </data>
 </root>

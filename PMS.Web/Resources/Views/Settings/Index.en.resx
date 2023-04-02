@@ -129,4 +129,16 @@
     <value>Save</value>
     <comment/>
   </data>
+  <data name="HeaderColor" xml:space="preserve">
+    <value>Select background color:</value>
+    <comment/>
+  </data>
+  <data name="HeaderLight" xml:space="preserve">
+    <value>Light</value>
+    <comment/>
+  </data>
+  <data name="HeaderDark" xml:space="preserve">
+    <value>Dark</value>
+    <comment/>
+  </data>
 </root>

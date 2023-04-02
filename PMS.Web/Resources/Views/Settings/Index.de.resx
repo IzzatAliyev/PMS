@@ -129,4 +129,16 @@
     <value>Speichern</value>
     <comment/>
   </data>
+  <data name="HeaderColor" xml:space="preserve">
+    <value>Hintergrundfarbe wählen:</value>
+    <comment/>
+  </data>
+  <data name="HeaderLight" xml:space="preserve">
+    <value>Licht</value>
+    <comment/>
+  </data>
+  <data name="HeaderDark" xml:space="preserve">
+    <value>Dunkel</value>
+    <comment/>
+  </data>
 </root>

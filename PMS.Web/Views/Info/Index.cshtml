@@ -3,101 +3,106 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Info";
+  ViewData["Title"] = "Info";
 }
 
 <div class=main>
-<section class="intro">
+  <section class="intro">
     <div class="container">
-        <h1 class="intro__title">@Localizer["HeaderTitle"]</h1>
-        <p class="intro__text">
-            @Localizer["HeaderText"]
-        </p>
+      <h1 class="intro__title">@Localizer["HeaderTitle"]</h1>
+      <p class="intro__text">
+        @Localizer["HeaderText"]
+      </p>
     </div>
-</section>
+  </section>
 
-<section class="features">
+  <section class="features">
     <div class="container">
-        <h2 class="features__title">@Localizer["FeatureTitle1"]</h2>
-        <p class="features__text">
-            @Localizer["FeatureText1"]
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle1"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText1"]
+      </p>
 
-        <h2 class="features__title">@Localizer["FeatureTitle2"]</h2>
-        <p class="features__text">
-            @Localizer["FeatureText2"]
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle2"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText2"]
+      </p>
 
-        <h2 class="features__title">@Localizer["FeatureTitle3"]</h2>
-        <p class="features__text">
-            @Localizer["FeatureText3"]
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle3"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText3"]
+      </p>
 
-        <h2 class="features__title">@Localizer["FeatureTitle4"]</h2>
-        <p class="features__text">
-            @Localizer["FeatureText4"]
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle4"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText4"]
+      </p>
     </div>
-</section>
+  </section>
 
-<footer>
+  <footer>
     <div class="container">
-        <p>&copy; @Localizer["FooterText"]</p>
+      <p>&copy; @Localizer["FooterText"]</p>
     </div>
-</footer>
+  </footer>
 </div>
 
 <style>
-.main{
-    width:1150px;
-	height:997px;
-	position:inherit;
-	left:256px;
-	top:27px;
-}
+  .main {
+    width: 1150px;
+    height: 997px;
+    position: inherit;
+    left: 256px;
+    top: 27px;
+  }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
 
-.intro {
-  background-color: #f5f5f5;
-  padding: 80px 0;
-}
+  .intro {
+    background-color: var(--third-color);
+    padding: 80px 0;
+  }
 
-.intro__title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 30px;
-  text-align: center;
-}
+  .intro__title {
+    color: var(--default-color);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+  }
 
-.intro__text {
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-}
+  .intro__text {
+    color: var(--text-color);
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+  }
 
-.features {
-  padding: 80px 0;
-}
+  .features {
+    padding: 80px 0;
+  }
 
-.features__title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
+  .features__title {
+    color: var(--default-color);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
 
-.features__text {
-  font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 30px;
-}
+  .features__text {
+    color: var(--text-color);
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
 
-footer {
-  background-color: #ddd;
-  text-align: center;
-}
+  footer {
+    margin-top: 3px;
+    background-color: var(--primary-color);
+    text-align: center;
+  }
 </style>
