@@ -1,4 +1,4 @@
-﻿<a class="employee" style="color: #fff;" asp-area="" asp-controller="Employee" asp-action="Index">
+﻿<a class="employee" asp-area="" asp-controller="Employee" asp-action="Index">
     <li><span class="employee-name">John Smith</span><span class="employee-role">Project Manager</span></li>
 </a>
 
@@ -14,12 +14,13 @@
 	}
 
 	.employee-name {
+		color: var(--primary-color);
 		font-weight: bold;
 		margin-right: 10px;
 	}
 
 	.employee-role {
-		color: #666;
+		color: var(--default-color);
 		font-style: italic;
 	}
 </style>

@@ -1,6 +1,6 @@
 ﻿<div class=project>
     <li>
-        <span>Project A</span>
+        <span class="projname">Project A</span>
         <span class="status in-progress">In Progress</span>
     </li>
 </div>
@@ -10,8 +10,9 @@
         flex-basis: calc(50% - 10px);
 		margin-top: 5px;
         margin-right: 20px;
+		margin-left: 5px;
 		margin-bottom: 15px;
-		background-color: #fff;
+		background-color: var(--secondary-color);
 		box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
 		border-radius: 5px;
 		padding: 20px;
@@ -26,9 +27,8 @@
 		font-weight: bold;
 		text-transform: uppercase;
 		margin-right: 10px;
-		color: #fff;
+		color: var(--primary-color);
 	}
-	
 
 	.project .status.in-progress {
 		background-color: #fbbd08;
@@ -40,5 +40,9 @@
 
 	.project .status.delayed {
 		background-color: #db2828;
+	}
+
+	.projname{
+		color: var(--text-color);
 	}
 </style>

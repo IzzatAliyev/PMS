@@ -1,85 +1,165 @@
 ﻿@using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.Extensions.Options 
+@using Microsoft.Extensions.Options
 
 @inject IViewLocalizer Localizer
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
-    ViewData["Title"] = "Settings";
+	ViewData["Title"] = "Settings";
 }
 
 @{
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    var cultureItems = LocOptions.Value.SupportedUICultures
-        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
-        .ToList();
+	var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+	var cultureItems = LocOptions.Value.SupportedUICultures
+	.Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+	.ToList();
 }
 
 <div class=boardmenu>
-<h1>@Localizer["HeaderSettings"]</h1>
+	<h1>@Localizer["HeaderSettings"]</h1>
 	<div class="container">
-		<form method="post" asp-controller="Settings" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path">
+		<form method="post" asp-controller="Settings" asp-action="SetLanguage"
+			asp-route-returnUrl="@Context.Request.Path">
 			<label for="culture">@Localizer["HeaderLanguage"]</label>
-            <select name="culture"
-                    asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                    asp-items="cultureItems"></select>
+			<select name="culture" asp-for="@requestCulture.RequestCulture.UICulture.Name"
+				asp-items="cultureItems"></select>
 
 			<button type="submit" onclick="this.form.submit()">@Localizer["HeaderSave"]</button>
 		</form>
+
+		<form>
+			<label for="colorPreference">Select background color:</label>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="colorPreference" id="light" value="light" checked>
+				<label class="form-check-label" for="light">
+					Light
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="colorPreference" id="dark" value="dark">
+				<label class="form-check-label" for="dark">
+					Dark
+				</label>
+			</div>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+
+
+		@* <h1>Change Global Color</h1>
+		<form>
+		<label for="primary-color">Primary Color:</label>
+		<input type="color" id="primary-color" name="primary-color"><br>
+
+		<input type="submit" value="Apply">
+		</form> *@
 	</div>
 </div>
 
+@* <script>
+	const primaryColor = getCookie('primaryColor');
+
+	document.documentElement.style.setProperty('--primary-color', primaryColor);
+	document.getElementById('primary-color').value = primaryColor;
+
+	document.querySelector('form').addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const primaryColor = document.getElementById('primary-color').value;
+
+		document.documentElement.style.setProperty('--primary-color', primaryColor);
+
+		setCookie('primaryColor', primaryColor);
+	});
+
+	function getCookie(name) {
+		const cookieString = document.cookie;
+		const cookies = cookieString.split('; ');
+		for (const cookie of cookies) {
+			const [cookieName, cookieValue] = cookie.split('=');
+			if (cookieName === name) {
+				return cookieValue;
+			}
+		}
+		return null;
+	}
+
+	function setCookie(name, value, expires = '') {
+		const cookieString = `${name}=${value}; ${expires}`;
+		document.cookie = cookieString;
+	}
+</script> *@
+
 <style>
-		h1 {
-			text-align: center;
-			margin-top: 50px;
-			color: #333;
-		}
+	h1 {
+		text-align: center;
+		margin-top: 50px;
+		color: var(--text-color)
+	}
 
-		.container {
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 50px;
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			border-radius: 5px;
-		}
+	.container {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 50px;
+		background-color: var(--third-color);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border-radius: 5px;
+	}
 
-		label {
-			display: block;
-			margin-bottom: 10px;
-			color: #333;
-		}
+	label {
+		display: block;
+		margin-bottom: 10px;
+		color: var(--default-color);
+	}
 
-		input[type="text"],
-		input[type="email"],
-		input[type="password"],
-		select {
-			width: 100%;
-			padding: 10px;
-			border-radius: 5px;
-			border: 1px solid #ccc;
-			background-color: #f9f9f9;
-			font-size: 16px;
-			margin-bottom: 20px;
-			box-sizing: border-box;
-		}
+	input[type="text"],
+	input[type="email"],
+	input[type="password"],
+	select {
+		width: 100%;
+		padding: 10px;
+		border-radius: 5px;
+		border: 1px solid var(--secondary-color);
+		background-color: white;
+		font-size: 16px;
+		margin-bottom: 20px;
+		box-sizing: border-box;
+	}
 
-		button[type="submit"] {
-			background-color: #333;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			padding: 10px 20px;
-			font-size: 16px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-		}
+	button[type="submit"] {
+		background-color: var(--button-color);
+		color: var(--primary-color);
+		border: none;
+		border-radius: 5px;
+		padding: 10px 20px;
+		font-size: 16px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
 
-		button[type="submit"]:hover {
-			background-color: #ccc;
-			color: black;
-		}
-	</style>
+	button[type="submit"]:hover {
+		background-color: var(--default-color);
+		color: var(--text-color)
+	}
+
+	form {
+		margin-top: 20px;
+		padding: 20px;
+		border-radius: 5px;
+	}
+
+	.form-check {
+		margin-bottom: 15px;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+	}
+
+	.btn-primary:hover {
+		background-color: #0069d9;
+		border-color: #0062cc;
+	}
+</style>

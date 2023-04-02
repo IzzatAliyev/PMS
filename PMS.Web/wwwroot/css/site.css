@@ -17,12 +17,42 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+:root {
+	--primary-color: #202123;
+	--secondary-color: #353740;
+	--third-color: #444654;
+	--text-color: white;
+	--default-color: #ece;
+	--button-color: #eee
 }
 
+.light{
+	--primary-color: white;
+	--secondary-color: rgba(238.00000101327896, 242.00000077486038, 245.00000059604645, 1);
+	--third-color: rgb(255, 248, 248);
+	--text-color: black;
+	--default-color: rgba(111.5625, 111.5625, 111.5625, 1);
+	--button-color: #333
+}
+
+.dark{
+	--primary-color: #202123;
+	--secondary-color: #353740;
+	--third-color: #444654;
+	--text-color: white;
+	--default-color: #ece;
+	--button-color: #eee
+}
+
+body {
+	margin-bottom: 60px;
+	background-color: var(--primary-color);
+	color: var(--text-color);
+}
+  
+
 .pms { 
-	background-color:rgba(255, 255, 255, 1);
+	background-color: var(--secondary-color);
 	width:1440px;
 	height:1024px;
 	position:absolute;

@@ -1,5 +1,5 @@
-﻿<a class="project" style="color: #fff;" asp-area="" asp-controller="Project" asp-action="Index">
-    <li>Project A</li>
+﻿<a class="project" asp-area="" asp-controller="Project" asp-action="Index">
+    <li class="project-name">Project A</li>
 </a>
 
 <style>
@@ -11,5 +11,9 @@
 		margin-right: 10px;
 		margin-bottom: 10px;
 		text-transform: uppercase;
+	}
+
+	.project-name{
+		color: var(--primary-color);
 	}
 </style>
