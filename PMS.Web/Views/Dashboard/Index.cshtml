@@ -1,12 +1,16 @@
-﻿@{
-	ViewData["Title"] = "Dashboard";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
+	ViewData["Title"] = Localizer["HeaderTitle"];
 }
 
 <div class=boardmenu>
 	@Html.Partial("_TopBarPartial")
 	<div class="container">
 		<div class="employees">
-			<h1>Employees</h1>
+			<h1>@Localizer["HeaderEmployees"]</h1>
 			<div class="list">
 				<ul>
 					@{
@@ -22,7 +26,7 @@
 		</div>
 
 		<div class="projects">
-			<h1>Projects</h1>
+			<h1>@Localizer["HeaderProjects"]</h1>
 			<div class="list">
 				<ul>
 					@{
@@ -41,6 +45,7 @@
 
 <style>
 	h1 {
+		color: var(--default-color);
 		margin: 0;
 		font-size: 24px;
 		font-weight: normal;
@@ -53,13 +58,13 @@
 	}
 
 	.list::-webkit-scrollbar-thumb {
-		background-color: #ececec;
+		background-color: var(--secondary-color);
 		border-radius: 10px;
 	}
 
 	.list::-webkit-scrollbar {
 		width: 0.3em;
-		background-color: #F5F5F5;
+		background-color: var(--primary-color);
 	}
 
 	.container {
@@ -69,7 +74,7 @@
 		max-width: 1200px;
 		margin: 140px auto;
 		padding: 20px;
-		background-color: #fff;
+		background-color: var(--secondary-color);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		border-radius: 5px;
 		overflow: hidden;
@@ -79,7 +84,7 @@
 		flex-basis: calc(50% - 10px);
 		margin-right: 20px;
 		margin-bottom: 20px;
-		background-color: #fff;
+		background-color: var(--third-color);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		border-radius: 5px;
 		padding: 20px;
@@ -96,7 +101,7 @@
 	.projects {
 		flex-basis: calc(50% - 10px);
 		margin-bottom: 20px;
-		background-color: #fff;
+		background-color: var(--third-color);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		border-radius: 5px;
 		padding: 20px;

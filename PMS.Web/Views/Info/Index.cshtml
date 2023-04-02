@@ -1,108 +1,108 @@
-﻿@{
-    ViewData["Title"] = "Info";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
+  ViewData["Title"] = "Info";
 }
 
 <div class=main>
-<section class="intro">
+  <section class="intro">
     <div class="container">
-        <h1 class="intro__title">How to Use Project Management System</h1>
-        <p class="intro__text">
-            Our project management system is designed to help you manage your
-            projects more efficiently, collaborate with your team, and track your
-            progress. Here are some tips on how to use our system:
-        </p>
+      <h1 class="intro__title">@Localizer["HeaderTitle"]</h1>
+      <p class="intro__text">
+        @Localizer["HeaderText"]
+      </p>
     </div>
-</section>
+  </section>
 
-<section class="features">
+  <section class="features">
     <div class="container">
-        <h2 class="features__title">1. Create Projects and Tasks</h2>
-        <p class="features__text">
-            To get started, create a new project and break it down into smaller
-            tasks. This will help you stay organized and on track.
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle1"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText1"]
+      </p>
 
-        <h2 class="features__title">2. Assign Tasks to Team Members</h2>
-        <p class="features__text">
-            Assign tasks to your team members and set deadlines. This will help
-            ensure that everyone knows what they need to do and when they need to
-            do it by.
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle2"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText2"]
+      </p>
 
-        <h2 class="features__title">3. Collaborate and Communicate</h2>
-        <p class="features__text">
-            Use our system's collaboration tools to communicate with your team and
-            share files and information. This will help ensure that everyone is on
-            the same page and working towards the same goal.
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle3"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText3"]
+      </p>
 
-        <h2 class="features__title">4. Monitor Progress and Make Adjustments</h2>
-        <p class="features__text">
-            Use our system's progress tracking tools to monitor the progress of
-            your projects and tasks. Make adjustments as needed to ensure that
-            you're staying on track and meeting your goals.
-        </p>
+      <h2 class="features__title">@Localizer["FeatureTitle4"]</h2>
+      <p class="features__text">
+        @Localizer["FeatureText4"]
+      </p>
     </div>
-</section>
+  </section>
 
-<footer>
+  <footer>
     <div class="container">
-        <p>&copy; 2023 Project Management System</p>
+      <p>&copy; @Localizer["FooterText"]</p>
     </div>
-</footer>
+  </footer>
 </div>
 
 <style>
-.main{
-    width:1150px;
-	height:997px;
-	position:inherit;
-	left:256px;
-	top:27px;
-}
+  .main {
+    width: 1150px;
+    height: 997px;
+    position: inherit;
+    left: 256px;
+    top: 27px;
+  }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
 
-.intro {
-  background-color: #f5f5f5;
-  padding: 80px 0;
-}
+  .intro {
+    background-color: var(--third-color);
+    padding: 80px 0;
+  }
 
-.intro__title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 30px;
-  text-align: center;
-}
+  .intro__title {
+    color: var(--default-color);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+  }
 
-.intro__text {
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-}
+  .intro__text {
+    color: var(--text-color);
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+  }
 
-.features {
-  padding: 80px 0;
-}
+  .features {
+    padding: 80px 0;
+  }
 
-.features__title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
+  .features__title {
+    color: var(--default-color);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
 
-.features__text {
-  font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 30px;
-}
+  .features__text {
+    color: var(--text-color);
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
 
-footer {
-  background-color: #ddd;
-  text-align: center;
-}
+  footer {
+    margin-top: 3px;
+    background-color: var(--primary-color);
+    text-align: center;
+  }
 </style>
