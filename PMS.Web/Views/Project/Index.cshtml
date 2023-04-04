@@ -1,21 +1,25 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
 	ViewData["Title"] = "Project";
 }
 
 <div class=boardmenu>
 	<div class="container">
-		<h1>Project Information</h1>
+		<h1>@Localizer["HeaderProject"]</h1>
 
-		<h2>Name</h2>
+		<h2>@Localizer["HeaderName"]</h2>
 		<p>Your project name goes here</p>
 
-		<h2>Description</h2>
+		<h2>@Localizer["HeaderDesc"]</h2>
 		<p>Your project description goes here</p>
 
-		<h2>Status</h2>
+		<h2>@Localizer["HeaderStatus"]</h2>
 		<p>The current status of the project is: <span class="status in-progress">In Progress</span></p>
 
-		<h2>Employees</h2>
+		<h2>@Localizer["HeaderEmployees"]</h2>
 		<ul class="list">
 			@{
 				for (int i = 0; i < 5; i++)

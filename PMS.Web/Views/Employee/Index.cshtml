@@ -1,29 +1,33 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
     ViewData["Title"] = "Employee";
 }
 
 <div class=boardmenu>
     <div class="container">
-        <h1>Employee Information</h1>
+        <h1>@Localizer["HeaderEmployee"]</h1>
 
         <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Profile Picture" class="profile-picture">
 
-        <h2>Name</h2>
+        <h2>@Localizer["HeaderName"]</h2>
         <p>Your employee name goes here</p>
 
-        <h2>Position</h2>
+        <h2>@Localizer["HeaderPosition"]</h2>
         <p>Your employee position goes here</p>
 
-        <h2>Email</h2>
+        <h2>@Localizer["HeaderEmail"]</h2>
         <p class="email">Your employee email goes here</p>
 
-        <h2>Description</h2>
+        <h2>@Localizer["HeaderDesc"]</h2>
         <p>Your employee description goes here</p>
 
-        <h2>Phone Number</h2>
+        <h2>@Localizer["HeaderNumber"]</h2>
         <p class="phone-number">Your employee phone number goes here</p>
 
-        <h2>Projects</h2>
+        <h2>@Localizer["HeaderProjects"]</h2>
         <ul class="list">
             @{
                 for (int i = 0; i < 5; i++)
@@ -33,7 +37,7 @@
             }
         </ul>
 
-        <h2>Skills</h2>
+        <h2>@Localizer["HeaderSkills"]</h2>
         <ul class="list">
             <li class="skill">master</li>
             <li class="skill">frontend</li>
