@@ -1,29 +1,27 @@
-﻿<a asp-area="" asp-controller="Project" asp-action="Index">
+﻿<a asp-area="" asp-controller="Project" asp-action="GetTasksById">
     <div class="tile">
         <h2>Project 1</h2>
         <p class="description">Description of project 1.</p>
         <div class="status success">Complete</div>
-        <img src="~/images/project.jpg" alt="Project Picture" class="picture">
+        <p class="task">To tasks</p>
     </div>
 </a>
 
 <style>
-    img.picture {
-        float: right;
+    p.task{
+        text-align: right;
+        font-size: 20px;
         position: relative;
-        bottom: 81px;
-        right: -20px;
-        height: inherit;
-        border-top-right-radius: inherit;
-        border-bottom-right-radius: inherit;
+        bottom: 30px;
+        color: var(--default-color);
     }
 
     .tile {
         background-color: var(--third-color);
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        height: 150px;
         padding: 20px;
-        border-radius: 20px;
-        height: 143px;
+        border-radius: 5px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         transition: box-shadow 0.3s ease-in-out;
     }

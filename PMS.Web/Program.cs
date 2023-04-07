@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc.Razor;
+using PMS.Core.Repositories;
+using PMS.Core.Repositories.Repositories;
 using PMS.Infrastructure;
 using PMS.Infrastructure.Data;
+using PMS.Service.Services.Impl;
+using PMS.Service.Services.Interfaces;
 
 namespace PMS.Web
 {
@@ -14,8 +18,13 @@ namespace PMS.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddStorage(builder.Configuration);
 
-            builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IProjectService, ProjectService>();
+            builder.Services.AddScoped<ISkillService, SkillService>();
 
+            builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.SetDefaultCulture("en");

@@ -1,19 +1,45 @@
 using Microsoft.AspNetCore.Mvc;
+using PMS.Service.Services.Interfaces;
 
 namespace PMS.Web.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly ILogger<EmployeeController> _logger;
+        private readonly IEmployeeService employeeService;
+        private readonly ILogger<EmployeeController> logger;
 
-        public EmployeeController(ILogger<EmployeeController> logger)
+        public EmployeeController(ILogger<EmployeeController> logger, IEmployeeService employeeService)
         {
-            _logger = logger;
+            this.employeeService = employeeService;
+            this.logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            // var employee = new EmployeeViewModel()
+            // {
+            //     Name = "anton",
+            //     Position = "master",
+            //     Email = "employeeDb.Email",
+            //     Description = "employeeDb.Description",
+            //     PhoneNumber = "employeeDb.PhoneNumber"
+            // };
+            // await this.employeeService.CreateEmployee(employee);
+            // await this.employeeService.UpdateEmployeeById(2, employee);
+            // await this.employeeService.DeleteEmployeeById(2);
+            // var empl = await this.employeeService.GetEmployeeById(3);
+            // Console.WriteLine(empl.Name);
             return View();
+        }
+
+        public IActionResult GetAll()
+        {
+            var employees = this.employeeService.GetAllEmployees();
+            foreach(var emp in employees)
+            {
+                Console.WriteLine(emp.Name);
+            }
+            return View(employees);
         }
     }
 }
