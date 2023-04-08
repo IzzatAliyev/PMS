@@ -23,6 +23,7 @@ namespace PMS.Web
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<ISkillService, SkillService>();
+            builder.Services.AddScoped<IProjectTaskService, ProjectTaskService>();
 
             builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
             builder.Services.Configure<RequestLocalizationOptions>(options =>

@@ -112,18 +112,21 @@
 
 	.list {
 		margin-top: 25px;
-		height: 700px;
+		height: 750px;
 		overflow-y: scroll;
+		background-color: var(--secondary-color);
+		margin: 5px;
+		border-radius: 10px;
 	}
 
-	..list::-webkit-scrollbar-thumb {
-		background-color: var(--secondary-color);
+	.list::-webkit-scrollbar-thumb {
+		background-color: var(--third-color);
 		border-radius: 10px;
 	}
 
 	.list::-webkit-scrollbar {
 		width: 0.1em;
-		background-color: var(--primary-color);
+		background-color: var(--secondary-color);
 	}
 
 	.doneselection {
