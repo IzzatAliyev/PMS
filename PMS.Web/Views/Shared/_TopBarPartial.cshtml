@@ -1,5 +1,7 @@
 ﻿<div class=topbar>
-	<a class="ellipse_1" asp-area="" asp-controller="Employee" asp-action="Index"></a>
+	<a asp-area="" asp-controller="Employee" asp-action="Index">
+		<img class="ellipse_1" src="https://randomuser.me/api/portraits/men/11.jpg" onerror="this.src='~/images/profile.png'" alt="Profile Picture">
+	</a>
 	<span class="name">@ViewData["Title"]</span>
 	<div class=filter>
 		<span class="this_week">This week</span>
@@ -39,6 +41,7 @@
 
 	.ellipse_1 {
 		position: inherit;
+		float:right;
 		right: 0;
 		top: 0;
 		width: 40px;
@@ -48,7 +51,6 @@
 		background-color: var(--default-color);
 		background-position: center;
 		background-size: cover;
-		background-image: url('https://randomuser.me/api/portraits/men/11.jpg')
 	}
 
 	.name {
