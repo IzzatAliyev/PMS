@@ -17,11 +17,13 @@ namespace PMS.Service.Services.Impl
         {
             var newEmployee = new Employee()
             {
+                Id = employee.Id,
                 Name = employee.Name,
                 Position = employee.Position,
                 Email = employee.Email,
                 Description = employee.Description,
-                PhoneNumber = employee.PhoneNumber
+                PhoneNumber = employee.PhoneNumber,
+                ProfilePicture = employee.ProfilePicture
             };
             await this.unitOfWork.GenericRepository<Employee>().AddAsync(newEmployee);
             await this.unitOfWork.SaveAsync();
@@ -37,6 +39,7 @@ namespace PMS.Service.Services.Impl
                 employeeOld.Email = employee.Email;
                 employeeOld.Description = employee.Description;
                 employeeOld.PhoneNumber = employee.PhoneNumber;
+                employeeOld.ProfilePicture = employee.ProfilePicture;
                 await this.unitOfWork.GenericRepository<Employee>().UpdateAsync(employeeOld);
                 await this.unitOfWork.SaveAsync();
             }
@@ -72,7 +75,8 @@ namespace PMS.Service.Services.Impl
                     Position = employeeDb.Position,
                     Email = employeeDb.Email,
                     Description = employeeDb.Description,
-                    PhoneNumber = employeeDb.PhoneNumber
+                    PhoneNumber = employeeDb.PhoneNumber,
+                    ProfilePicture = employeeDb.ProfilePicture
                 };
                 return employee;
             }
@@ -98,6 +102,7 @@ namespace PMS.Service.Services.Impl
                         Email = employee.Email,
                         Description = employee.Description,
                         PhoneNumber = employee.PhoneNumber,
+                        ProfilePicture = employee.ProfilePicture
                     };
                     employees.Add(currentEmployee);
                 }

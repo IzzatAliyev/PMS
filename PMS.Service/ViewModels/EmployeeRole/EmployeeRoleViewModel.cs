@@ -1,13 +1,12 @@
 using Newtonsoft.Json;
 
-namespace PMS.Infrastructure.Entities
+namespace PMS.Service.ViewModels.EmployeeRole
 {
-    public class EmployeeRole
+    public class EmployeeRoleViewModel
     {
         public int Id {get;set;}
         public int EmployeeId {get;set;}
         public string Role {get;set;}
-        public Employee Employee {get;set;}
 
         public override string ToString()
         {

@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace PMS.Service.ViewModels.ProjectTask
 {
     public class ProjectTaskViewModel
@@ -10,5 +12,10 @@ namespace PMS.Service.ViewModels.ProjectTask
         public string AssignedFrom {get;set;}
         public int EmployeeId {get;set;}
         public int ProjectId {get;set;}
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

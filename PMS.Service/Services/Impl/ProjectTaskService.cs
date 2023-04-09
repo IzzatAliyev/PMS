@@ -17,6 +17,7 @@ namespace PMS.Service.Services.Impl
         {
             var newTask = new ProjectTask()
             {
+                Id = task.Id,
                 Name = task.Name,
                 Description = task.Description,
                 TaskType = task.TaskType,
@@ -113,7 +114,7 @@ namespace PMS.Service.Services.Impl
             }
             else
             {
-                throw new Exception("projects doesn't exist");
+                throw new Exception("project tasks doesn't exist");
             }
         }
     }

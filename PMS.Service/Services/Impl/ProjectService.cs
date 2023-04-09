@@ -17,6 +17,7 @@ namespace PMS.Service.Services.Impl
         {
             var newProject = new Project()
             {
+                Id = project.Id,
                 Name = project.Name,
                 Description = project.Description,
                 Status = project.Status

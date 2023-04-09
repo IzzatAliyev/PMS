@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace PMS.Service.ViewModels.Employee
 {
     public class EmployeeViewModel
@@ -8,5 +10,11 @@ namespace PMS.Service.ViewModels.Employee
         public string Email {get;set;}
         public string Description {get;set;}
         public string PhoneNumber {get;set;}
+        public string ProfilePicture {get;set;}
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

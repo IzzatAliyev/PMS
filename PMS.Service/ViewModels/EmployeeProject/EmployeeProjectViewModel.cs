@@ -1,14 +1,14 @@
 using Newtonsoft.Json;
 
-namespace PMS.Infrastructure.Entities
+namespace PMS.Service.ViewModels.EmployeeProject
 {
-    public class EmployeeRole
+    public class EmployeeProjectViewModel
     {
         public int Id {get;set;}
         public int EmployeeId {get;set;}
-        public string Role {get;set;}
-        public Employee Employee {get;set;}
-
+        public int ProjectId {get;set;}
+        public string Task {get;set;}
+        
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

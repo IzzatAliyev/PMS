@@ -17,6 +17,7 @@ namespace PMS.Service.Services.Impl
         {
             var newSkill = new Skill()
             {
+                Id = skill.Id,
                 Name = skill.Name,
                 Description = skill.Description,
                 ColorCode = skill.ColorCode

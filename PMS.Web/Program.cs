@@ -24,6 +24,10 @@ namespace PMS.Web
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<ISkillService, SkillService>();
             builder.Services.AddScoped<IProjectTaskService, ProjectTaskService>();
+            builder.Services.AddScoped<IEmployeeProjectService, EmployeeProjectService>();
+            builder.Services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
+            builder.Services.AddScoped<IEmployeeSkillService, EmployeeSkillService>();
+            builder.Services.AddScoped<IProjectRoleService, ProjectRoleService>();
 
             builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
             builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -40,6 +44,8 @@ namespace PMS.Web
 
             var app = builder.Build();
             await app.DatabaseEnsureCreated();
+            
+            // await DummyDataGenerator.GenerateAsync(app.Services);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -60,6 +66,8 @@ namespace PMS.Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            
+            app.MapFallbackToController("NotFound", "Home");
 
             app.Run();
         }

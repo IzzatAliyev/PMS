@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace PMS.Infrastructure.Entities
 {
     public class EmployeeSkill
@@ -8,5 +10,10 @@ namespace PMS.Infrastructure.Entities
         public int Level {get;set;}
         public Employee Employee {get;set;}
         public Skill Skill {get;set;}
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
