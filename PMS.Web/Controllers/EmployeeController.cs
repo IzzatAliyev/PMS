@@ -6,11 +6,15 @@ namespace PMS.Web.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService employeeService;
+        private readonly IEmployeeSkillService employeeSkillService;
+        private readonly IEmployeeProjectService employeeProjectService;
         private readonly ILogger<EmployeeController> logger;
 
-        public EmployeeController(ILogger<EmployeeController> logger, IEmployeeService employeeService)
+        public EmployeeController(ILogger<EmployeeController> logger, IEmployeeSkillService employeeSkillService, IEmployeeProjectService employeeProjectService, IEmployeeService employeeService)
         {
             this.employeeService = employeeService;
+            this.employeeSkillService = employeeSkillService;
+            this.employeeProjectService = employeeProjectService;
             this.logger = logger;
         }
 
@@ -21,6 +25,8 @@ namespace PMS.Web.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
             var employee = await this.employeeService.GetEmployeeById(id);
+            ViewBag.Skills = this.employeeSkillService.GetSkillsByEmployeeId(id);
+            ViewBag.Projects = this.employeeProjectService.GetProjectsByEmployeeId(id);
             return View(employee);
         }
 

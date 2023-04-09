@@ -1,4 +1,5 @@
 using PMS.Service.ViewModels.EmployeeSkill;
+using PMS.Service.ViewModels.Skill;
 
 namespace PMS.Service.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace PMS.Service.Services.Interfaces
         Task DeleteEmployeeSkillById(int id);
         Task<EmployeeSkillViewModel> GetEmployeeSkillById(int id);
         IEnumerable<EmployeeSkillViewModel> GetAllEmployeeSkills();
+        IEnumerable<SkillViewModel> GetSkillsByEmployeeId(int employeeId);
     }
 }

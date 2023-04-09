@@ -1,5 +1,9 @@
-﻿<a class="project" asp-area="" asp-controller="Project" asp-action="Index">
-    <li class="project-name">Project A</li>
+﻿@using PMS.Service.ViewModels.Project
+
+@model ProjectViewModel
+
+<a class="project" href="@Url.Action("Index", "Project", new { id = Model.Id }, null)">
+    <li class="project-name">@Model.Name</li>
 </a>
 
 <style>

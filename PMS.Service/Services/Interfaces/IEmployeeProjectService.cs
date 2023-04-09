@@ -1,4 +1,6 @@
+using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
+using PMS.Service.ViewModels.Project;
 
 namespace PMS.Service.Services.Interfaces
 {
@@ -9,5 +11,7 @@ namespace PMS.Service.Services.Interfaces
         Task DeleteEmployeeProjectById(int id);
         Task<EmployeeProjectViewModel> GetEmployeeProjectById(int id);
         IEnumerable<EmployeeProjectViewModel> GetAllEmployeeProjects();
+        IEnumerable<ProjectViewModel> GetProjectsByEmployeeId(int employeeId);
+        IEnumerable<EmployeeWithRoleViewModel> GetEmployeesByProjectId(int projectId);
     }
 }

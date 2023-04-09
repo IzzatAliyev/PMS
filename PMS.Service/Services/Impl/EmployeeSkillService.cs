@@ -1,17 +1,22 @@
+using Microsoft.EntityFrameworkCore;
 using PMS.Core.Repositories;
+using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.EmployeeSkill;
+using PMS.Service.ViewModels.Skill;
 
 namespace PMS.Service.Services.Impl
 {
     public class EmployeeSkillService : IEmployeeSkillService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly PMSDbContext dbcontext;
 
-        public EmployeeSkillService(IUnitOfWork unitOfWork)
+        public EmployeeSkillService(IUnitOfWork unitOfWork, PMSDbContext dbcontext)
         {
             this.unitOfWork = unitOfWork;
+            this.dbcontext = dbcontext;
         }
         public async Task CreateEmployeeSkill(EmployeeSkillViewModel employeeSkill)
         {
@@ -100,6 +105,23 @@ namespace PMS.Service.Services.Impl
             {
                 throw new Exception("employee skills doesn't exist");
             }
+        }
+
+        public IEnumerable<SkillViewModel> GetSkillsByEmployeeId(int employeeId)
+        {
+            var result = this.dbcontext.Employees
+                .Include(e => e.Skills)
+                .Where(e => e.Id == employeeId)
+                .SelectMany(e => e.Skills.Select(s => new SkillViewModel
+                {
+                    Id = s.Skill.Id,
+                    Name = s.Skill.Name,
+                    Description = s.Skill.Description,
+                    ColorCode = s.Skill.ColorCode
+                }))
+                .ToList();
+
+                return result;
         }
     }
 }

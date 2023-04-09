@@ -6,11 +6,13 @@ namespace PMS.Web.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectService projectService;
+        private readonly IEmployeeProjectService employeeProjectService;
         private readonly ILogger<ProjectController> logger;
 
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger)
+        public ProjectController(IProjectService projectService, IEmployeeProjectService employeeProjectService, ILogger<ProjectController> logger)
         {
             this.projectService = projectService;
+            this.employeeProjectService = employeeProjectService;
             this.logger = logger;
         }
 
@@ -21,6 +23,7 @@ namespace PMS.Web.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
             var project = await this.projectService.GetProjectById(id);
+            ViewBag.Employees = this.employeeProjectService.GetEmployeesByProjectId(id);
             return View(project);
         }
 

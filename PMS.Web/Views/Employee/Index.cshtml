@@ -1,9 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using PMS.Service.ViewModels.Employee;
+@using PMS.Service.ViewModels.Project;
+@using PMS.Service.ViewModels.Skill;
 
 @inject IViewLocalizer Localizer
 
 @model EmployeeViewModel
+
+@{
+    List<ProjectViewModel> projects =  ViewBag.Projects;
+    List<SkillViewModel> skills = ViewBag.Skills;
+}
 
 @{
     ViewData["Title"] = "Employee";
@@ -32,19 +39,36 @@
 
         <h2>@Localizer["HeaderProjects"]</h2>
         <ul class="list">
-            @{
-                for (int i = 0; i < 5; i++)
+            @{ 
+                if (projects.Count != 0)
                 {
-                    @Html.Partial("_ProjectSmallPartial")
+                    foreach (var project in projects)
+                    {
+                        @await Html.PartialAsync("_ProjectSmallPartial", project)
+                    }
+                }
+                else
+                {
+                    <p class="nocontent">No Projects</p>
                 }
             }
         </ul>
 
         <h2>@Localizer["HeaderSkills"]</h2>
         <ul class="list">
-            <li class="skill">master</li>
-            <li class="skill">frontend</li>
-            <li class="skill">backend</li>
+            @{
+                if (skills.Count != 0)
+                {
+                foreach(var skill in skills)
+                {
+                    <li class="skill">@skill.Name</li>
+                }
+                }
+                else
+                {
+                    <p class="nocontent">No Skills</p>
+                }
+            }
         </ul>
     </div>
 </div>
@@ -58,6 +82,10 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         margin-top: 50px;
+    }
+
+    .nocontent{
+        color: var(--default-color);
     }
 
     h1 {
