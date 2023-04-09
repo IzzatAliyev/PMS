@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using PMS.Core.Repositories;
+using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.ProjectTask;
@@ -8,10 +10,12 @@ namespace PMS.Service.Services.Impl
     public class ProjectTaskService : IProjectTaskService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly PMSDbContext dbcontext;
 
-        public ProjectTaskService(IUnitOfWork unitOfWork)
+        public ProjectTaskService(IUnitOfWork unitOfWork, PMSDbContext dbcontext)
         {
             this.unitOfWork = unitOfWork;
+            this.dbcontext = dbcontext;
         }
         public async Task CreateTask(ProjectTaskViewModel task)
         {
@@ -24,7 +28,8 @@ namespace PMS.Service.Services.Impl
                 AssignedTo = task.AssignedTo,
                 AssignedFrom = task.AssignedFrom,
                 EmployeeId = task.EmployeeId,
-                ProjectId = task.ProjectId
+                ProjectId = task.ProjectId,
+                Status = task.Status
             };
             await this.unitOfWork.GenericRepository<ProjectTask>().AddAsync(newTask);
             await this.unitOfWork.SaveAsync();
@@ -42,6 +47,7 @@ namespace PMS.Service.Services.Impl
                 taskOld.AssignedFrom = task.AssignedFrom;
                 taskOld.EmployeeId = task.EmployeeId;
                 taskOld.ProjectId = task.ProjectId;
+                taskOld.Status = task.Status;
                 await this.unitOfWork.GenericRepository<ProjectTask>().UpdateAsync(taskOld);
                 await this.unitOfWork.SaveAsync();
             }
@@ -79,7 +85,8 @@ namespace PMS.Service.Services.Impl
                     AssignedTo = taskDb.AssignedTo,
                     AssignedFrom = taskDb.AssignedFrom,
                     EmployeeId = taskDb.EmployeeId,
-                    ProjectId = taskDb.ProjectId
+                    ProjectId = taskDb.ProjectId,
+                    Status = taskDb.Status
                 };
                 return task;
             }
@@ -106,7 +113,8 @@ namespace PMS.Service.Services.Impl
                         AssignedTo = task.AssignedTo,
                         AssignedFrom = task.AssignedFrom,
                         EmployeeId = task.EmployeeId,
-                        ProjectId = task.ProjectId
+                        ProjectId = task.ProjectId,
+                        Status = task.Status
                     };
                     tasks.Add(currentProject);
                 }
@@ -116,6 +124,28 @@ namespace PMS.Service.Services.Impl
             {
                 throw new Exception("project tasks doesn't exist");
             }
+        }
+
+        public IEnumerable<ProjectTaskViewModel> GetTasksByProjectId(int projectId)
+        {
+            var result = this.dbcontext.Projects
+                .Include(p => p.Tasks)
+                .Where(p => p.Id == projectId)
+                .SelectMany(p => p.Tasks.Select(t =>new ProjectTaskViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Description = t.Description,
+                    TaskType = t.TaskType,
+                    AssignedTo = t.AssignedTo,
+                    AssignedFrom = t.AssignedFrom,
+                    Status = t.Status,
+                    EmployeeId = t.EmployeeId,
+                    ProjectId = t.ProjectId
+                }))
+                .ToList();
+
+                return result;
         }
     }
 }

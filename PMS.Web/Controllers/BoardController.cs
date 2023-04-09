@@ -1,19 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
+using PMS.Service.Services.Interfaces;
 
 namespace PMS.Web.Controllers
 {
     public class BoardController : Controller
     {
-        private readonly ILogger<BoardController> _logger;
+        private readonly IProjectService projectService;
+        private readonly ILogger<BoardController> logger;
 
-        public BoardController(ILogger<BoardController> logger)
+        public BoardController(IProjectService projectService, ILogger<BoardController> logger)
         {
-            _logger = logger;
+            this.projectService = projectService;
+            this.logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var projects = this.projectService.GetAllProjects();
+            return View(projects);
         }
     }
 }

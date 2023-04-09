@@ -3,16 +3,19 @@ using PMS.Service.Services.Interfaces;
 
 namespace PMS.Web.Controllers
 {
+    [Route("projects")]
     public class ProjectController : Controller
     {
         private readonly IProjectService projectService;
         private readonly IEmployeeProjectService employeeProjectService;
+        private readonly IProjectTaskService projectTaskService;
         private readonly ILogger<ProjectController> logger;
 
-        public ProjectController(IProjectService projectService, IEmployeeProjectService employeeProjectService, ILogger<ProjectController> logger)
+        public ProjectController(IProjectService projectService, IEmployeeProjectService employeeProjectService, IProjectTaskService projectTaskService, ILogger<ProjectController> logger)
         {
             this.projectService = projectService;
             this.employeeProjectService = employeeProjectService;
+            this.projectTaskService = projectTaskService;
             this.logger = logger;
         }
 
@@ -27,11 +30,14 @@ namespace PMS.Web.Controllers
             return View(project);
         }
 
-        public IActionResult GetTasksById()
+        [HttpGet("tasks/{id:int}")]
+        public IActionResult GetTasksByProjectId([FromRoute]int id)
         {
-            return View();
+            var tasks = this.projectTaskService.GetTasksByProjectId(id);
+            return View(tasks);
         }
 
+        [HttpGet]
         public IActionResult GetAll()
         {
             var projects = this.projectService.GetAllProjects();

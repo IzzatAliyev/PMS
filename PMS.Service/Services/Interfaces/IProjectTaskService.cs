@@ -9,5 +9,6 @@ namespace PMS.Service.Services.Interfaces
         Task DeleteTaskById(int id);
         Task<ProjectTaskViewModel> GetTaskById(int id);
         IEnumerable<ProjectTaskViewModel> GetAllTasks();
+        IEnumerable<ProjectTaskViewModel> GetTasksByProjectId(int projectId);
     }
 }
