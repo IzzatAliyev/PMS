@@ -14,31 +14,19 @@ namespace PMS.Web.Controllers
             this.logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            // var employee = new EmployeeViewModel()
-            // {
-            //     Name = "anton",
-            //     Position = "master",
-            //     Email = "employeeDb.Email",
-            //     Description = "employeeDb.Description",
-            //     PhoneNumber = "employeeDb.PhoneNumber"
-            // };
-            // await this.employeeService.CreateEmployee(employee);
-            // await this.employeeService.UpdateEmployeeById(2, employee);
-            // await this.employeeService.DeleteEmployeeById(2);
-            // var empl = await this.employeeService.GetEmployeeById(3);
-            // Console.WriteLine(empl.Name);
-            return View();
+            if (id == 0)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            var employee = await this.employeeService.GetEmployeeById(id);
+            return View(employee);
         }
 
         public IActionResult GetAll()
         {
             var employees = this.employeeService.GetAllEmployees();
-            foreach(var emp in employees)
-            {
-                Console.WriteLine(emp.Name);
-            }
             return View(employees);
         }
     }

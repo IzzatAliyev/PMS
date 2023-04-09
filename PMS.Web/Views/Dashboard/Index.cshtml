@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Employee;
+@using PMS.Service.ViewModels.Project;
 
 @inject IViewLocalizer Localizer
 
@@ -18,10 +20,10 @@
 			<div class="list">
 				<ul>
 					@{
-						for (int i = 0; i < 40; i++)
+						foreach(EmployeeViewModel employee in ViewBag.Employees)
 						{
-							<a asp-area="" asp-controller="Employee" asp-action="Index">
-								@Html.Partial("_EmployeePartial")
+							<a href="@Url.Action("Index", "Employee", new { id = employee.Id }, null)">
+								@await Html.PartialAsync("_EmployeePartial", employee)
 							</a>
 						}
 					}
@@ -38,10 +40,10 @@
 			<div class="list">
 				<ul>
 					@{
-						for (int i = 0; i < 100; i++)
+						foreach(ProjectViewModel project in ViewBag.Projects)
 						{
-							<a asp-area="" asp-controller="Project" asp-action="Index">
-								@Html.Partial("_ProjectPartial")
+							<a href="@Url.Action("Index", "Project", new { id = project.Id }, null)">
+								@await Html.PartialAsync("_ProjectPartial", project)
 							</a>
 						}
 					}

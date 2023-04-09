@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Employee;
 
 @inject IViewLocalizer Localizer
+
+@model EmployeeViewModel
 
 @{
     ViewData["Title"] = "Employee";
@@ -10,22 +13,22 @@
     <div class="container">
         <h1>@Localizer["HeaderEmployee"]</h1>
 
-        <img src="https://randomuser.me/api/portraits/men/11.jpg" onerror="this.src='~/images/profile.png'" alt="Profile Picture" class="profile-picture">
+        <img src="@Model.ProfilePicture" onerror="this.src='~/images/profile.png'" alt="Profile Picture" class="profile-picture">
 
         <h2>@Localizer["HeaderName"]</h2>
-        <p>Your employee name goes here</p>
+        <p>@Model.Name</p>
 
         <h2>@Localizer["HeaderPosition"]</h2>
-        <p>Your employee position goes here</p>
+        <p>@Model.Position</p>
 
         <h2>@Localizer["HeaderEmail"]</h2>
-        <p class="email">Your employee email goes here</p>
+        <p class="email">@Model.Email</p>
 
         <h2>@Localizer["HeaderDesc"]</h2>
-        <p>Your employee description goes here</p>
+        <p>@Model.Description</p>
 
         <h2>@Localizer["HeaderNumber"]</h2>
-        <p class="phone-number">Your employee phone number goes here</p>
+        <p class="phone-number">@Model.PhoneNumber</p>
 
         <h2>@Localizer["HeaderProjects"]</h2>
         <ul class="list">

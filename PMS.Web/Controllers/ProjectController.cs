@@ -14,9 +14,14 @@ namespace PMS.Web.Controllers
             this.logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            var project = await this.projectService.GetProjectById(id);
+            return View(project);
         }
 
         public IActionResult GetTasksById()
@@ -27,10 +32,6 @@ namespace PMS.Web.Controllers
         public IActionResult GetAll()
         {
             var projects = this.projectService.GetAllProjects();
-            foreach(var proj in projects)
-            {
-                Console.WriteLine(proj.Name);
-            }
             return View(projects);
         }
     }

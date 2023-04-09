@@ -1,8 +1,12 @@
-﻿<div class="employee">
+﻿@using PMS.Service.ViewModels.Employee;
+
+@model EmployeeViewModel
+
+<div class="employee">
     <li>
-        <img class="avatar" src="https://randomuser.me/api/portraits/men/11.jpg" onerror="this.src='~/images/profile.png'" alt="Profile Picture">
+        <img class="avatar" src="@Model.ProfilePicture" onerror="this.src='~/images/profile.png'" alt="Profile Picture">
         </img>
-        <span class="emplname">John Smith</span>
+        <span class="emplname">@Model.Name</span>
     </li>
 </div>
 

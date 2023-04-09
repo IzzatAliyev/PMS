@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Project
 
 @inject IViewLocalizer Localizer
+
+@model IEnumerable<ProjectViewModel>
 
 @{
     ViewData["Title"] = "Projects";
@@ -10,9 +13,9 @@
     @Html.Partial("_TopBarPartial")
 	<div class="container-list">
 		@{
-			for (int i = 0; i < 20; i++)
+			foreach(ProjectViewModel project in @Model)
 			{
-				@Html.Partial("_ProjectTilePartial");
+				@await Html.PartialAsync("_ProjectTilePartial", project);
 			}
 		}
 	</div>

@@ -1,9 +1,13 @@
-﻿<a asp-area="" asp-controller="Employee" asp-action="Index">
+﻿@using PMS.Service.ViewModels.Employee;
+
+@model EmployeeViewModel
+
+<a href="@Url.Action("Index", "Employee", new { id = @Model.Id }, null)">
     <div class="tile">
-        <h2>Kiril</h2>
-        <p class="description">I'm software engineer.</p>
-        <div class="status success">Master</div>
-        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Profile Picture" class="picture">
+        <h2>@Model.Name</h2>
+        <p class="description">@Model.Description</p>
+        <div class="status success">@Model.Position</div>
+        <img src="@Model.ProfilePicture" alt="Profile Picture" class="picture">
     </div>
 </a>
 
