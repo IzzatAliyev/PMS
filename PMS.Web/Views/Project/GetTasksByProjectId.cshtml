@@ -17,7 +17,7 @@
 	<div class=todoselection>
 		<div class="rectangle_3">
 			<div class="title">
-				<span class="names">@Localizer["HeaderTodo"]</span>
+				<h4 class="names">@Localizer["HeaderTodo"]</h4>
 				<div class="add pointer" id="add-task-button">
 					<span class="material-symbols-outlined">
 						add
@@ -37,7 +37,7 @@
 						{
 							if (task.Status == "todo")
 							{
-								@Html.Partial("_TilePartial")
+								@await Html.PartialAsync("_TilePartial", task)
 							}
 						}
 					}
@@ -52,7 +52,7 @@
 	<div class=inprogressselection>
 		<div class="rectangle_3">
 			<div class="title">
-				<span class="names">@Localizer["HeaderInProgress"]</span>
+				<h4 class="names">@Localizer["HeaderInProgress"]</h4>
 				<div class="add pointer">
 					<span class="material-symbols-outlined">
 						add
@@ -72,7 +72,7 @@
 						{
 							if (task.Status == "inprogress")
 							{
-								@Html.Partial("_TilePartial")
+								@await Html.PartialAsync("_TilePartial", task)
 							}
 						}
 					}
@@ -87,7 +87,7 @@
 	<div class=doneselection>
 		<div class="rectangle_3">
 			<div class="title">
-				<span class="names">@Localizer["HeaderDone"]</span>
+				<h4 class="names">@Localizer["HeaderDone"]</h4>
 				<div class="add pointer">
 					<span class="material-symbols-outlined">
 						add
@@ -107,7 +107,7 @@
 						{
 							if (task.Status == "done")
 							{
-								@Html.Partial("_TilePartial")
+								@await Html.PartialAsync("_TilePartial", task)
 							}
 						}
 					}
@@ -192,7 +192,7 @@
 
 	.names {
 		color: var(--text-color);
-		width: 45px;
+		width: 100px;
 		height: 24px;
 		position: relative;
 		left: 24px;
@@ -204,6 +204,7 @@
 	}
 
 	.add {
+		bottom: 10px;
 		width: 25px;
 		height: 25px;
 		position: relative;
@@ -215,7 +216,7 @@
 		height: 25px;
 		position: relative;
 		left: 319px;
-		bottom: 25px;
+		bottom: 35px;
 	}
 
 	.motiv {

@@ -3,6 +3,7 @@ using PMS.Service.Services.Interfaces;
 
 namespace PMS.Web.Controllers
 {
+    [Route("employees")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService employeeService;
@@ -18,7 +19,8 @@ namespace PMS.Web.Controllers
             this.logger = logger;
         }
 
-        public async Task<IActionResult> Index(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Index([FromRoute] int id)
         {
             if (id == 0)
             {
@@ -30,6 +32,7 @@ namespace PMS.Web.Controllers
             return View(employee);
         }
 
+        [HttpGet]
         public IActionResult GetAll()
         {
             var employees = this.employeeService.GetAllEmployees();

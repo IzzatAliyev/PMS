@@ -19,7 +19,8 @@ namespace PMS.Web.Controllers
             this.logger = logger;
         }
 
-        public async Task<IActionResult> Index(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Index([FromRoute] int id)
         {
             if (id == 0)
             {
@@ -31,7 +32,7 @@ namespace PMS.Web.Controllers
         }
 
         [HttpGet("tasks/{id:int}")]
-        public IActionResult GetTasksByProjectId([FromRoute]int id)
+        public IActionResult GetTasksByProjectId([FromRoute] int id)
         {
             var tasks = this.projectTaskService.GetTasksByProjectId(id);
             return View(tasks);

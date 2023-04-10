@@ -1,6 +1,7 @@
 ﻿<div class=topbar>
 	<a asp-area="" asp-controller="Employee" asp-action="Index">
-		<img class="ellipse_1" src="https://randomuser.me/api/portraits/men/11.jpg" onerror="this.src='~/images/profile.png'" alt="Profile Picture">
+		<img class="ellipse_1" src="https://randomuser.me/api/portraits/men/11.jpg"
+			onerror="this.src='~/images/profile.png'" alt="Profile Picture">
 	</a>
 	<span class="name">@ViewData["Title"]</span>
 	<div class=filter>
@@ -16,19 +17,68 @@
 			notifications
 		</span>
 	</div>
-	<div class=search><span class="searchtext">Search</span>
-		<div class=searchicon>
-			<span class="material-symbols-outlined">
-				search
-			</span>
-		</div>
+
+	<div class="search-container">
+		<form id="search-form">
+			<input type="text" id="search-input" name="search-query" placeholder="Search...">
+		</form>
+		<div id="search-results"></div>
 	</div>
+
 	<a class=questions asp-area="" asp-controller="Info" asp-action="Index">
 		<span class="material-symbols-outlined">
 			help
 		</span>
 	</a>
 </div>
+
+<script>
+	const searchInput = document.getElementById('search-input');
+	const searchResults = document.getElementById('search-results');
+
+	searchInput.addEventListener('input', () => {
+		const query = searchInput.value;
+		if (query.trim() === '') {
+			hideSearchResults();
+		} else {
+			search(query);
+		}
+	});
+
+	async function search(query) {
+		const res = await fetch(`http://localhost:5047/dashboard/search?query=${query}`);
+		const body = res.body;
+		const reader = body.getReader();
+		let totalData = '';
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) {
+				break;
+			}
+			totalData += new TextDecoder().decode(value);
+		}
+		const output = JSON.parse(totalData);
+
+		let resultHtml = '<ul>';
+		for (const result of output) {
+			resultHtml += `<li><a href="${result.url}">${result.name}</a><p>${result.type}</p</li>`;
+		}
+		resultHtml += '</ul>';
+
+		searchResults.innerHTML = `<p>Search results for "${query}":</p>${resultHtml}`;
+		showSearchResults();
+	}
+
+
+	function showSearchResults() {
+		searchResults.style.display = 'block';
+	}
+
+	function hideSearchResults() {
+		searchResults.style.display = 'none';
+	}
+
+</script>
 
 <style>
 	.topbar {
@@ -41,7 +91,7 @@
 
 	.ellipse_1 {
 		position: inherit;
-		float:right;
+		float: right;
 		right: 0;
 		top: 0;
 		width: 40px;
@@ -104,45 +154,87 @@
 		top: 6px;
 	}
 
-	.search {
-		width: 91px;
-		height: 24px;
-		position: inherit;
-		left: 34px;
-		top: 0px;
-		color: var(--default-color);
-		font-family: Poppins;
-		text-align: left;
-		font-size: 16px;
-		letter-spacing: 0;
-	}
-
-	.searchtext {
-		width: 91px;
-		height: 24px;
-		position: inherit;
-		left: 34px;
-		top: 3px;
-		color: var(--default-color);
-		font-family: Poppins;
-		text-align: left;
-		font-size: 16px;
-		letter-spacing: 0;
-	}
-
-	.searchicon {
-		width: 17.9999942779541px;
-		height: 17.9999942779541px;
-		position: inherit;
-		left: 0px;
-		top: 4px;
-	}
-
 	.questions {
 		width: 20px;
 		height: 20px;
 		position: inherit;
 		left: 1037px;
 		top: 6px;
+	}
+
+	/* Search container */
+	.search-container {
+		position: relative;
+		width: 950px;
+	}
+
+	form #search-form{
+		background-color: var(--secondary-color);
+		border: none;
+	}
+
+	/* Search input */
+	#search-input {
+		width: 100%;
+		padding: 12px 20px;
+		font-size: 16px;
+		border: none;
+		border-radius: 4px;
+		color: var(--text-color);
+		background-color: var(--secondary-color);
+	}
+
+	/* Search results */
+	#search-results {
+		position: absolute;
+		display: none;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		max-height: 200px;
+		overflow-y: auto;
+		background-color: var(--third-color);
+		border-top: none;
+		z-index: 1;
+		padding: 10px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	}
+
+	#search-results::-webkit-scrollbar-thumb {
+		background-color: var(--secondary-color);
+		border-radius: 10px;
+	}
+
+	#search-results::-webkit-scrollbar {
+		width: 0.3em;
+		background-color: var(--primary-color);
+	}
+
+	#search-results p {
+		font-size: 10px;
+		color: var(--default-color);
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+
+	#search-results ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	#search-results li {
+		margin-bottom: 5px;
+	}
+
+	#search-results li a {
+		display: block;
+		font-size: 14px;
+		color: var(--text-color);
+		text-decoration: none;
+	}
+
+	#search-results li a:hover {
+		text-decoration: underline;
 	}
 </style>
