@@ -1,6 +1,38 @@
 # Project Management System
 The Project Management System is a web-based platform designed to help teams manage and track their projects. The system provides a centralized location for teams to collaborate, share project updates, and assign tasks.
 
+## User Roles and Permissions
+
+This application has three types of users: Admins, Project Owners, and Employees. Each user role has different permissions and capabilities within the system.
+
+### Admins
+
+Admins have full access and control over all aspects of the system. This includes creating and managing projects, employees, tasks, and user accounts. Some of the specific actions that admins can perform include:
+
+- Create, edit, and delete projects
+- Create, edit, and delete employees
+- Create, edit, and delete tasks
+- Assign employees to projects and tasks
+- Update the status of projects and tasks
+- Create and manage user accounts
+- Change system settings and configurations
+
+### Project Owners
+
+Project Owners are users who have been assigned as the owner of a particular project. They have some limited control over the project and its associated tasks, but do not have full access to the system like admins do. Some of the specific actions that Project Owners can perform include:
+
+- Add employees to a project
+- Create new tasks and assign them to employees
+- View the status of tasks and projects
+- Update the status of tasks assigned to them
+
+### Employees
+
+Employees are users who have been added to the system as members of a project team. They have very limited access and control over the system, and can only perform a few specific actions. Some of the specific actions that Employees can perform include:
+
+- Update their own personal information (e.g. name, job title, contact information)
+- Update the status of tasks assigned to them
+
 ## Features
 The Project Management System includes the following features:
 
