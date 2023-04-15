@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Employee;
+@using PMS.Service.ViewModels.Project;
 
 @inject IViewLocalizer Localizer
 
@@ -11,13 +13,17 @@
 	<div class="container">
 		<div class="employees">
 			<h1>@Localizer["HeaderEmployees"]</h1>
+			<a class="material-symbols-outlined seeall pointer" asp-area="" asp-controller="Employee"
+				asp-action="GetAll" title="see all">
+				format_align_justify
+			</a>
 			<div class="list">
 				<ul>
 					@{
-						for (int i = 0; i < 40; i++)
+						foreach(EmployeeViewModel employee in ViewBag.Employees)
 						{
-							<a asp-area="" asp-controller="Employee" asp-action="Index">
-								@Html.Partial("_EmployeePartial")
+							<a href="@Url.Action("Index", "Employee", new { id = employee.Id }, null)">
+								@await Html.PartialAsync("_EmployeePartial", employee)
 							</a>
 						}
 					}
@@ -27,13 +33,17 @@
 
 		<div class="projects">
 			<h1>@Localizer["HeaderProjects"]</h1>
+			<a class="material-symbols-outlined seeall pointer" asp-area="" asp-controller="Project"
+				asp-action="GetAll" title="see all">
+				format_align_justify
+			</a>
 			<div class="list">
 				<ul>
 					@{
-						for (int i = 0; i < 100; i++)
+						foreach(ProjectViewModel project in ViewBag.Projects)
 						{
-							<a asp-area="" asp-controller="Project" asp-action="Index">
-								@Html.Partial("_ProjectPartial")
+							<a href="@Url.Action("Index", "Project", new { id = project.Id }, null)">
+								@await Html.PartialAsync("_ProjectPartial", project)
 							</a>
 						}
 					}
@@ -49,6 +59,13 @@
 		margin: 0;
 		font-size: 24px;
 		font-weight: normal;
+		width: min-content;
+	}
+
+	.seeall {
+		float: right;
+		margin-top: -26px;
+		color: var(--default-color);
 	}
 
 	.list {
@@ -75,9 +92,6 @@
 		margin: 140px auto;
 		padding: 20px;
 		background-color: var(--secondary-color);
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	.employees {
@@ -89,6 +103,10 @@
 		border-radius: 5px;
 		padding: 20px;
 		box-sizing: border-box;
+	}
+
+	.employees ul {
+		padding-left: 0.5rem;
 	}
 
 	.employees h2 {

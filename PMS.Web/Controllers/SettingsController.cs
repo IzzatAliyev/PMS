@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Route("settings")]
     public class SettingsController : Controller
     {
         private readonly ILogger<SettingsController> _logger;

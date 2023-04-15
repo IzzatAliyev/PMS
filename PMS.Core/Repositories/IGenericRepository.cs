@@ -4,12 +4,6 @@ namespace PMS.Core.Repositories.Repositories
 {
     public interface IGenericRepository<T> : IDisposable
     {
-        IEnumerable<T> GetAll(
-            Expression<Func<T, bool>>? filter = null,
-            Func<IQueryable<T>, IOrderedEnumerable<T>>? orderBy = null,
-            string includeProperties = "");
-
-
         void Add(T entity);
 
         Task<T> AddAsync(T entity);
@@ -25,5 +19,10 @@ namespace PMS.Core.Repositories.Repositories
         T GetById(object id);
 
         Task<T> GetByIdAsync(object id);
+
+        IEnumerable<T> GetAll(
+            Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedEnumerable<T>>? orderBy = null,
+            string includeProperties = "");
     }
 }

@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace PMS.Infrastructure.Entities
 {
     public class Project
@@ -7,6 +9,12 @@ namespace PMS.Infrastructure.Entities
         public string Description {get;set;}
         public string Status {get;set;}
         public virtual ICollection<EmployeeProject> Employees {get;set;}
+        public virtual ICollection<PTask> Tasks {get;set;}
         public ProjectRole Role {get;set;}
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

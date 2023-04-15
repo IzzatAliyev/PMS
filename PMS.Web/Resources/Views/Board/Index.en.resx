@@ -121,16 +121,4 @@
     <value>Board</value>
     <comment/>
   </data>
-  <data name="HeaderTodo" xml:space="preserve">
-    <value>To do</value>
-    <comment/>
-  </data>
-  <data name="HeaderInProgress" xml:space="preserve">
-    <value>In Progress</value>
-    <comment/>
-  </data>
-  <data name="HeaderDone" xml:space="preserve">
-    <value>Done</value>
-    <comment/>
-  </data>
 </root>

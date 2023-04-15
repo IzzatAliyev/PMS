@@ -9,6 +9,10 @@ namespace PMS.Infrastructure.Data.EntityTypeConfiguration
         public void Configure(EntityTypeBuilder<Project> builder)
         {
             builder.HasKey(x => x.Id);
+
+            builder.HasMany(x => x.Tasks)
+            .WithOne(x => x.Project)
+            .HasForeignKey(x => x.ProjectId);
         }
     }
 }

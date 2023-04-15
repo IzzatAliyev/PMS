@@ -1,0 +1,84 @@
+<div class="popup-form" id="add-task-form">
+    <form>
+        <label for="task-name">Task Name:</label>
+        <input type="text" id="task-name" name="task-name" required>
+
+        <label for="task-description">Description:</label>
+        <textarea id="task-description" name="task-description"></textarea>
+
+        <label for="user">Assigned To:</label>
+        <select id="user" name="user" required>
+            <option value="" disabled selected>Select User</option>
+            <option value="user1">User 1</option>
+            <option value="user2">User 2</option>
+            <option value="user3">User 3</option>
+        </select>
+
+        <button type="button" id="close-button">Close</button>
+        <button type="submit">Create Task</button>
+    </form>
+</div>
+
+<style>
+    .popup-form {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--third-color);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+    }
+
+    .popup-form label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .popup-form input[type="text"],
+    .popup-form textarea,
+    .popup-form select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .popup-form select option {
+        color: var(--default-color);
+    }
+
+    .popup-form button[type="submit"] {
+        background-color: var(--button-color);
+        color: var(--primary-color);
+        border: none;
+        border-radius: 5px;
+        float: right;
+        cursor: pointer;
+    }
+
+    .popup-form button[type="submit"]:hover {
+        background-color: var(--default-color);
+        color: var(--text-color)
+    }
+
+    .popup-form button[type="button"] {
+        background-color: var(--button-color);
+        color: var(--primary-color);
+        border: none;
+        border-radius: 5px;
+        float: left;
+        cursor: pointer;
+    }
+
+    .popup-form button[type="button"]:hover {
+        background-color: var(--default-color);
+        color: var(--text-color)
+    }
+</style>

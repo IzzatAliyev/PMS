@@ -1,43 +1,74 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Employee;
+@using PMS.Service.ViewModels.Project;
+@using PMS.Service.ViewModels.Skill;
+
+@inject IViewLocalizer Localizer
+
+@model EmployeeViewModel
+
+@{
+    List<ProjectViewModel> projects =  ViewBag.Projects;
+    List<SkillViewModel> skills = ViewBag.Skills;
+}
+
+@{
     ViewData["Title"] = "Employee";
 }
 
 <div class=boardmenu>
     <div class="container">
-        <h1>Employee Information</h1>
+        <h1>@Localizer["HeaderEmployee"]</h1>
 
-        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Profile Picture" class="profile-picture">
+        <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png'" alt="Profile Picture" class="profile-picture">
 
-        <h2>Name</h2>
-        <p>Your employee name goes here</p>
+        <h2>@Localizer["HeaderName"]</h2>
+        <p>@Model.Name</p>
 
-        <h2>Position</h2>
-        <p>Your employee position goes here</p>
+        <h2>@Localizer["HeaderPosition"]</h2>
+        <p>@Model.Position</p>
 
-        <h2>Email</h2>
-        <p class="email">Your employee email goes here</p>
+        <h2>@Localizer["HeaderEmail"]</h2>
+        <p class="email">@Model.Email</p>
 
-        <h2>Description</h2>
-        <p>Your employee description goes here</p>
+        <h2>@Localizer["HeaderDesc"]</h2>
+        <p>@Model.Description</p>
 
-        <h2>Phone Number</h2>
-        <p class="phone-number">Your employee phone number goes here</p>
+        <h2>@Localizer["HeaderNumber"]</h2>
+        <p class="phone-number">@Model.PhoneNumber</p>
 
-        <h2>Projects</h2>
+        <h2>@Localizer["HeaderProjects"]</h2>
         <ul class="list">
-            @{
-                for (int i = 0; i < 5; i++)
+            @{ 
+                if (projects.Count != 0)
                 {
-                    @Html.Partial("_ProjectSmallPartial")
+                    foreach (var project in projects)
+                    {
+                        @await Html.PartialAsync("_ProjectSmallPartial", project)
+                    }
+                }
+                else
+                {
+                    <p class="nocontent">No Projects</p>
                 }
             }
         </ul>
 
-        <h2>Skills</h2>
+        <h2>@Localizer["HeaderSkills"]</h2>
         <ul class="list">
-            <li class="skill">master</li>
-            <li class="skill">frontend</li>
-            <li class="skill">backend</li>
+            @{
+                if (skills.Count != 0)
+                {
+                foreach(var skill in skills)
+                {
+                    <li class="skill">@skill.Name</li>
+                }
+                }
+                else
+                {
+                    <p class="nocontent">No Skills</p>
+                }
+            }
         </ul>
     </div>
 </div>
@@ -51,6 +82,10 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         margin-top: 50px;
+    }
+
+    .nocontent{
+        color: var(--default-color);
     }
 
     h1 {

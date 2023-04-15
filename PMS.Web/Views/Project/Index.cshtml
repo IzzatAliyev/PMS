@@ -1,26 +1,45 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Project;
+@using PMS.Service.ViewModels.Employee;
+
+@inject IViewLocalizer Localizer
+
+@model ProjectViewModel
+
+@{
+	List<EmployeeWithRoleViewModel> employees = ViewBag.Employees; 
+}
+
+@{
 	ViewData["Title"] = "Project";
 }
 
 <div class=boardmenu>
 	<div class="container">
-		<h1>Project Information</h1>
+		<h1>@Localizer["HeaderProject"]</h1>
 
-		<h2>Name</h2>
-		<p>Your project name goes here</p>
+		<h2>@Localizer["HeaderName"]</h2>
+		<p>@Model.Name</p>
 
-		<h2>Description</h2>
-		<p>Your project description goes here</p>
+		<h2>@Localizer["HeaderDesc"]</h2>
+		<p>@Model.Description</p>
 
-		<h2>Status</h2>
-		<p>The current status of the project is: <span class="status in-progress">In Progress</span></p>
+		<h2>@Localizer["HeaderStatus"]</h2>
+		<p>The current status of the project is: <span class="status in-progress">@Model.Status</span></p>
 
-		<h2>Employees</h2>
+		<h2>@Localizer["HeaderEmployees"]</h2>
 		<ul class="list">
 			@{
-				for (int i = 0; i < 5; i++)
+				if (employees.Count != 0)
 				{
-					@Html.Partial("_EmployeeSmallPartial")
+					foreach (var employee in employees)
+					{
+						@await Html.PartialAsync("_EmployeeSmallPartial", employee)
+					}
+				}
+				else
+				{
+					<p class="nocontent">No Employees</p>
 				}
 			}
 		</ul>
@@ -37,6 +56,10 @@
 		border-radius: 5px;
 		margin-top: 50px;
 	}
+
+	.nocontent{
+        color: var(--default-color);
+    }
 
 	h1 {
 		font-size: 36px;

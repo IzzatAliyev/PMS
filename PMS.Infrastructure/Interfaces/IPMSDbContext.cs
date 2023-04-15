@@ -12,6 +12,7 @@ namespace PMS.Infrastructure.Interfaces
         DbSet<Project> Projects { get; set; }
         DbSet<ProjectRole> ProjectRoles { get; set; }
         DbSet<Skill> Skills { get; set; }
+        DbSet<PTask> Tasks { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);

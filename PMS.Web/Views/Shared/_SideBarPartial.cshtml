@@ -41,13 +41,13 @@
 			</span>
 		</div><span class="settingstext">@Localizer["HeaderSettings"]</span>
 	</a>
-	<div class="logout pointer">
+	<a class="logout" asp-area="" asp-controller="Auth" asp-action="Login">
 		<div class=logouticon>
 			<span class="material-symbols-outlined">
 				logout
 			</span>
 		</div><span class="logouttext">@Localizer["HeaderLogout"]</span>
-	</div>
+	</a>
 </div>
 
 <style>

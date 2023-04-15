@@ -1,5 +1,9 @@
-﻿<a class="employee" asp-area="" asp-controller="Employee" asp-action="Index">
-    <li><span class="employee-name">John Smith</span><span class="employee-role">Project Manager</span></li>
+﻿@using PMS.Service.ViewModels.Employee
+
+@model EmployeeWithRoleViewModel
+
+<a class="employee" href="@Url.Action("Index", "Employee", new { id = Model.Id }, null)">
+    <li><span class="employee-name">@Model.Name</span><span class="employee-role">@Model.Role</span></li>
 </a>
 
 <style>

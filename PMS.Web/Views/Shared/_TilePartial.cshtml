@@ -1,14 +1,27 @@
-﻿<div class=tile>
+﻿@using PMS.Service.ViewModels.PTask
+
+@model PTaskViewModel
+
+@{
+	@* string fullName = @Model.AssignedToId;
+	string[] nameParts = fullName.Split(' '); *@
+	string initials = "Pt";
+	@* foreach (string part in nameParts)
+	{
+		initials += part[0]; 
+	}*@
+}
+
+<div class=tile>
 	<div class="rectangle_292">
-		<div class=tiletitle><span class="design_system">DESIGN SYSTEM</span>
+		<div class=tiletitle><p class="design_system">@Model.TaskType</p>
 			<div class="ellipse_2"></div>
 		</div>
-		<span class="hero_section">Hero section</span>
-		<span class="hero_content">Create a design system for a hero section in 2 different variants. Create a simple
-			presentation
-			with these components.</span>
+		<h3 class="hero_section">@Model.Name</h3>
+		<p class="hero_content">@Model.Description</p>
 		<div class=user2>
-			<div class="ellipse_3"></div><span class="vh">VH</span>
+			<div class="ellipse_3"></div>
+			<p class="vh">@initials</p>
 		</div>
 	</div>
 </div>
@@ -27,7 +40,7 @@
 		width: 312px;
 		height: 207px;
 		position: relative;
-		left: 0px;
+		left: -5px;
 		top: 0px;
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
@@ -45,7 +58,7 @@
 	.design_system {
 		color: var(--default-color);
 		width: 92px;
-		height: 18px;
+		height: 3px;
 		position: relative;
 		left: 20px;
 		top: 15px;
@@ -67,11 +80,13 @@
 
 	.hero_section {
 		color: var(--text-color);
-		width: 113px;
-		height: 27px;
-		position: inherit;
+		width: 266px;
+		height: 23px;
+		position: relative;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		left: 24px;
-		top: 32px;
+		top: 25px;
 		font-family: Poppins;
 		text-align: left;
 		font-size: 18px;
@@ -81,13 +96,15 @@
 	.hero_content {
 		color: var(--text-color);
 		position: relative;
-		float: left;
-		top: 32px;
+		height: 84px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		top: 27px;
 		font-family: Poppins;
 		font-size: 14px;
 		letter-spacing: 0;
-		margin-left: 23px;
-		margin-right: 10px;
+		margin-left: 25px;
+		margin-right: 25px;
 	}
 
 	.tilemore {
@@ -103,7 +120,7 @@
 		height: 29px;
 		position: relative;
 		left: 24px;
-		top: 120px;
+		top: 18px;
 	}
 
 	.ellipse_3 {
@@ -119,8 +136,8 @@
 	.vh {
 		color: var(--primary-color);
 		position: relative;
-		bottom: 82px;
-		left: 6px;
+		bottom: 23px;
+		left: 5px;
 		font-family: Poppins;
 		font-size: 12px;
 		letter-spacing: 0;

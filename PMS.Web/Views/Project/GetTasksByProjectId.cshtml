@@ -1,0 +1,261 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.PTask
+
+@inject IViewLocalizer Localizer
+
+@model List<PTaskViewModel>
+
+@{
+	ViewData["Title"] = "Project";
+}
+
+<div class=boardmenu>
+	<div class="motiv">
+		<span>To all our dedicated employees: Thank you for your hard work and contributions to our company's success. Let's continue to work together with passion, enthusiasm, and a commitment to excellence. Remember the impact of your work and stay motivated towards your goals. You are valued and appreciated. <span style="float: right;margin-top: 30px;margin-right: 30px; ">Sincerely, <i>Izzat Aliyev</i></span></span>
+	</div>
+	@Html.Partial("_PopUpAddTask")
+	<div class=todoselection>
+		<div class="rectangle_3">
+			<div class="title">
+				<h4 class="names">@Localizer["HeaderTodo"]</h4>
+				<div class="add pointer" id="add-task-button">
+					<span class="material-symbols-outlined">
+						add
+					</span>
+				</div>  
+				<div class=more>
+					<span class="material-symbols-outlined">
+						more_horiz
+					</span>
+				</div>
+			</div>
+			<div class="list">
+				@{
+					if (@Model.Count != 0)
+					{
+						foreach (var task in Model)
+						{
+							if (task.Status == "todo")
+							{
+								@await Html.PartialAsync("_TilePartial", task)
+							}
+						}
+					}
+					else
+					{
+						<p class="nocontent">No Tasks</p>
+					}
+				}
+			</div>
+		</div>
+	</div>
+	<div class=inprogressselection>
+		<div class="rectangle_3">
+			<div class="title">
+				<h4 class="names">@Localizer["HeaderInProgress"]</h4>
+				<div class="add pointer">
+					<span class="material-symbols-outlined">
+						add
+					</span>
+				</div>
+				<div class=more>
+					<span class="material-symbols-outlined">
+						more_horiz
+					</span>
+				</div>
+			</div>
+			<div class="list">
+				@{
+					if (@Model.Count != 0)
+					{
+						foreach (var task in Model)
+						{
+							if (task.Status == "inprogress")
+							{
+								@await Html.PartialAsync("_TilePartial", task)
+							}
+						}
+					}
+					else
+					{
+						<p class="nocontent">No Tasks</p>
+					}
+				}
+			</div>
+		</div>
+	</div>
+	<div class=doneselection>
+		<div class="rectangle_3">
+			<div class="title">
+				<h4 class="names">@Localizer["HeaderDone"]</h4>
+				<div class="add pointer">
+					<span class="material-symbols-outlined">
+						add
+					</span>
+				</div>
+				<div class=more>
+					<span class="material-symbols-outlined">
+						more_horiz
+					</span>
+				</div>
+			</div>
+			<div class="list">
+				@{
+					if (@Model.Count != 0)
+					{
+						foreach (var task in Model)
+						{
+							if (task.Status == "done")
+							{
+								@await Html.PartialAsync("_TilePartial", task)
+							}
+						}
+					}
+					else
+					{
+						<p class="nocontent">No Tasks</p>
+					}
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.inprogressselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 384px;
+		top: 157px;
+	}
+
+	.nocontent {
+		text-align: center;
+		top: 350px;
+		position: relative;
+		color: var(--default-color);
+	}
+
+	.rectangle_3 {
+		background-color: var(--third-color);
+		width: 360px;
+		height: 820px;
+		position: inherit;
+		left: 0px;
+		top: 0px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+
+	.list {
+		margin-top: 25px;
+		height: 750px;
+		overflow-y: scroll;
+		background-color: var(--secondary-color);
+		margin: 5px;
+		border-radius: 10px;
+	}
+
+	.list::-webkit-scrollbar-thumb {
+		background-color: var(--third-color);
+		border-radius: 10px;
+	}
+
+	.list::-webkit-scrollbar {
+		width: 0.1em;
+		background-color: var(--secondary-color);
+	}
+
+	.doneselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 768px;
+		top: 157px;
+	}
+
+	.todoselection {
+		width: 360px;
+		height: 840px;
+		position: inherit;
+		left: 0px;
+		top: 157px;
+	}
+
+	.title {
+		position: relative;
+		height: 60px;
+	}
+
+	.names {
+		color: var(--text-color);
+		width: 100px;
+		height: 24px;
+		position: relative;
+		left: 24px;
+		top: 24px;
+		font-family: Poppins;
+		text-align: left;
+		font-size: 16px;
+		letter-spacing: 0;
+	}
+
+	.add {
+		bottom: 10px;
+		width: 25px;
+		height: 25px;
+		position: relative;
+		left: 289px;
+	}
+
+	.more {
+		width: 25px;
+		height: 25px;
+		position: relative;
+		left: 319px;
+		bottom: 35px;
+	}
+
+	.motiv {
+		width: 0;
+		height: 15px;
+		background-color: var(--secondary-color);
+		color: var(--default-color);
+		padding: 10px;
+		font-size: 21px;
+		line-height: 35px;
+		transition: height 10s;
+		overflow: hidden;
+	}
+
+	.motiv.loaded {
+		width: 1150px;
+		height: 150px;
+	}
+</style>
+
+<script>
+	window.onload = function() {
+			document.querySelector('.motiv').classList.add('loaded');
+	}
+    var addTaskButton = document.getElementById("add-task-button");
+    var addTaskForm = document.getElementById("add-task-form");
+    var closeButton = document.getElementById("close-button");
+
+    addTaskButton.onclick = function () {
+        addTaskForm.style.display = "block";
+    }
+
+    closeButton.onclick = function() {
+  addTaskForm.style.display = "none";
+}
+
+    addTaskForm.onsubmit = function () {
+        // Handle form submission here
+        addTaskForm.style.display = "none";
+        return false;
+    }
+</script>

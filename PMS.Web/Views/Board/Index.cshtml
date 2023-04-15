@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Project
 
 @inject IViewLocalizer Localizer
+
+@model IEnumerable<ProjectViewModel>
 
 @{
 	ViewData["Title"] = Localizer["HeaderTitle"];
@@ -8,167 +11,31 @@
 
 <div class=boardmenu>
 	@Html.Partial("_TopBarPartial")
-	<div class=todoselection>
-		<div class="rectangle_3">
-			<div class="title">
-				<span class="names">@Localizer["HeaderTodo"]</span>
-				<div class=add>
-					<span class="material-symbols-outlined">
-						add
-					</span>
-				</div>
-				<div class=more>
-					<span class="material-symbols-outlined">
-						more_horiz
-					</span>
-				</div>
-			</div>
-			<div class="list">
-				@{
-					for (int i = 0; i < 10; i++)
-					{
-						@Html.Partial("_TilePartial")
-					}
-				}
-			</div>
-		</div>
-	</div>
-	<div class=inprogressselection>
-		<div class="rectangle_3">
-			<div class="title">
-				<span class="names">@Localizer["HeaderInProgress"]</span>
-				<div class=add>
-					<span class="material-symbols-outlined">
-						add
-					</span>
-				</div>
-				<div class=more>
-					<span class="material-symbols-outlined">
-						more_horiz
-					</span>
-				</div>
-			</div>
-			<div class="list">
-				@{
-					for (int i = 0; i < 4; i++)
-					{
-						@Html.Partial("_TilePartial")
-					}
-				}
-			</div>
-		</div>
-	</div>
-	<div class=doneselection>
-		<div class="rectangle_3">
-			<div class="title">
-				<span class="names">@Localizer["HeaderDone"]</span>
-				<div class=add>
-					<span class="material-symbols-outlined">
-						add
-					</span>
-				</div>
-				<div class=more>
-					<span class="material-symbols-outlined">
-						more_horiz
-					</span>
-				</div>
-			</div>
-			<div class="list">
-				@{
-					for (int i = 0; i < 2; i++)
-					{
-						@Html.Partial("_TilePartial")
-					}
-				}
-			</div>
-		</div>
+	<div class="container-list">
+		@{
+			foreach(var project in Model)
+			{
+				@await Html.PartialAsync("_ProjectTasksTilePartial", project);
+			}
+		}
 	</div>
 </div>
 
 <style>
-	.inprogressselection {
-		width: 360px;
-		height: 840px;
-		position: inherit;
-		left: 384px;
-		top: 157px;
-	}
-
-	.rectangle_3 {
-		background-color: var(--third-color);
-		width: 360px;
-		height: 820px;
-		position: inherit;
-		left: 0px;
-		top: 0px;
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
-	}
-
-	.list {
-		margin-top: 25px;
-		height: 700px;
+	.container-list {
+		padding: 20px;
+		margin-top: 140px;
+		height: 850px;
 		overflow-y: scroll;
 	}
 
-	..list::-webkit-scrollbar-thumb {
+	.container-list::-webkit-scrollbar-thumb {
 		background-color: var(--secondary-color);
 		border-radius: 10px;
 	}
 
-	.list::-webkit-scrollbar {
-		width: 0.1em;
+	.container-list::-webkit-scrollbar {
+		width: 0.3em;
 		background-color: var(--primary-color);
-	}
-
-	.doneselection {
-		width: 360px;
-		height: 840px;
-		position: inherit;
-		left: 768px;
-		top: 157px;
-	}
-
-	.todoselection {
-		width: 360px;
-		height: 840px;
-		position: inherit;
-		left: 0px;
-		top: 157px;
-	}
-
-	.title {
-		position: relative;
-		height: 60px;
-	}
-
-	.names {
-		color: var(--text-color);
-		width: 45px;
-		height: 24px;
-		position: relative;
-		left: 24px;
-		top: 24px;
-		font-family: Poppins;
-		text-align: left;
-		font-size: 16px;
-		letter-spacing: 0;
-	}
-
-	.add {
-		width: 14px;
-		height: 14px;
-		position: relative;
-		left: 289px;
-	}
-
-	.more {
-		width: 16px;
-		height: 2px;
-		position: relative;
-		left: 319px;
-		bottom: 15px;
 	}
 </style>

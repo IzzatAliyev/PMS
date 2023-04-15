@@ -1,8 +1,12 @@
-﻿<div class="employee">
+﻿@using PMS.Service.ViewModels.Employee;
+
+@model EmployeeViewModel
+
+<div class="employee">
     <li>
-        <div class="avatar">
-        </div>
-        <span class="emplname">John Smith</span>
+        <img class="avatar" src="@Model.ProfilePicture" onerror="this.src='/images/profile.png'" alt="Profile Picture">
+        </img>
+        <span class="emplname">@Model.Name</span>
     </li>
 </div>
 
@@ -32,7 +36,6 @@
 		background-color: var(--third-color);
 		background-position: center;
 		background-size: cover;
-		background-image: url('https://randomuser.me/api/portraits/men/11.jpg')
 	}
 
 	.emplname{

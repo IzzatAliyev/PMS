@@ -1,7 +1,11 @@
-﻿<div class=project>
+﻿@using PMS.Service.ViewModels.Project;
+
+@model ProjectViewModel
+
+<div class=project>
     <li>
-        <span class="projname">Project A</span>
-        <span class="status in-progress">In Progress</span>
+        <span class="projname">@Model.Name</span>
+        <span class="status in-progress">@Model.Status</span>
     </li>
 </div>
 

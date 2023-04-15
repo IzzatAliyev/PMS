@@ -1,7 +1,5 @@
 var colorPreference = getCookie("colorPreference");
 
-console.log(colorPreference);
-
 if (colorPreference == "light") {
   document.documentElement.style.setProperty("--primary-color", "white");
   document.documentElement.style.setProperty("--secondary-color", "rgba(238.00000101327896, 242.00000077486038, 245.00000059604645, 1)");

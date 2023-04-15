@@ -1,0 +1,74 @@
+﻿@using PMS.Service.ViewModels.Employee;
+
+@model EmployeeViewModel
+
+<a href="@Url.Action("Index", "Employee", new { id = @Model.Id }, null)">
+    <div class="tile">
+        <h2>@Model.Name</h2>
+        <p class="description">@Model.Description</p>
+        <div class="status success">@Model.Position</div>
+        <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png'" alt="Profile Picture" class="picture">
+    </div>
+</a>
+
+<style>
+    img.picture {
+        float: right;
+        position: relative;
+        bottom: 81px;
+        right: -20px;
+        height: inherit;
+        border-top-right-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
+
+    .tile {
+        background-color: var(--third-color);
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 20px;
+        height: 143px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .tile:hover {
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .tile h2 {
+        margin-top: 0;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    p.description {
+        margin-bottom: 0;
+        font-size: 16px;
+        color: var(--default-color);
+    }
+
+    .tile .status {
+        margin-top: 10px;
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .tile .status.success {
+        background-color: #4caf50;
+    }
+
+    .tile .status.warning {
+        background-color: #ff9800;
+    }
+
+    .tile .status.error {
+        background-color: #f44336;
+    }
+</style>

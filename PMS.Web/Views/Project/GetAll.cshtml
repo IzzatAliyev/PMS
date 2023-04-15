@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using PMS.Service.ViewModels.Project
+
+@inject IViewLocalizer Localizer
+
+@model IEnumerable<ProjectViewModel>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<div class=boardmenu>
+    @Html.Partial("_TopBarPartial")
+	<div class="container-list">
+		@{
+			foreach(ProjectViewModel project in @Model)
+			{
+				@await Html.PartialAsync("_ProjectTilePartial", project);
+			}
+		}
+	</div>
+</div>
+
+<style>
+    .container-list {
+		padding: 20px;
+		margin-top: 140px;
+		height: 850px;
+		overflow-y: scroll;
+	}
+
+	.container-list::-webkit-scrollbar-thumb {
+		background-color: var(--secondary-color);
+		border-radius: 10px;
+	}
+
+	.container-list::-webkit-scrollbar {
+		width: 0.3em;
+		background-color: var(--primary-color);
+	}
+</style>
