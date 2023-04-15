@@ -18,9 +18,9 @@ namespace PMS.Service.Services.Impl
             var newSkill = new Skill()
             {
                 Id = skill.Id,
-                Name = skill.Name,
-                Description = skill.Description,
-                ColorCode = skill.ColorCode
+                Name = skill.Name != null ? skill.Name : string.Empty,
+                Description = skill.Description != null ? skill.Description : string.Empty,
+                ColorCode = skill.ColorCode != null ? skill.ColorCode : string.Empty
             };
             await this.unitOfWork.GenericRepository<Skill>().AddAsync(newSkill);
             await this.unitOfWork.SaveAsync();
@@ -31,9 +31,9 @@ namespace PMS.Service.Services.Impl
             var skillOld = await this.unitOfWork.GenericRepository<Skill>().GetByIdAsync(id);
             if (skillOld != null)
             {
-                skillOld.Name = skill.Name;
-                skillOld.Description = skill.Description;
-                skillOld.ColorCode = skill.ColorCode;
+                skillOld.Name = skill.Name != null ? skill.Name : skillOld.Name;
+                skillOld.Description = skill.Description != null ? skill.Description : skillOld.Description;
+                skillOld.ColorCode = skill.ColorCode != null ? skill.ColorCode : skillOld.ColorCode;
                 await this.unitOfWork.GenericRepository<Skill>().UpdateAsync(skillOld);
                 await this.unitOfWork.SaveAsync();
             }
