@@ -22,9 +22,9 @@ namespace PMS.Service.Services.Impl
             var newProject = new Project()
             {
                 Id = project.Id,
-                Name = project.Name,
-                Description = project.Description,
-                Status = project.Status
+                Name = project.Name != null ? project.Name : string.Empty,
+                Description = project.Description != null ? project.Description : string.Empty,
+                Status = project.Status != null ? project.Status : string.Empty
             };
             await this.unitOfWork.GenericRepository<Project>().AddAsync(newProject);
             await this.unitOfWork.SaveAsync();
@@ -35,9 +35,9 @@ namespace PMS.Service.Services.Impl
             var projectOld = await this.unitOfWork.GenericRepository<Project>().GetByIdAsync(id);
             if (projectOld != null)
             {
-                projectOld.Name = project.Name;
-                projectOld.Description = project.Description;
-                projectOld.Status = project.Status;
+                projectOld.Name = project.Name != null ? project.Name : projectOld.Name;
+                projectOld.Description = project.Description != null ? project.Description : projectOld.Description;
+                projectOld.Status = project.Status != null ? project.Status : projectOld.Status;
                 await this.unitOfWork.GenericRepository<Project>().UpdateAsync(projectOld);
                 await this.unitOfWork.SaveAsync();
             }

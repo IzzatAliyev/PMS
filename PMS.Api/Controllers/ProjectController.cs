@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.Services.Interfaces;
+using PMS.Service.ViewModels.Project;
 
 namespace PMS.Api.Controllers
 {
@@ -16,22 +17,67 @@ namespace PMS.Api.Controllers
             this.logger = logger;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateProject([FromBody] ProjectViewModel project)
+        {
+            await this.projectService.CreateProject(project);
+            return this.Created(nameof(CreateProject), "Successfully created!");
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> UpdateProjectById([FromRoute] int id, [FromBody] ProjectViewModel project)
+        {
+            try
+            {
+                await this.projectService.UpdateProjectById(id, project);
+                return this.Created(nameof(UpdateProjectById), "Successfully updated!");
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteProjectById([FromRoute] int id)
+        {
+            try
+            {
+                await this.projectService.DeleteProjectById(id);
+                return this.Ok("Successfully deleted!");
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProjectById([FromRoute] int id)
         {
-            if (id == 0)
+            try
             {
-                return this.BadRequest("NotFound");
+                var project = await this.projectService.GetProjectById(id);
+                return this.Ok(project);
             }
-            var project = await this.projectService.GetProjectById(id);
-            return this.Ok(project);
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var projects = this.projectService.GetAllProjects();
-            return this.Ok(projects);
+            try
+            {
+                var projects = this.projectService.GetAllProjects();
+                return this.Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace PMS.Api.Controllers
             try
             {
                 await this.employeeService.DeleteEmployeeById(id);
-                return this.Created(nameof(UpdateEmployeeById), "Successfully deleted!");
+                return this.Ok("Successfully deleted!");
             }
             catch (Exception ex)
             {
