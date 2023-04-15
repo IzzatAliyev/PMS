@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Route("skills")]
     public class SkillsController : Controller
     {
         private readonly ILogger<SkillsController> _logger;

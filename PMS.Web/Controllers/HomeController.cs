@@ -3,44 +3,46 @@ using Microsoft.AspNetCore.Mvc;
 using PMS.Web.Models;
 using System.Web;
 
-namespace PMS.Web.Controllers;
-
-public class HomeController : Controller
+namespace PMS.Web.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [Route("home")]
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ILogger<HomeController> _logger;
 
-    public IActionResult Index()
-    {
-        bool loggedin = true;
-        if (!loggedin)
+        public HomeController(ILogger<HomeController> logger)
         {
-           return RedirectToAction("Login", "Auth");
-        }
-        else
-        {
-            return RedirectToAction("Index", "Dashboard");
+            _logger = logger;
         }
 
-        // return View();
-    }
+        public IActionResult Index()
+        {
+            bool loggedin = true;
+            if (!loggedin)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
 
-    public new IActionResult NotFound()
-    {
-        return View();
-    }
-    public IActionResult SomethingWentWrong()
-    {
-        return View();
-    }
+            // return View();
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public new IActionResult NotFound()
+        {
+            return View();
+        }
+        public IActionResult SomethingWentWrong()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PMS.Web.Controllers
 {
     [AllowAnonymous]
+    [Route("auth")]
     public class AuthController : Controller
     {
 

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Route("info")]
     public class InfoController : Controller
     {
         private readonly ILogger<InfoController> _logger;

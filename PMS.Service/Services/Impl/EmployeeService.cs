@@ -1,17 +1,21 @@
 using PMS.Core.Repositories;
+using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
+using PMS.Service.ViewModels.EmployeeProject;
 
 namespace PMS.Service.Services.Impl
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly PMSDbContext context;
 
-        public EmployeeService(IUnitOfWork unitOfWork)
+        public EmployeeService(IUnitOfWork unitOfWork, PMSDbContext context)
         {
             this.unitOfWork = unitOfWork;
+            this.context = context;
         }
         public async Task CreateEmployee(EmployeeViewModel employee)
         {
@@ -112,6 +116,21 @@ namespace PMS.Service.Services.Impl
             {
                 throw new Exception("employees doesn't exist");
             }
+        }
+
+        public IEnumerable<EmployeeProjectSearchViewModel> GetEmployeesBySearchInput(string input)
+        {
+            var matchingEmployees = this.context.Employees
+                .Where(e => e.Name.ToLower().Contains(input))
+                .Select(e => new EmployeeProjectSearchViewModel
+                {
+                    Name = e.Name,
+                    Url = $"http://localhost:5047/employees/{e.Id}",
+                    Type = "employee"
+                })
+                .ToList();
+
+            return matchingEmployees;
         }
     }
 }

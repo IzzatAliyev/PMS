@@ -1,3 +1,4 @@
+using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;
 
 namespace PMS.Service.Services.Interfaces
@@ -9,5 +10,6 @@ namespace PMS.Service.Services.Interfaces
         Task DeleteProjectById(int id);
         Task<ProjectViewModel> GetProjectById(int id);
         IEnumerable<ProjectViewModel> GetAllProjects();
+        IEnumerable<EmployeeProjectSearchViewModel> GetProjectsBySearchInput(string input);
     }
 }

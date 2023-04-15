@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Route("analytics")]
     public class AnalyticsController : Controller
     {
         private readonly ILogger<AnalyticsController> _logger;

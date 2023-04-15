@@ -17,6 +17,7 @@ namespace PMS.Api
 
             builder.Services.AddControllers();
             builder.Services.AddStorage(builder.Configuration);
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

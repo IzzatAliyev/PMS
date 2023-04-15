@@ -1,6 +1,8 @@
 using PMS.Core.Repositories;
+using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
+using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;
 
 namespace PMS.Service.Services.Impl
@@ -8,10 +10,12 @@ namespace PMS.Service.Services.Impl
     public class ProjectService : IProjectService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly PMSDbContext context;
 
-        public ProjectService(IUnitOfWork unitOfWork)
+        public ProjectService(IUnitOfWork unitOfWork, PMSDbContext context)
         {
             this.unitOfWork = unitOfWork;
+            this.context = context;
         }
         public async Task CreateProject(ProjectViewModel project)
         {
@@ -100,6 +104,20 @@ namespace PMS.Service.Services.Impl
             {
                 throw new Exception("projects doesn't exist");
             }
+        }
+
+        public IEnumerable<EmployeeProjectSearchViewModel> GetProjectsBySearchInput(string input)
+        {
+            var matchingProjects = this.context.Projects
+                .Where(p => p.Name.ToLower().Contains(input) || p.Description.ToLower().Contains(input))
+                .Select(p => new EmployeeProjectSearchViewModel
+                {
+                    Name = p.Name,
+                    Url = $"http://localhost:5047/projects/{p.Id}",
+                    Type = "project"
+                })
+                .ToList();
+            return matchingProjects;
         }
     }
 }
