@@ -13,7 +13,7 @@ namespace PMS.Infrastructure.Entities
         public string ProfilePicture {get;set;}
         public virtual ICollection<EmployeeProject> Projects {get;set;}
         public virtual ICollection<EmployeeSkill> Skills {get;set;}
-        public virtual ICollection<ProjectTask> Tasks {get;set;}
+        public virtual ICollection<PTask> Tasks {get;set;}
 
         public override string ToString()
         {

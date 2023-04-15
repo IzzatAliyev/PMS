@@ -1,9 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using PMS.Core.Repositories;
 using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;
+using PMS.Service.ViewModels.PTask;
 
 namespace PMS.Service.Services.Impl
 {
@@ -118,6 +120,28 @@ namespace PMS.Service.Services.Impl
                 })
                 .ToList();
             return matchingProjects;
+        }
+
+        public IEnumerable<PTaskViewModel> GetTasksByProjectId(int projectId)
+        {
+            var result = this.context.Projects
+                .Include(p => p.Tasks)
+                .Where(p => p.Id == projectId)
+                .SelectMany(p => p.Tasks.Select(t =>new PTaskViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Description = t.Description,
+                    TaskType = t.TaskType,
+                    AssignedTo = t.AssignedTo,
+                    AssignedFrom = t.AssignedFrom,
+                    Status = t.Status,
+                    EmployeeId = t.EmployeeId,
+                    ProjectId = t.ProjectId
+                }))
+                .ToList();
+
+                return result;
         }
     }
 }

@@ -1,5 +1,6 @@
 using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;
+using PMS.Service.ViewModels.PTask;
 
 namespace PMS.Service.Services.Interfaces
 {
@@ -11,5 +12,6 @@ namespace PMS.Service.Services.Interfaces
         Task<ProjectViewModel> GetProjectById(int id);
         IEnumerable<ProjectViewModel> GetAllProjects();
         IEnumerable<EmployeeProjectSearchViewModel> GetProjectsBySearchInput(string input);
+        IEnumerable<PTaskViewModel> GetTasksByProjectId(int projectId);
     }
 }

@@ -1,5 +1,4 @@
 using Bogus;
-using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
@@ -7,7 +6,7 @@ using PMS.Service.ViewModels.EmployeeRole;
 using PMS.Service.ViewModels.EmployeeSkill;
 using PMS.Service.ViewModels.Project;
 using PMS.Service.ViewModels.ProjectRole;
-using PMS.Service.ViewModels.ProjectTask;
+using PMS.Service.ViewModels.PTask;
 using PMS.Service.ViewModels.Skill;
 
 namespace PMS.Web
@@ -23,7 +22,7 @@ namespace PMS.Web
             var employeeFaker = new EmployeeFaker();
             var projectFaker = new ProjectFaker();
             var skillFaker = new SkillFaker();
-            var taskFaker = new ProjectTaskFaker();
+            var taskFaker = new TaskFaker();
             var employeeProjectaker = new EmployeeProjectFaker();
             var employeeRoleFaker = new EmployeeRoleFaker();
             var employeeSkillFaker = new EmployeeSkillFaker();
@@ -34,7 +33,7 @@ namespace PMS.Web
                 var employeeService = scope.ServiceProvider.GetService<IEmployeeService>();
                 var projectService = scope.ServiceProvider.GetService<IProjectService>();
                 var skillService = scope.ServiceProvider.GetService<ISkillService>();
-                var taskService = scope.ServiceProvider.GetService<IProjectTaskService>();
+                var taskService = scope.ServiceProvider.GetService<ITaskService>();
                 var employeeProjectService = scope.ServiceProvider.GetService<IEmployeeProjectService>();
                 var employeeRoleService = scope.ServiceProvider.GetService<IEmployeeRoleService>();
                 var employeeSkillService = scope.ServiceProvider.GetService<IEmployeeSkillService>();
@@ -142,9 +141,9 @@ namespace PMS.Web
         }
     }
 
-    public class ProjectTaskFaker : Faker<ProjectTaskViewModel>
+    public class TaskFaker : Faker<PTaskViewModel>
     {
-        public ProjectTaskFaker()
+        public TaskFaker()
         {
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));

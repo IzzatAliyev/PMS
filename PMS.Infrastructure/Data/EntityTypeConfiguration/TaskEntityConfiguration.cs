@@ -4,9 +4,9 @@ using PMS.Infrastructure.Entities;
 
 namespace PMS.Infrastructure.Data.EntityTypeConfiguration
 {
-    internal class TaskEntityConfiguration : IEntityTypeConfiguration<ProjectTask>
+    internal class TaskEntityConfiguration : IEntityTypeConfiguration<PTask>
     {
-        public void Configure(EntityTypeBuilder<ProjectTask> builder)
+        public void Configure(EntityTypeBuilder<PTask> builder)
         {
             builder.HasKey(x => x.Id);
 

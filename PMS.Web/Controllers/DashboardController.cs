@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;

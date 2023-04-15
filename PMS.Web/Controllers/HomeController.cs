@@ -5,7 +5,6 @@ using System.Web;
 
 namespace PMS.Web.Controllers
 {
-    [Route("home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

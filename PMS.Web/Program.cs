@@ -24,7 +24,7 @@ namespace PMS.Web
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<ISkillService, SkillService>();
-            builder.Services.AddScoped<IProjectTaskService, ProjectTaskService>();
+            builder.Services.AddScoped<ITaskService, TaskService>();
             builder.Services.AddScoped<IEmployeeProjectService, EmployeeProjectService>();
             builder.Services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
             builder.Services.AddScoped<IEmployeeSkillService, EmployeeSkillService>();

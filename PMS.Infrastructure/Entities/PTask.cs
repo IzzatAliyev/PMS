@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
 
-namespace PMS.Service.ViewModels.ProjectTask
+namespace PMS.Infrastructure.Entities
 {
-    public class ProjectTaskViewModel
+    public class PTask
     {
         public int Id {get;set;}
         public string Name {get;set;}
@@ -13,6 +13,8 @@ namespace PMS.Service.ViewModels.ProjectTask
         public string Status {get;set;}
         public int EmployeeId {get;set;}
         public int ProjectId {get;set;}
+        public Employee Employee {get;set;}
+        public Project Project {get;set;}
 
         public override string ToString()
         {

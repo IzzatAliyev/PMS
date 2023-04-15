@@ -7,7 +7,7 @@
         <h2>@Model.Name</h2>
         <p class="description">@Model.Description</p>
         <div class="status success">@Model.Position</div>
-        <img src="@Model.ProfilePicture" alt="Profile Picture" class="picture">
+        <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png'" alt="Profile Picture" class="picture">
     </div>
 </a>
 

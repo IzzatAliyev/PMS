@@ -79,5 +79,12 @@ namespace PMS.Api.Controllers
                 return this.NotFound(ex.Message);
             }
         }
+
+        [HttpGet("{projectId:int}/tasks")]
+        public IActionResult GetTasksByProjectId([FromRoute] int projectId)
+        {
+            var tasks = this.projectService.GetTasksByProjectId(projectId);
+            return this.Ok(tasks);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace PMS.Infrastructure.Entities
         public string Description {get;set;}
         public string Status {get;set;}
         public virtual ICollection<EmployeeProject> Employees {get;set;}
-        public virtual ICollection<ProjectTask> Tasks {get;set;}
+        public virtual ICollection<PTask> Tasks {get;set;}
         public ProjectRole Role {get;set;}
 
         public override string ToString()

@@ -15,7 +15,7 @@ namespace PMS.Infrastructure.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectRole> ProjectRoles { get; set; }
         public DbSet<Skill> Skills { get; set; }
-        public DbSet<ProjectTask> Tasks { get; set; }
+        public DbSet<PTask> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.Project;
-using PMS.Service.ViewModels.ProjectTask;
+using PMS.Service.ViewModels.PTask;
 
 namespace PMS.Web.Controllers
 {
@@ -43,8 +43,8 @@ namespace PMS.Web.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:5108/api/");
-                var response = await client.GetAsync($"project-task/project/{id}/tasks");
-                var projectTasks = await response.Content.ReadFromJsonAsync<IEnumerable<ProjectTaskViewModel>>();
+                var response = await client.GetAsync($"projects/{id}/tasks");
+                var projectTasks = await response.Content.ReadFromJsonAsync<IEnumerable<PTaskViewModel>>();
                 if (projectTasks != null)
                 {
                     return View(projectTasks);
