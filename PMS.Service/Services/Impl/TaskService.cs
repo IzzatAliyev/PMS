@@ -18,14 +18,13 @@ namespace PMS.Service.Services.Impl
             var newTask = new PTask()
             {
                 Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                TaskType = task.TaskType,
-                AssignedTo = task.AssignedTo,
-                AssignedFrom = task.AssignedFrom,
-                EmployeeId = task.EmployeeId,
+                Name = task.Name != null ? task.Name : string.Empty,
+                Description = task.Description != null ? task.Description : string.Empty,
+                TaskType = task.TaskType != null ? task.TaskType : string.Empty,
+                AssignedToId = task.AssignedToId,
+                AssignedFromId = task.AssignedFromId,
                 ProjectId = task.ProjectId,
-                Status = task.Status
+                Status = task.Status != null ? task.Status : string.Empty
             };
             await this.unitOfWork.GenericRepository<PTask>().AddAsync(newTask);
             await this.unitOfWork.SaveAsync();
@@ -36,14 +35,13 @@ namespace PMS.Service.Services.Impl
             var taskOld = await this.unitOfWork.GenericRepository<PTask>().GetByIdAsync(id);
             if (taskOld != null)
             {
-                taskOld.Name = task.Name;
-                taskOld.Description = task.Description;
-                taskOld.TaskType = task.TaskType;
-                taskOld.AssignedTo = task.AssignedTo;
-                taskOld.AssignedFrom = task.AssignedFrom;
-                taskOld.EmployeeId = task.EmployeeId;
-                taskOld.ProjectId = task.ProjectId;
-                taskOld.Status = task.Status;
+                taskOld.Name = task.Name != null ? task.Name : taskOld.Name;
+                taskOld.Description = task.Description != null ? task.Description : taskOld.Description;
+                taskOld.TaskType = task.TaskType != null ? task.TaskType : taskOld.TaskType;
+                taskOld.AssignedToId = task.AssignedToId != 0 ? task.AssignedToId : taskOld.AssignedToId;
+                taskOld.AssignedFromId = task.AssignedFromId != 0 ? task.AssignedFromId : taskOld.AssignedFromId;
+                taskOld.ProjectId = task.ProjectId != 0 ? task.ProjectId : taskOld.ProjectId;
+                taskOld.Status = task.Status != null ? task.Status : taskOld.Status;
                 await this.unitOfWork.GenericRepository<PTask>().UpdateAsync(taskOld);
                 await this.unitOfWork.SaveAsync();
             }
@@ -78,9 +76,8 @@ namespace PMS.Service.Services.Impl
                     Name = taskDb.Name,
                     Description = taskDb.Description,
                     TaskType = taskDb.TaskType,
-                    AssignedTo = taskDb.AssignedTo,
-                    AssignedFrom = taskDb.AssignedFrom,
-                    EmployeeId = taskDb.EmployeeId,
+                    AssignedToId = taskDb.AssignedToId,
+                    AssignedFromId = taskDb.AssignedFromId,
                     ProjectId = taskDb.ProjectId,
                     Status = taskDb.Status
                 };
@@ -106,9 +103,8 @@ namespace PMS.Service.Services.Impl
                         Name = task.Name,
                         Description = task.Description,
                         TaskType = task.TaskType,
-                        AssignedTo = task.AssignedTo,
-                        AssignedFrom = task.AssignedFrom,
-                        EmployeeId = task.EmployeeId,
+                        AssignedToId = task.AssignedToId,
+                        AssignedFromId = task.AssignedFromId,
                         ProjectId = task.ProjectId,
                         Status = task.Status
                     };

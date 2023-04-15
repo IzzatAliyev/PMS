@@ -133,10 +133,9 @@ namespace PMS.Service.Services.Impl
                     Name = t.Name,
                     Description = t.Description,
                     TaskType = t.TaskType,
-                    AssignedTo = t.AssignedTo,
-                    AssignedFrom = t.AssignedFrom,
+                    AssignedToId = t.AssignedToId,
+                    AssignedFromId = t.AssignedFromId,
                     Status = t.Status,
-                    EmployeeId = t.EmployeeId,
                     ProjectId = t.ProjectId
                 }))
                 .ToList();

@@ -69,7 +69,9 @@ namespace PMS.Web
 
                     var task = taskFaker.Generate();
                     {
-                        task.EmployeeId = employeeIds.Find(x => x % 2 == 0);
+                        task.Status = "todo";
+                        task.AssignedToId = employeeIds.Find(x => x % 2 == 0);
+                        task.AssignedFromId = employeeIds.Find(x => x % 2 == 1);
                         task.ProjectId = projectIds.Find(x => x % 2 == 0);
                     }
                     await taskService.CreateTask(task);
@@ -149,8 +151,6 @@ namespace PMS.Web
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
             RuleFor(e => e.TaskType, f => f.Lorem.Sentence(1));
-            RuleFor(e => e.AssignedTo, f => f.Person.FullName);
-            RuleFor(e => e.AssignedFrom, f => f.Person.FullName);
         }
     }
 

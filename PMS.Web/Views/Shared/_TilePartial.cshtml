@@ -3,13 +3,13 @@
 @model PTaskViewModel
 
 @{
-	string fullName = @Model.AssignedTo;
-	string[] nameParts = fullName.Split(' ');
-	string initials = "";
-	foreach (string part in nameParts)
+	@* string fullName = @Model.AssignedToId;
+	string[] nameParts = fullName.Split(' '); *@
+	string initials = "Pt";
+	@* foreach (string part in nameParts)
 	{
-		initials += part[0];
-	}
+		initials += part[0]; 
+	}*@
 }
 
 <div class=tile>

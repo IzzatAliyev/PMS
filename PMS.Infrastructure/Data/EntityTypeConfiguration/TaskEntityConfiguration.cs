@@ -10,9 +10,14 @@ namespace PMS.Infrastructure.Data.EntityTypeConfiguration
         {
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.Employee)
-            .WithMany(x => x.Tasks)
-            .HasForeignKey(x => x.EmployeeId)
+            builder.HasOne(x => x.AssignedTo)
+            .WithMany(x => x.TasksFrom)
+            .HasForeignKey(x => x.AssignedToId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.AssignedFrom)
+            .WithMany(x => x.TasksTo)
+            .HasForeignKey(x => x.AssignedFromId)
             .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.Project)

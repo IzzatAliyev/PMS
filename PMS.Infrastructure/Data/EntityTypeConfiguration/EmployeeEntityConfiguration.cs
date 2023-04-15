@@ -10,9 +10,13 @@ namespace PMS.Infrastructure.Data.EntityTypeConfiguration
         {
             builder.HasKey(x => x.Id);
 
-            builder.HasMany(x => x.Tasks)
-            .WithOne(x => x.Employee)
-            .HasForeignKey(x => x.EmployeeId);
+            builder.HasMany(x => x.TasksTo)
+            .WithOne(x => x.AssignedFrom)
+            .HasForeignKey(x => x.AssignedFromId);
+
+            builder.HasMany(x => x.TasksFrom)
+            .WithOne(x => x.AssignedTo)
+            .HasForeignKey(x => x.AssignedToId);
         }
     }
 }

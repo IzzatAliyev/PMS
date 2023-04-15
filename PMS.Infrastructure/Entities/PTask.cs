@@ -8,12 +8,12 @@ namespace PMS.Infrastructure.Entities
         public string Name {get;set;}
         public string Description {get;set;}
         public string TaskType {get;set;}
-        public string AssignedTo {get;set;}
-        public string AssignedFrom {get;set;}
+        public int AssignedToId {get;set;}
+        public int AssignedFromId {get;set;}
         public string Status {get;set;}
-        public int EmployeeId {get;set;}
         public int ProjectId {get;set;}
-        public Employee Employee {get;set;}
+        public Employee AssignedTo {get;set;}
+        public Employee AssignedFrom {get;set;}
         public Project Project {get;set;}
 
         public override string ToString()

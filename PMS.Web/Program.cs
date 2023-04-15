@@ -46,7 +46,7 @@ namespace PMS.Web
             var app = builder.Build();
             await app.DatabaseEnsureCreated();
 
-            // await DummyDataGenerator.GenerateAsync(app.Services);
+            // await DummyDataGenerator.GenerateAsync(app.Services); 
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
