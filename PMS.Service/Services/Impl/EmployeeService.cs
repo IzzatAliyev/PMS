@@ -22,12 +22,12 @@ namespace PMS.Service.Services.Impl
             var newEmployee = new Employee()
             {
                 Id = employee.Id,
-                Name = employee.Name,
-                Position = employee.Position,
-                Email = employee.Email,
-                Description = employee.Description,
-                PhoneNumber = employee.PhoneNumber,
-                ProfilePicture = employee.ProfilePicture
+                Name = employee.Name != null ? employee.Name : string.Empty,
+                Position = employee.Position != null ? employee.Position : string.Empty,
+                Email = employee.Email != null ? employee.Email : string.Empty,
+                Description = employee.Description != null ? employee.Description : string.Empty,
+                PhoneNumber = employee.PhoneNumber != null ? employee.PhoneNumber : string.Empty,
+                ProfilePicture = employee.ProfilePicture != null ? employee.ProfilePicture : string.Empty
             };
             await this.unitOfWork.GenericRepository<Employee>().AddAsync(newEmployee);
             await this.unitOfWork.SaveAsync();
@@ -38,12 +38,12 @@ namespace PMS.Service.Services.Impl
             var employeeOld = await this.unitOfWork.GenericRepository<Employee>().GetByIdAsync(id);
             if (employeeOld != null)
             {
-                employeeOld.Name = employee.Name;
-                employeeOld.Position = employee.Position;
-                employeeOld.Email = employee.Email;
-                employeeOld.Description = employee.Description;
-                employeeOld.PhoneNumber = employee.PhoneNumber;
-                employeeOld.ProfilePicture = employee.ProfilePicture;
+                employeeOld.Name = employee.Name != null ? employee.Name : employeeOld.Name;
+                employeeOld.Position = employee.Position != null ? employee.Position : employeeOld.Position;
+                employeeOld.Email = employee.Email != null ? employee.Email : employeeOld.Email;
+                employeeOld.Description = employee.Description != null ? employee.Description : employeeOld.Description;
+                employeeOld.PhoneNumber = employee.PhoneNumber != null ? employee.PhoneNumber : employeeOld.PhoneNumber;
+                employeeOld.ProfilePicture = employee.ProfilePicture != null ? employee.ProfilePicture : employeeOld.ProfilePicture;
                 await this.unitOfWork.GenericRepository<Employee>().UpdateAsync(employeeOld);
                 await this.unitOfWork.SaveAsync();
             }

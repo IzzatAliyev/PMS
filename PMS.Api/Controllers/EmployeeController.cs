@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.Services.Interfaces;
+using PMS.Service.ViewModels.Employee;
 
 namespace PMS.Api.Controllers
 {
@@ -20,22 +21,67 @@ namespace PMS.Api.Controllers
             this.logger = logger;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeViewModel employee)
+        {
+            await this.employeeService.CreateEmployee(employee);
+            return this.Created(nameof(CreateEmployee), "Successfully created!");
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> UpdateEmployeeById([FromRoute] int id, [FromBody] EmployeeViewModel employee)
+        {
+            try
+            {
+                await this.employeeService.UpdateEmployeeById(id, employee);
+                return this.Created(nameof(UpdateEmployeeById), "Successfully updated!");
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteEmployeeById([FromRoute] int id)
+        {
+            try
+            {
+                await this.employeeService.DeleteEmployeeById(id);
+                return this.Created(nameof(UpdateEmployeeById), "Successfully deleted!");
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetEmployeeById([FromRoute] int id)
         {
-            if (id == 0)
+            try
             {
-                return this.BadRequest("NotFound");
+                var employee = await this.employeeService.GetEmployeeById(id);
+                return this.Ok(employee);
             }
-            var employee = await this.employeeService.GetEmployeeById(id);
-            return this.Ok(employee);
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var employees = this.employeeService.GetAllEmployees();
-            return this.Ok(employees);
+            try
+            {
+                var employees = this.employeeService.GetAllEmployees();
+                return this.Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
     }
 }
