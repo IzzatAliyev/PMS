@@ -35,7 +35,7 @@ namespace PMS.MediaStorage.Models
 
         private string GetMediaUrl(string fileName)
         {
-            return $"http://localhost:5275/home/media?mediaUrl={fileName}";
+            return $"http://localhost:5275/api2/mediums/media?mediaUrl={fileName}";
         }
 
         private string GetFileExtension(string mediaType)

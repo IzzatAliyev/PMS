@@ -4,12 +4,12 @@ using PMS.MediaStorage.Models;
 namespace PMS.MediaStorage.Controllers
 {
     [ApiController]
-    [Route("home")]
-    public class HomeController : ControllerBase
+    [Route("api2/mediums")]
+    public class MediaController : ControllerBase
     {
         private readonly MediaStorageViewModel mediaStore;
 
-        public HomeController(MediaStorageViewModel mediaStore)
+        public MediaController(MediaStorageViewModel mediaStore)
         {
             this.mediaStore = mediaStore;
         }
@@ -19,6 +19,13 @@ namespace PMS.MediaStorage.Controllers
         {
             string mediaUrl = mediaStore.StoreMedia(mediaFile);
             return this.Ok(mediaUrl);
+        }
+
+        [HttpGet("media")]
+        public IActionResult Media([FromQuery] string mediaUrl)
+        {
+            byte[] mediaData = mediaStore.GetMedia(mediaUrl);
+            return this.File(mediaData, "image/jpeg");
         }
 
         [HttpGet]
@@ -32,13 +39,6 @@ namespace PMS.MediaStorage.Controllers
             }).ToList();
 
             return this.Ok(mediaViewModels);
-        }
-
-        [HttpGet("media")]
-        public IActionResult Media([FromQuery] string mediaUrl)
-        {
-            byte[] mediaData = mediaStore.GetMedia(mediaUrl);
-            return this.File(mediaData, "image/jpeg");
         }
 
         private string GetMediaUrl(string fileName)
