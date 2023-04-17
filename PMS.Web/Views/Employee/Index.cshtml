@@ -8,7 +8,7 @@
 @model EmployeeViewModel
 
 @{
-    List<ProjectViewModel> projects =  ViewBag.Projects;
+    List<ProjectViewModel> projects = ViewBag.Projects;
     List<SkillViewModel> skills = ViewBag.Skills;
 }
 
@@ -20,7 +20,19 @@
     <div class="container">
         <h1>@Localizer["HeaderEmployee"]</h1>
 
-        <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png'" alt="Profile Picture" class="profile-picture">
+        <form id="profilePictureForm" action="/employees" method="post" enctype="multipart/form-data"
+            style="display: inline;">
+
+            <label for="mediaFile" class="profile-picture-label">
+                <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png';" 
+                onmouseover="this.src='/images/upload.png';"
+                onmouseout="this.src='@Model.ProfilePicture';"
+                alt="Profile Picture" class="profile-picture" style="cursor: pointer;">
+            </label>
+
+            <input id="mediaFile" type="file" name="mediaFile" style="display: none;" accept="image/*"
+                onchange="document.getElementById('profilePictureForm').submit();">
+        </form>
 
         <h2>@Localizer["HeaderName"]</h2>
         <p>@Model.Name</p>
@@ -39,7 +51,7 @@
 
         <h2>@Localizer["HeaderProjects"]</h2>
         <ul class="list">
-            @{ 
+            @{
                 if (projects.Count != 0)
                 {
                     foreach (var project in projects)
@@ -59,10 +71,10 @@
             @{
                 if (skills.Count != 0)
                 {
-                foreach(var skill in skills)
-                {
-                    <li class="skill">@skill.Name</li>
-                }
+                    foreach (var skill in skills)
+                    {
+                        <li class="skill">@skill.Name</li>
+                    }
                 }
                 else
                 {
@@ -84,7 +96,11 @@
         margin-top: 50px;
     }
 
-    .nocontent{
+    label{
+        display: block;
+    }
+
+    .nocontent {
         color: var(--default-color);
     }
 
@@ -163,7 +179,7 @@
         border-radius: 50%;
         border: 5px solid var(--third-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        max-width: 200px;
-        max-height: 200px;
+        width: 150px;
+        height: 150px;
     }
 </style>
