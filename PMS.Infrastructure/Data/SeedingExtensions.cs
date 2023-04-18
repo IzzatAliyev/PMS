@@ -10,8 +10,11 @@ namespace PMS.Infrastructure.Data
             using (var scope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<PMSDbContext>();
+                var identityDbContext = scope.ServiceProvider.GetRequiredService<PMSIdentityDbContext>();
                 var database = dbContext.Database;
+                var identityDatabase = identityDbContext.Database;
                 await database.EnsureCreatedAsync();
+                await identityDatabase.EnsureCreatedAsync();
             }
         }
     }

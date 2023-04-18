@@ -15,7 +15,13 @@ namespace PMS.Infrastructure
                 options.UseMySQL(configuration["ConnectionStrings:DefaultConnection"]);
             });
 
+            serviceCollection.AddDbContext<PMSIdentityDbContext>(options =>
+            {
+                options.UseMySQL(configuration["ConnectionStrings:IdentityConnection"]);
+            });
+
             serviceCollection.AddScoped<IPMSDbContext, PMSDbContext>();
+            serviceCollection.AddScoped<PMSIdentityDbContext>();
         }
     }
 }

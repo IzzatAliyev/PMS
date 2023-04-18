@@ -5,7 +5,6 @@ using PMS.Infrastructure;
 using PMS.Infrastructure.Data;
 using PMS.Service.Services.Impl;
 using PMS.Service.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web
 {

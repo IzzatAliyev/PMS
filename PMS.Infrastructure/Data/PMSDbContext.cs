@@ -6,7 +6,7 @@ namespace PMS.Infrastructure.Data
 {
     public class PMSDbContext: DbContext, IPMSDbContext
     {
-        public PMSDbContext(DbContextOptions options) : base(options) { }
+        public PMSDbContext(DbContextOptions<PMSDbContext> options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeProject> EmployeeProjects { get; set; }
