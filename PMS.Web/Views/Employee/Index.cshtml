@@ -23,6 +23,9 @@
         <form id="profilePictureForm" action="/employees" method="post" enctype="multipart/form-data"
             style="display: inline;">
 
+             @Html.AntiForgeryToken()
+            <input type="hidden" name="profilePicture" value="@Model.ProfilePicture" />
+
             <label for="mediaFile" class="profile-picture-label">
                 <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png';" 
                 onmouseover="this.src='/images/upload.png';"
