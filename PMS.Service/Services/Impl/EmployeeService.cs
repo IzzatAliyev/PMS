@@ -90,6 +90,29 @@ namespace PMS.Service.Services.Impl
             }
         }
 
+        public EmployeeViewModel GetEmployeeByEmail(string email)
+        {
+            var employeeDb = this.context.Employees.Where(e => e.Email == email).First();
+            if (employeeDb != null)
+            {
+                var employee = new EmployeeViewModel()
+                {
+                    Id = employeeDb.Id,
+                    Name = employeeDb.Name,
+                    Position = employeeDb.Position,
+                    Email = employeeDb.Email,
+                    Description = employeeDb.Description,
+                    PhoneNumber = employeeDb.PhoneNumber,
+                    ProfilePicture = employeeDb.ProfilePicture
+                };
+                return employee;
+            }
+            else
+            {
+                throw new Exception("email doesn't exist");
+            }
+        }
+
         public IEnumerable<EmployeeViewModel> GetAllEmployees()
         {
             var employees = new List<EmployeeViewModel>();
@@ -131,6 +154,21 @@ namespace PMS.Service.Services.Impl
                 .ToList();
 
             return matchingEmployees;
+        }
+
+        public async Task SetProfilePictureByEmployeeId(int id, string url)
+        {
+            var employeeDb = await this.unitOfWork.GenericRepository<Employee>().GetByIdAsync(id);
+            if (employeeDb != null)
+            {
+                employeeDb.ProfilePicture = url != null ? url : employeeDb.ProfilePicture;
+                await this.unitOfWork.GenericRepository<Employee>().UpdateAsync(employeeDb);
+                await this.unitOfWork.SaveAsync();
+            }
+            else
+            {
+                throw new Exception("id doesn't exist");
+            }
         }
     }
 }

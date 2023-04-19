@@ -15,9 +15,11 @@ namespace PMS.MediaStorage.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upload(IFormFile mediaFile)
+        public IActionResult Upload([FromForm] MediaUploadViewModel model)
         {
-            string mediaUrl = mediaStore.StoreMedia(mediaFile);
+            var mediaFile = model.MediaFile;
+            var employeeId = model.EmployeeId;
+            string mediaUrl = mediaStore.StoreMedia(mediaFile, employeeId);
             return this.Ok(mediaUrl);
         }
 

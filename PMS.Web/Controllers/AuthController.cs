@@ -25,6 +25,10 @@ namespace PMS.Web.Controllers
         [HttpGet("login")]
         public async Task<ActionResult> LoginAsync(string? returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var loginModel = new LoginViewModel()
             {
                 ReturnUrl = returnUrl,
@@ -63,6 +67,10 @@ namespace PMS.Web.Controllers
         [HttpGet("register")]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -76,7 +84,7 @@ namespace PMS.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    this.context.Employees.Add(new Employee { Id = 30, Name = $"{user.FirstName} {user.LastName}", Position = string.Empty, Email = user.Email, Description = string.Empty, PhoneNumber = string.Empty, ProfilePicture = string.Empty });
+                    this.context.Employees.Add(new Employee { Name = $"{user.FirstName} {user.LastName}", Position = string.Empty, Email = user.Email, Description = string.Empty, PhoneNumber = string.Empty, ProfilePicture = string.Empty });
 
                     this.userManager.AddToRoleAsync(user, "Employee").Wait();
                     await this.context.SaveChangesAsync();

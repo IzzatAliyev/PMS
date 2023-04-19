@@ -14,15 +14,34 @@ namespace PMS.MediaStorage.Models
             get { return mediaFolder; }
         }
 
-        public string StoreMedia(IFormFile mediaFile)
+        public string StoreMedia(IFormFile mediaFile, int employeeId)
         {
-            string fileName = Guid.NewGuid().ToString() + GetFileExtension(mediaFile.ContentType);
-            string filePath = Path.Combine(mediaFolder, fileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            string fileName = $"{employeeId}_{Guid.NewGuid().ToString()}{GetFileExtension(mediaFile.ContentType)}";
+            string[] parts = fileName.Split('_');
+            string firstPart = $"{parts[0]}_";
+
+            var mediaFiles = Directory.GetFiles(MediaFolder);
+            var mediaViewModels = mediaFiles.Select(file => Path.GetFileName(file)).ToList();
+            foreach (var media in mediaViewModels)
+            {
+                if (media.StartsWith(firstPart))
+                {
+                    // Update existing image
+                    string filePath = Path.Combine(MediaFolder, media);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        mediaFile.CopyTo(stream);
+                    }
+                    return GetMediaUrl(media);
+                }
+            }
+
+            // Create new image
+            string newFilePath = Path.Combine(MediaFolder, fileName);
+            using (var stream = new FileStream(newFilePath, FileMode.Create))
             {
                 mediaFile.CopyTo(stream);
             }
-
             return GetMediaUrl(fileName);
         }
 
