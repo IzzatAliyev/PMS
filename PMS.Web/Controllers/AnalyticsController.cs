@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("analytics")]
     public class AnalyticsController : Controller
     {

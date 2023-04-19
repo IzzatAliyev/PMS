@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PMS.Infrastructure.Data;
+using PMS.Infrastructure.Entities;
+using PMS.Service.ViewModels.Auth;
 
 namespace PMS.Web.Controllers
 {
@@ -7,12 +11,96 @@ namespace PMS.Web.Controllers
     [Route("auth")]
     public class AuthController : Controller
     {
+        private readonly PMSDbContext context;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        [HttpGet]
-        public ActionResult Login(string returnUrl)
+        public AuthController(PMSDbContext context, UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            this.context = context;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+        }
+
+        [HttpGet("login")]
+        public async Task<ActionResult> LoginAsync(string? returnUrl = null)
+        {
+            var loginModel = new LoginViewModel()
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+            return View(loginModel);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginAsync(LoginViewModel model)
+        {
+            if (await this.userManager.FindByEmailAsync(model.Email) != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = this.userManager.Users.Where(u => u.Email == model.Email).FirstOrDefault();
+                    var result = await this.signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
+
+                    if (result.Succeeded)
+                    {
+                        await this.signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Password wrong");
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Not found this login");
+            }
+
+            return View(model);
+        }
+
+        [HttpGet("register")]
+        public IActionResult Register()
+        {
             return View();
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var result = await this.userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    this.context.Employees.Add(new Employee { Id = 30, Name = $"{user.FirstName} {user.LastName}", Position = string.Empty, Email = user.Email, Description = string.Empty, PhoneNumber = string.Empty, ProfilePicture = string.Empty });
+
+                    this.userManager.AddToRoleAsync(user, "Employee").Wait();
+                    await this.context.SaveChangesAsync();
+                    await this.signInManager.SignInAsync(user, isPersistent: false);
+
+                    return RedirectToAction("Index", "Dashboard");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Auth");
         }
     }
 }

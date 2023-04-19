@@ -5,7 +5,9 @@ using PMS.Infrastructure;
 using PMS.Infrastructure.Data;
 using PMS.Service.Services.Impl;
 using PMS.Service.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PMS.Infrastructure.Entities;
 
 namespace PMS.Web
 {
@@ -14,10 +16,25 @@ namespace PMS.Web
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("IdentityConnection") ?? throw new InvalidOperationException("Connection string 'IdentityConnection' not found.");
+
+            builder.Services.AddDbContext<PMSIdentityDbContext>(options => options.UseMySQL(connectionString));
+
+            builder.Services
+            .AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<PMSIdentityDbContext>()
+            .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/auth/login";
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
             builder.Services.AddStorage(builder.Configuration);
+            builder.Services.AddIdentityStorage(builder.Configuration);
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -29,6 +46,7 @@ namespace PMS.Web
             builder.Services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
             builder.Services.AddScoped<IEmployeeSkillService, EmployeeSkillService>();
             builder.Services.AddScoped<IProjectRoleService, ProjectRoleService>();
+
 
             builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
             builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -45,6 +63,7 @@ namespace PMS.Web
 
             var app = builder.Build();
             await app.DatabaseEnsureCreated();
+            await app.IdentityDatabaseEnsureCreated();
 
             // await DummyDataGenerator.GenerateAsync(app.Services); 
 
@@ -69,7 +88,7 @@ namespace PMS.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.MapFallbackToController("NotFound", "Home");
+            // app.MapFallbackToController("NotFound", "Home");
 
             app.Run();
         }

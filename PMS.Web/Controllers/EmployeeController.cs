@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.Project;
@@ -6,6 +7,7 @@ using PMS.Service.ViewModels.Skill;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("employees")]
     public class EmployeeController : Controller
     {

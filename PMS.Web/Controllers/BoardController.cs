@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Project;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("board")]
     public class BoardController : Controller
     {

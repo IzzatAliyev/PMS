@@ -1,0 +1,162 @@
+@using PMS.Service.ViewModels.Auth
+@using Microsoft.AspNetCore.Mvc.Localization
+  
+@model RegisterViewModel
+
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="container">
+	<h1>Register</h1>
+	<form method="post">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show"></div>
+		<div class="row justify-content-center">
+			<div class="col-sm-6 col-lg-6">
+				<div class="input-group mb-1">
+					<input asp-for="Email" type="email" class="form-control" autocomplete="email"
+						placeholder="Your email" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-user"></span>
+						</div>
+					</div>
+				</div>
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 col-lg-6">
+				<div class="input-group mb-1 mt-3">
+					<input asp-for="Password" class="form-control" id="password" autocomplete="password"
+						placeholder="Password" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							@* <span class="fas fa-lock" onclick='ShowPassword()'></span> *@
+						</div>
+					</div>
+				</div>
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="col-sm-6 col-lg-6">
+				<div class="input-group mb-1 mt-3">
+					<input asp-for="ConfirmPassword" class="form-control" id="confirmPassword"
+						autocomplete="confirmpassword" placeholder="Confirm password" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							@* <span class="fas fa-lock" onclick='ShowPassword()'></span> *@
+						</div>
+					</div>
+				</div>
+				<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 col-lg-6">
+				<div class="input-group mb-1 mt-3">
+					<input asp-for="FirstName" class="form-control" autocomplete="firstname" placeholder="Firstname" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-user"></span>
+						</div>
+					</div>
+				</div>
+				<span asp-validation-for="FirstName" class="text-danger"></span>
+			</div>
+			<div class="col-sm-6 col-lg-6">
+				<div class="input-group mb-1 mt-3">
+					<input asp-for="LastName" class="form-control" autocomplete="lastname" placeholder="Lastname" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-user"></span>
+						</div>
+					</div>
+				</div>
+				<span asp-validation-for="LastName" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4 offset-4 mt-2">
+				<button type="submit" class="btn mt-3 text-center"
+					style="background-color:#01ABC2">Register</button>
+			</div>
+		</div>
+	</form>
+	@* <form action="#" method="post">
+	<label for="username">Username/email</label>
+	<input type="text" id="username" name="username" required>
+
+	<label for="password">Password</label>
+	<input type="password" id="password" name="password" required>
+
+	<input type="submit" value="Login">
+	</form> *@
+	<p>Don't have an account? <a href="#">Sign up here.</a></p>
+	<div class="error">Incorrect username or password.</div>
+</div>
+
+
+<style>
+	.container {
+		top: 110px;
+		background-color: var(--third-color);
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		margin: 50px auto;
+		max-width: 400px;
+		padding: 30px;
+		position: relative;
+	}
+
+	h1 {
+		font-size: 28px;
+		margin: 0;
+		text-align: center;
+	}
+
+	form {
+		margin-top: 20px;
+	}
+
+	label {
+		color: var(--text-color);
+	}
+
+	input[type="text"],
+	input[type="password"] {
+		border: 2px solid #ccc;
+		border-radius: 5px;
+		font-size: 16px;
+		padding: 10px;
+		width: 100%;
+	}
+
+	input[type="submit"] {
+		margin-top: 10px;
+		background-color: #4CAF50;
+		border: none;
+		border-radius: 5px;
+		color: white;
+		cursor: pointer;
+		font-size: 16px;
+		padding: 10px;
+		width: 100%;
+	}
+
+	input[type="submit"]:hover {
+		background-color: #3e8e41;
+	}
+
+	p {
+		margin-top: 20px;
+		text-align: center;
+		color: var(--default-color);
+	}
+
+	.error {
+		color: red;
+		font-size: 14px;
+		margin-top: 10px;
+		text-align: center;
+	}
+</style>

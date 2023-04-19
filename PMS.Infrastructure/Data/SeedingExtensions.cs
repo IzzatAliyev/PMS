@@ -14,5 +14,15 @@ namespace PMS.Infrastructure.Data
                 await database.EnsureCreatedAsync();
             }
         }
+
+        public static async Task IdentityDatabaseEnsureCreated(this IApplicationBuilder applicationBuilder)
+        {
+            using (var scope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<PMSIdentityDbContext>();
+                var database = dbContext.Database;
+                await database.EnsureCreatedAsync();
+            }
+        }
     }
 }

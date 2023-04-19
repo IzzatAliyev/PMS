@@ -1,10 +1,45 @@
+@using PMS.Service.ViewModels.Auth
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@model LoginViewModel;
+
 @{
     ViewData["Title"] = "Login";
 }
 
 <div class="container">
 		<h1>Login</h1>
-		<form action="#" method="post">
+	<form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show"></div>
+		<div class="input-group mb-1">
+			<input asp-for="Email" type="email" class="form-control" placeholder="Email" autocomplete="email" />
+			<div class="input-group-append">
+				<div class="input-group-text">
+					<span class="fas fa-envelope"></span>
+				</div>
+			</div>
+		</div>
+		<span asp-validation-for="Email" class="text-danger"></span>
+		<div class="input-group mb-1 mt-3">
+			<input asp-for="Password" class="form-control" id="password" placeholder="Password"
+				autocomplete="password" />
+			<div class="input-group-append">
+				<div class="input-group-text">
+					@* <span class="fas fa-lock" onclick='ShowPassword()'></span> *@
+				</div>
+			</div>
+		</div>
+		<span asp-validation-for="Password" class="text-danger mt-2"></span>
+		<div class="row">
+			<div class="col-4 offset-4 mt-3">
+				<button type="submit" class="btn mt-3 text-center text-white" style="background-color:#01ABC2">Log
+					in</button>
+			</div>
+		</div>
+	</form>
+		@* <form action="#" method="post">
 			<label for="username">Username/email</label>
 			<input type="text" id="username" name="username" required>
 
@@ -12,8 +47,8 @@
 			<input type="password" id="password" name="password" required>
 
 			<input type="submit" value="Login">
-		</form>
-		<p>Don't have an account? <a href="#">Sign up here.</a></p>
+		</form> *@
+		<p>Don't have an account? <a href="/auth/register">Sign up here.</a></p>
 		<div class="error">Incorrect username or password.</div>
 </div>
 
