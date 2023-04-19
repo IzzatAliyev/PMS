@@ -17,5 +17,13 @@ namespace PMS.Infrastructure
 
             serviceCollection.AddScoped<IPMSDbContext, PMSDbContext>();
         }
+
+         public static void AddIdentityStorage(this IServiceCollection serviceCollection, IConfiguration configuration)
+        {
+            serviceCollection.AddDbContext<PMSIdentityDbContext>(options =>
+            {
+                options.UseMySQL(configuration["ConnectionStrings:IdentityConnection"]);
+            });
+        }
     }
 }

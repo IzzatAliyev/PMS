@@ -1,18 +1,27 @@
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PMS.Infrastructure.Entities;
+using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.Project;
 using PMS.Service.ViewModels.Skill;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("employees")]
     public class EmployeeController : Controller
     {
+        private UserManager<User> userManager;
+        private IEmployeeService employeeService;
         private readonly ILogger<EmployeeController> logger;
 
-        public EmployeeController(ILogger<EmployeeController> logger)
+        public EmployeeController(UserManager<User> userManager, IEmployeeService employeeService, ILogger<EmployeeController> logger)
         {
+            this.userManager = userManager;
+            this.employeeService = employeeService;
             this.logger = logger;
         }
 
@@ -61,17 +70,21 @@ namespace PMS.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadMedia(IFormFile mediaFile)
+        public async Task<IActionResult> UploadMedia(IFormFile mediaFile, int employeeId)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:5275/api2/");
                 var formData = new MultipartFormDataContent();
+                var stringContent = new StringContent(employeeId.ToString());
                 var fileContent = new StreamContent(mediaFile.OpenReadStream());
                 fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                 formData.Add(fileContent, "mediaFile", mediaFile.FileName);
+                formData.Add(stringContent, "employeeId");
                 var response = await client.PostAsync("mediums", formData);
-                return response.IsSuccessStatusCode ? RedirectToAction("Index", new { id = 1} ) : RedirectToAction("SomethingWentWrong", "Home");
+                var res = await response.Content.ReadAsStringAsync();
+                await this.employeeService.SetProfilePictureByEmployeeId(employeeId, res);
+                return response.IsSuccessStatusCode ? RedirectToAction("Index", new { id = employeeId} ) : RedirectToAction("SomethingWentWrong", "Home");
             }
         }
     }

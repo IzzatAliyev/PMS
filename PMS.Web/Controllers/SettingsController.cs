@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("settings")]
     public class SettingsController : Controller
     {

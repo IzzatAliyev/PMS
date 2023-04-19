@@ -41,16 +41,29 @@
 			</span>
 		</div><span class="settingstext">@Localizer["HeaderSettings"]</span>
 	</a>
-	<a class="logout" asp-area="" asp-controller="Auth" asp-action="Login">
+	<form id="logoutForm" class="logout" asp-area="" asp-controller="Auth" asp-action="Logout"
+		asp-route-returnUrl="@Url.Action("Login", "Auth", new { area = "" })">
 		<div class=logouticon>
 			<span class="material-symbols-outlined">
 				logout
 			</span>
-		</div><span class="logouttext">@Localizer["HeaderLogout"]</span>
-	</a>
+		</div>
+		<input id="logout" class="logouttext" type="submit" value="@Localizer["HeaderLogout"]">
+	</form>
+	
 </div>
 
 <style>
+	input[type="submit"] {
+		border: none;
+		background: none;
+		cursor: pointer;
+	}
+
+	input[type="submit"]:hover {
+		text-decoration: none;
+	}
+
 	.sidebar {
 		width: 224px;
 		height: 1024px;
@@ -256,7 +269,7 @@
 
 	.logouttext {
 		color: var(--text-color);
-		width: 59px;
+		width: max-content;
 		height: 24px;
 		position: inherit;
 		left: 80px;

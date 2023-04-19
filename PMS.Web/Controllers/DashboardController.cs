@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
@@ -5,6 +6,7 @@ using PMS.Service.ViewModels.Project;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("dashboard")]
     public class DashboardController : Controller
     {

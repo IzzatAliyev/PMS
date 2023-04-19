@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     [Route("info")]
     public class InfoController : Controller
     {
