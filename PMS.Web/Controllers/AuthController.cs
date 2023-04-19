@@ -36,27 +36,25 @@ namespace PMS.Web.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> LoginAsync(LoginViewModel model)
         {
-            if (await this.userManager.FindByEmailAsync(model.Email) != null)
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var user = await this.userManager.FindByEmailAsync(model.Email);
+                if (user == null)
                 {
-                    var user = this.userManager.Users.Where(u => u.Email == model.Email).FirstOrDefault();
-                    var result = await this.signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
-
-                    if (result.Succeeded)
-                    {
-                        await this.signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Password wrong");
-                    }
+                    ModelState.AddModelError("", "Your authentication details are incorrect. Please try again.");
+                    return View(model);
                 }
-            }
-            else
-            {
-                ModelState.AddModelError("", "Not found this login");
+
+                var result = await this.signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    await this.signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Your authentication details are incorrect. Please try again.");
+                }
             }
 
             return View(model);
@@ -85,11 +83,6 @@ namespace PMS.Web.Controllers
                     await this.signInManager.SignInAsync(user, isPersistent: false);
 
                     return RedirectToAction("Index", "Dashboard");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 

@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Web.Models;
-using System.Web;
 
 namespace PMS.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,17 +17,7 @@ namespace PMS.Web.Controllers
 
         public IActionResult Index()
         {
-            bool loggedin = true;
-            if (!loggedin)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Dashboard");
-            }
-
-            // return View();
+            return RedirectToAction("Index", "Dashboard");
         }
 
         public new IActionResult NotFound()
