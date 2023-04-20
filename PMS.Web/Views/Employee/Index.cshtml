@@ -19,18 +19,22 @@
 <div class=boardmenu>
     <div class="container">
         <h1>@Localizer["HeaderEmployee"]</h1>
+        
+        <a id="edit">
+            <span class="material-symbols-outlined">
+                edit
+            </span>
+        </a>
 
-        <form id="profilePictureForm" action="/employees" method="post" enctype="multipart/form-data"
-            style="display: inline;">
+        <form id="profilePictureForm" action="/employees" method="post" enctype="multipart/form-data">
 
             @Html.AntiForgeryToken()
             <input type="hidden" name="profilePicture" value="@Model.ProfilePicture" />
 
             <label for="mediaFile" class="profile-picture-label">
-                <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png';" 
-                onmouseover="this.src='/images/upload.png';"
-                onmouseout="this.src='@Model.ProfilePicture';"
-                alt="Profile Picture" class="profile-picture" style="cursor: pointer;">
+                <img src="@Model.ProfilePicture" onerror="this.src='/images/profile.png';"
+                    onmouseover="this.src='/images/upload.png';" onmouseout="this.src='@Model.ProfilePicture';"
+                    alt="Profile Picture" class="profile-picture" style="cursor: pointer;">
             </label>
 
             <input id="mediaFile" type="file" name="mediaFile" style="display: none;" accept="image/*"
@@ -93,6 +97,7 @@
     .container {
         max-width: 800px;
         margin: 0 auto;
+        position: relative;
         padding: 20px;
         background-color: var(--third-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -100,8 +105,22 @@
         margin-top: 50px;
     }
 
-    label{
+    form#profilePictureForm {
+        width: max-content;
+        margin: 0 auto;
+    }
+
+    label {
         display: block;
+    }
+
+    a#edit {
+        color: var(--text-color);
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 25px;
     }
 
     .nocontent {
