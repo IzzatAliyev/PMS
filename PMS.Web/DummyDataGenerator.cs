@@ -111,8 +111,10 @@ namespace PMS.Web
     {
         public EmployeeFaker()
         {
-            RuleFor(e => e.Id, f => f.IndexFaker + 1);
-            RuleFor(e => e.Name, f => f.Person.FullName);
+            RuleFor(e => e.Id, f => f.IndexFaker + 3);
+            RuleFor(e => e.UserName, f => f.Person.FullName);
+            RuleFor(e => e.FirstName, f => f.Person.FirstName);
+            RuleFor(e => e.LastName, f => f.Person.LastName);
             RuleFor(e => e.Position, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Email, f => f.Person.Email);
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));

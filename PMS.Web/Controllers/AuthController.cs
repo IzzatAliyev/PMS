@@ -79,12 +79,28 @@ namespace PMS.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var user = new User
+                {
+                    UserName = $"{model.FirstName} {model.LastName}",
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
                 var result = await this.userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    this.context.Employees.Add(new Employee { Name = $"{user.FirstName} {user.LastName}", Position = string.Empty, Email = user.Email, Description = string.Empty, PhoneNumber = string.Empty, ProfilePicture = string.Empty });
+                    this.context.Employees.Add(new Employee
+                    {
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Position = string.Empty,
+                        Email = user.Email,
+                        Description = string.Empty,
+                        PhoneNumber = string.Empty,
+                        ProfilePicture = string.Empty
+                    });
 
                     this.userManager.AddToRoleAsync(user, "Employee").Wait();
                     await this.context.SaveChangesAsync();

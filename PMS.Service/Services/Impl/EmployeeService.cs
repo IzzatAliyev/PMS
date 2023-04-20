@@ -22,7 +22,9 @@ namespace PMS.Service.Services.Impl
             var newEmployee = new Employee()
             {
                 Id = employee.Id,
-                Name = employee.Name != null ? employee.Name : string.Empty,
+                UserName = employee.UserName != null ? employee.UserName : string.Empty,
+                FirstName = employee.FirstName != null ? employee.FirstName : string.Empty,
+                LastName = employee.LastName != null ? employee.LastName : string.Empty,
                 Position = employee.Position != null ? employee.Position : string.Empty,
                 Email = employee.Email != null ? employee.Email : string.Empty,
                 Description = employee.Description != null ? employee.Description : string.Empty,
@@ -38,7 +40,9 @@ namespace PMS.Service.Services.Impl
             var employeeOld = await this.unitOfWork.GenericRepository<Employee>().GetByIdAsync(id);
             if (employeeOld != null)
             {
-                employeeOld.Name = employee.Name != null ? employee.Name : employeeOld.Name;
+                employeeOld.UserName = employee.UserName != null ? employee.UserName : employeeOld.UserName;
+                employeeOld.FirstName = employee.FirstName != null ? employee.FirstName : employeeOld.FirstName;
+                employeeOld.LastName = employee.LastName != null ? employee.LastName : employeeOld.LastName;
                 employeeOld.Position = employee.Position != null ? employee.Position : employeeOld.Position;
                 employeeOld.Email = employee.Email != null ? employee.Email : employeeOld.Email;
                 employeeOld.Description = employee.Description != null ? employee.Description : employeeOld.Description;
@@ -75,7 +79,9 @@ namespace PMS.Service.Services.Impl
                 var employee = new EmployeeViewModel()
                 {
                     Id = employeeDb.Id,
-                    Name = employeeDb.Name,
+                    UserName = employeeDb.UserName,
+                    FirstName = employeeDb.FirstName,
+                    LastName = employeeDb.LastName,
                     Position = employeeDb.Position,
                     Email = employeeDb.Email,
                     Description = employeeDb.Description,
@@ -98,7 +104,9 @@ namespace PMS.Service.Services.Impl
                 var employee = new EmployeeViewModel()
                 {
                     Id = employeeDb.Id,
-                    Name = employeeDb.Name,
+                    UserName = employeeDb.UserName,
+                    FirstName = employeeDb.FirstName,
+                    LastName = employeeDb.LastName,
                     Position = employeeDb.Position,
                     Email = employeeDb.Email,
                     Description = employeeDb.Description,
@@ -124,7 +132,9 @@ namespace PMS.Service.Services.Impl
                     var currentEmployee = new EmployeeViewModel()
                     {
                         Id = employee.Id,
-                        Name = employee.Name,
+                        UserName = employee.UserName,
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
                         Position = employee.Position,
                         Email = employee.Email,
                         Description = employee.Description,
@@ -144,10 +154,12 @@ namespace PMS.Service.Services.Impl
         public IEnumerable<EmployeeProjectSearchViewModel> GetEmployeesBySearchInput(string input)
         {
             var matchingEmployees = this.context.Employees
-                .Where(e => e.Name.ToLower().Contains(input))
+                .Where(e => e.UserName.ToLower().Contains(input) 
+                || e.FirstName.ToLower().Contains(input) 
+                || e.LastName.ToLower().Contains(input))
                 .Select(e => new EmployeeProjectSearchViewModel
                 {
-                    Name = e.Name,
+                    Name = e.UserName,
                     Url = $"http://localhost:5047/employees/{e.Id}",
                     Type = "employee"
                 })

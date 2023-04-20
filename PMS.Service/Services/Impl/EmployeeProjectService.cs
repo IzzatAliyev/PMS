@@ -133,7 +133,9 @@ namespace PMS.Service.Services.Impl
                 .SelectMany(p => p.Employees.Select(e => new EmployeeWithRoleViewModel
                 {
                     Id = e.Employee.Id,
-                    Name = e.Employee.Name,
+                    UserName = e.Employee.UserName,
+                    FirstName = e.Employee.FirstName,
+                    LastName = e.Employee.LastName,
                     Position = e.Employee.Position,
                     Email = e.Employee.Email,
                     Description = e.Employee.Description,

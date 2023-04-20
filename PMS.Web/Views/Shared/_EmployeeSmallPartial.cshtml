@@ -3,7 +3,7 @@
 @model EmployeeWithRoleViewModel
 
 <a class="employee" href="@Url.Action("Index", "Employee", new { id = Model.Id }, null)">
-    <li><span class="employee-name">@Model.Name</span><span class="employee-role">@Model.Role</span></li>
+    <li><span class="employee-name">@Model.UserName</span><span class="employee-role">@Model.Role</span></li>
 </a>
 
 <style>

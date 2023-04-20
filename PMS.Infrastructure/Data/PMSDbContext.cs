@@ -22,6 +22,33 @@ namespace PMS.Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PMSDbContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
+
+            var admin = new Employee
+            {
+                Id = 1,
+                UserName = "Admin",
+                FirstName = "Admin",
+                LastName = "Adminov",
+                Email = "admin@gmail.com",
+                Description = "Hi There!!",
+                Position = "Admin",
+                PhoneNumber = "111",
+                ProfilePicture = ""
+            };
+            var employee = new Employee
+            {
+                Id = 2,
+                UserName = "Employee",
+                FirstName = "Employee",
+                LastName = "Employov",
+                Email = "employee@gmail.com",
+                Description = "Hi There!!",
+                Position = "Employee",
+                PhoneNumber = "222",
+                ProfilePicture = ""
+            };
+
+            modelBuilder.Entity<Employee>().HasData(admin, employee);
         }
     }
 }
