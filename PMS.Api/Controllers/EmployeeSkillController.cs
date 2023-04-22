@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PMS.Service.Services.Interfaces;
+using PMS.Service.ViewModels.EmployeeSkill;
 
 namespace PMS.Api.Controllers
 {
@@ -21,6 +22,13 @@ namespace PMS.Api.Controllers
         {
             var skills = this.employeeSkillService.GetSkillsByEmployeeId(employeeId);
             return this.Ok(skills);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEmployeeSkill([FromBody] EmployeeSkillViewModel employeeSkill)
+        {
+            await this.employeeSkillService.CreateEmployeeSkill(employeeSkill);
+            return this.Created(nameof(CreateEmployeeSkill), "Successfully created!");
         }
     }
 }

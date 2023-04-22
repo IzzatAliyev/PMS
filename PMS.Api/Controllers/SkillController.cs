@@ -66,6 +66,20 @@ namespace PMS.Api.Controllers
             }
         }
 
+        [HttpGet("name")]
+        public IActionResult GetSkillByName([FromQuery] string name)
+        {
+            try
+            {
+                var skill = this.skillService.GetSkillByName(name);
+                return this.Ok(skill);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {

@@ -61,6 +61,11 @@ namespace PMS.Web
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();
 
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            builder.Logging.SetMinimumLevel(LogLevel.Warning);
+            builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning); 
+
             var app = builder.Build();
             await app.DatabaseEnsureCreated();
             await app.IdentityDatabaseEnsureCreated();

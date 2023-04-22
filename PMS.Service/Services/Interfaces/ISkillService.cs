@@ -8,6 +8,7 @@ namespace PMS.Service.Services.Interfaces
         Task UpdateSkillById(int id, SkillViewModel employee);
         Task DeleteSkillById(int id);
         Task<SkillViewModel> GetSkillById(int id);
+        SkillViewModel GetSkillByName(string name);
         IEnumerable<SkillViewModel> GetAllSkills();
     }
 }

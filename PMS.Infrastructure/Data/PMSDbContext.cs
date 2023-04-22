@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using PMS.Infrastructure.Interfaces;
 using PMS.Infrastructure.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace PMS.Infrastructure.Data
 {
-    public class PMSDbContext: DbContext, IPMSDbContext
+    public class PMSDbContext : DbContext, IPMSDbContext
     {
         public PMSDbContext(DbContextOptions<PMSDbContext> options) : base(options) { }
 
@@ -22,6 +23,7 @@ namespace PMS.Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PMSDbContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Ignore<User>();
 
             var admin = new Employee
             {

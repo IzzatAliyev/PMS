@@ -1,4 +1,5 @@
 using PMS.Core.Repositories;
+using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Skill;
@@ -7,10 +8,12 @@ namespace PMS.Service.Services.Impl
 {
     public class SkillService : ISkillService
     {
+        private readonly PMSDbContext context;
         private readonly IUnitOfWork unitOfWork;
 
-        public SkillService(IUnitOfWork unitOfWork)
+        public SkillService(PMSDbContext context, IUnitOfWork unitOfWork)
         {
+            this.context = context;
             this.unitOfWork = unitOfWork;
         }
         public async Task CreateSkill(SkillViewModel skill)
@@ -74,6 +77,26 @@ namespace PMS.Service.Services.Impl
             else
             {
                 throw new Exception("id doesn't exist");
+            }
+        }
+
+        public SkillViewModel GetSkillByName(string name)
+        {
+            var skillDb = this.context.Skills.Where(e => e.Name == name).First();
+            if (skillDb != null)
+            {
+                var skill = new SkillViewModel()
+                {
+                    Id = skillDb.Id,
+                    Name = skillDb.Name,
+                    Description = skillDb.Description,
+                    ColorCode = skillDb.ColorCode
+                };
+                return skill;
+            }
+            else
+            {
+                throw new Exception("name doesn't exist");
             }
         }
 
