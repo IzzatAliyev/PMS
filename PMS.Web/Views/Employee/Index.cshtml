@@ -11,6 +11,7 @@
     List<ProjectViewModel> projects = ViewBag.Projects;
     List<SkillViewModel> skills = ViewBag.Skills;
     List<SkillViewModel> allSkills = ViewBag.AllSkills;
+    List<string> filteredSkills = ViewBag.SkillsName;
 }
 
 @{
@@ -226,15 +227,26 @@
         const backgroundColor = selectedOption.style.backgroundColor;
         const selectedValue = selectElement.value;
         const content = { selectedValue, backgroundColor };
+        let data = @Html.Raw(Json.Serialize(filteredSkills));
+        if (data) {
+            const uniqueX = new Set(data);
+            console.log("uniqueX ", uniqueX);
+            uniqueX.forEach(x => {
+                const obj = { selectedValue: x, backgroundColor: '#cccccc' };
+                if (!list.some(content => content.selectedValue === x)) {
+                    list.push(obj);
+                }
+            });
+        }
         if (selectedValue) {
-            if (!list.some(content => content.selectedValue.includes(selectedValue))) {
-                console.log(content);
+            console.log("select ", selectedValue)
+            if (!list.some(content => content.selectedValue === selectedValue)) {
                 list.push(content);
                 let firstParams = list.map(obj => Object.values(obj)[0]);
                 document.querySelector('#selected-skills').value = firstParams;
             }
 
-            displayList(backgroundColor);
+            displayList(list, backgroundColor);
         }
     }
 

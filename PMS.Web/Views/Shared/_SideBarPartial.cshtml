@@ -41,6 +41,13 @@
 			</span>
 		</div><span class="settingstext">@Localizer["HeaderSettings"]</span>
 	</a>
+	<a class="admin" asp-area="" asp-controller="Admin" asp-action="Index">
+		<div class=adminicon>
+			<span class="material-symbols-outlined">
+				admin_panel_settings
+			</span>
+		</div><span class="admintext">@Localizer["HeaderAdmin"]</span>
+	</a>
 	<form id="logoutForm" class="logout" asp-area="" asp-controller="Auth" asp-action="Logout"
 		asp-route-returnUrl="@Url.Action("Login", "Auth", new { area = "" })">
 		<div class=logouticon>
@@ -121,6 +128,8 @@
 		padding-bottom: 35px;
 	}
 
+	.admin:hover,
+	.admintext:hover,
 	.dashboard:hover,
 	.dashboardtext:hover,
 	.boardbar:hover,
@@ -237,6 +246,37 @@
 	}
 
 	.settingstext {
+		color: var(--default-color);
+		width: 66px;
+		height: 24px;
+		position: inherit;
+		left: 80px;
+		top: 5px;
+		font-family: Poppins;
+		text-align: left;
+		font-size: 16px;
+		letter-spacing: 0;
+	}
+
+	.admin {
+		width: 106px;
+		height: 24px;
+		position: inherit;
+		top: 357px;
+		padding-left: 100%;
+		padding-bottom: 35px;
+	}
+
+	.adminicon {
+		color: var(--text-color);
+		width: 24px;
+		height: 24px;
+		position: inherit;
+		left: 43px;
+		top: 5px;
+	}
+
+	.admintext {
 		color: var(--default-color);
 		width: 66px;
 		height: 24px;

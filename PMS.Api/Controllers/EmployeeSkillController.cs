@@ -30,5 +30,12 @@ namespace PMS.Api.Controllers
             await this.employeeSkillService.CreateEmployeeSkill(employeeSkill);
             return this.Created(nameof(CreateEmployeeSkill), "Successfully created!");
         }
+
+         [HttpDelete("duplicate")]
+        public async Task<IActionResult> DeleteDuplicateEmployeeSkills()
+        {
+            await this.employeeSkillService.DeleteDuplicateEmployeeSkills();
+            return this.Ok("Successfully deleted!");
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace PMS.Web.Controllers
                     var response3 = await client.GetAsync($"employee-skill/employee/{id}/skills");
                     var skills = await response3.Content.ReadFromJsonAsync<IEnumerable<SkillViewModel>>();
                     ViewBag.Skills = skills;
+                    ViewBag.SkillsName = skills.Select(x => x.Name).ToList();
                     var response4 = await client.GetAsync("skills");
                     var allSkills = await response4.Content.ReadFromJsonAsync<IEnumerable<SkillViewModel>>();
                     ViewBag.AllSkills = allSkills;
@@ -132,6 +133,7 @@ namespace PMS.Web.Controllers
                         var skillContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(employeeSkill));
                         skillContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                         var response4 = await client.PostAsync("employee-skill", skillContent);
+                        var response5 = await client.DeleteAsync("employee-skill/duplicate");
                     }
                     return RedirectToAction("Index", new { id = id} );
                 }

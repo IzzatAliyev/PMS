@@ -1,0 +1,228 @@
+<div class="boardmenu">
+    <div class="scrollable-container">
+        <header>
+        <h1>Admin Page</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Employees</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Employees</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>john.doe@example.com</td>
+                        <td>Marketing</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>jane.smith@example.com</td>
+                        <td>IT</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Projects</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Project A</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam viverra justo ut ipsum
+                            tincidunt, sed vestibulum felis pharetra. Nam at ipsum augue. Sed lobortis auctor diam, et
+                            malesuada ex aliquam in. Sed posuere dolor ac elit lacinia dictum.</td>
+                        <td>2023-06-30</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Project B</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam viverra justo ut ipsum
+                            tincidunt, sed vestibulum felis pharetra. Nam at ipsum augue. Sed lobortis auctor diam, et
+                            malesuada ex aliquam in. Sed posuere dolor ac elit lacinia dictum.</td>
+                        <td>2023-08-15</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    </div>
+    
+</div>
+
+
+
+<style>
+    .scrollable-container{
+        overflow-y: scroll;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1,
+    h2 {
+        margin: 0;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    button {
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        padding: 8px 16px;
+    }
+
+    button:hover {
+        background-color: #0069d9;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    td {
+        background-color: #f9f9f9;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    /* Page Styles */
+
+    header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 16px;
+    }
+
+    header h1 {
+        margin: 0;
+    }
+
+    nav ul {
+        display: flex;
+    }
+
+    nav li {
+        margin-right: 16px;
+    }
+
+    nav li:last-child {
+        margin-right: 0;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    main {
+        margin: 16px;
+    }
+
+    section {
+        margin-bottom: 32px;
+    }
+
+    section:last-child {
+        margin-bottom: 0;
+    }
+
+    h2 {
+        margin-bottom: 16px;
+    }
+
+    table {
+        margin-bottom: 16px;
+    }
+
+    button {
+        margin-right: 8px;
+    }
+
+    footer {
+        background-color: #ddd;
+        color: #555;
+        padding: 16px;
+        text-align: center;
+    }
+</style>
