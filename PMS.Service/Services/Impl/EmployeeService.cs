@@ -48,6 +48,7 @@ namespace PMS.Service.Services.Impl
                 employeeOld.Description = employee.Description != null ? employee.Description : employeeOld.Description;
                 employeeOld.PhoneNumber = employee.PhoneNumber != null ? employee.PhoneNumber : employeeOld.PhoneNumber;
                 employeeOld.ProfilePicture = employee.ProfilePicture != null ? employee.ProfilePicture : employeeOld.ProfilePicture;
+                employeeOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<Employee>().UpdateAsync(employeeOld);
                 await this.unitOfWork.SaveAsync();
             }

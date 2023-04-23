@@ -42,6 +42,7 @@ namespace PMS.Service.Services.Impl
                 taskOld.AssignedFromId = task.AssignedFromId != 0 ? task.AssignedFromId : taskOld.AssignedFromId;
                 taskOld.ProjectId = task.ProjectId != 0 ? task.ProjectId : taskOld.ProjectId;
                 taskOld.Status = task.Status != null ? task.Status : taskOld.Status;
+                taskOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<PTask>().UpdateAsync(taskOld);
                 await this.unitOfWork.SaveAsync();
             }

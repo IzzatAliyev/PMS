@@ -1,4 +1,5 @@
 using Bogus;
+using PMS.Infrastructure.Enums;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
@@ -130,7 +131,7 @@ namespace PMS.Web
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
-            RuleFor(e => e.Status, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.Status, f => f.PickRandom<ProjectStatus>());
         }
     }
 
@@ -141,7 +142,7 @@ namespace PMS.Web
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
-            RuleFor(e => e.ColorCode, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.ColorCode, f => f.PickRandomParam("#ff0000", "#134000","#ff3543","#345433","#123123","#657656","#977643","#345432","#356811","#765432","#ccc455"));
         }
     }
 

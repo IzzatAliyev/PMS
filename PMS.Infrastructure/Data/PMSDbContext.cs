@@ -23,6 +23,8 @@ namespace PMS.Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PMSDbContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.SetBaseEntityProperties();
+            
             modelBuilder.Ignore<User>();
 
             var admin = new Employee

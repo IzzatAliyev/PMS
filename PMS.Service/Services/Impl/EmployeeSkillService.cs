@@ -39,6 +39,7 @@ namespace PMS.Service.Services.Impl
                 employeeSkillOld.EmployeeId = employeeSkill.EmployeeId;
                 employeeSkillOld.SkillId = employeeSkill.SkillId;
                 employeeSkillOld.Level = employeeSkill.Level;
+                employeeSkillOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<EmployeeSkill>().UpdateAsync(employeeSkillOld);
                 await this.unitOfWork.SaveAsync();
             }

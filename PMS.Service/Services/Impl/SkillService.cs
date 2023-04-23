@@ -37,6 +37,7 @@ namespace PMS.Service.Services.Impl
                 skillOld.Name = skill.Name != null ? skill.Name : skillOld.Name;
                 skillOld.Description = skill.Description != null ? skill.Description : skillOld.Description;
                 skillOld.ColorCode = skill.ColorCode != null ? skill.ColorCode : skillOld.ColorCode;
+                skillOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<Skill>().UpdateAsync(skillOld);
                 await this.unitOfWork.SaveAsync();
             }

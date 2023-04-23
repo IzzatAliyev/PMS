@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PMS.Core.Repositories;
 using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
+using PMS.Infrastructure.Enums;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;
@@ -26,7 +27,7 @@ namespace PMS.Service.Services.Impl
                 Id = project.Id,
                 Name = project.Name != null ? project.Name : string.Empty,
                 Description = project.Description != null ? project.Description : string.Empty,
-                Status = project.Status != null ? project.Status : string.Empty
+                Status = project.Status != null ? project.Status : ProjectStatus.NotStarted
             };
             await this.unitOfWork.GenericRepository<Project>().AddAsync(newProject);
             await this.unitOfWork.SaveAsync();
@@ -40,6 +41,7 @@ namespace PMS.Service.Services.Impl
                 projectOld.Name = project.Name != null ? project.Name : projectOld.Name;
                 projectOld.Description = project.Description != null ? project.Description : projectOld.Description;
                 projectOld.Status = project.Status != null ? project.Status : projectOld.Status;
+                projectOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<Project>().UpdateAsync(projectOld);
                 await this.unitOfWork.SaveAsync();
             }

@@ -114,7 +114,7 @@ namespace PMS.Web.Controllers
                         PhoneNumber = updatedModel.PhoneNumber
                     };
 
-                    var skills = updatedModel.Skills.Split(",");
+                    var skills = updatedModel.Skills != null ? updatedModel.Skills.Split(",") : Array.Empty<string>();
                     var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(employee));
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     var response2 = await client.PatchAsync($"employees/{id}", content);

@@ -40,6 +40,7 @@ namespace PMS.Service.Services.Impl
                 employeeProjectOld.EmployeeId = employeeProject.EmployeeId;
                 employeeProjectOld.ProjectId = employeeProject.ProjectId;
                 employeeProjectOld.Task = employeeProject.Task;
+                employeeProjectOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<EmployeeProject>().UpdateAsync(employeeProjectOld);
                 await this.unitOfWork.SaveAsync();
             }

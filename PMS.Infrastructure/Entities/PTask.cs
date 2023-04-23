@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PMS.Infrastructure.Entities
 {
-    public class PTask
+    public class PTask : BaseEntity
     {
         public int Id {get;set;}
         public string Name {get;set;}
