@@ -81,7 +81,9 @@ namespace PMS.Service.Services.Impl
                     AssignedToId = taskDb.AssignedToId,
                     AssignedFromId = taskDb.AssignedFromId,
                     ProjectId = taskDb.ProjectId,
-                    Status = taskDb.Status
+                    Status = taskDb.Status,
+                    CreatedAt = taskDb.CreatedAt,
+                    UpdatedAt = taskDb.UpdatedAt
                 };
                 return task;
             }

@@ -46,7 +46,7 @@ namespace PMS.Web.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:5108/api/");
                 var response = await client.GetAsync($"projects/{id}/tasks");
-                var projectTasks = await response.Content.ReadFromJsonAsync<IEnumerable<PTaskViewModel>>();
+                var projectTasks = await response.Content.ReadFromJsonAsync<IEnumerable<PTaskWithAssignedNamesViewModel>>();
                 if (projectTasks != null)
                 {
                     return View(projectTasks);

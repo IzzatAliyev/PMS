@@ -1,28 +1,46 @@
 ﻿@using PMS.Service.ViewModels.PTask
 
-@model PTaskViewModel
+@model PTaskWithAssignedNamesViewModel
 
 @{
-	@* string fullName = @Model.AssignedToId;
-	string[] nameParts = fullName.Split(' '); *@
-	string initials = "Pt";
-	@* foreach (string part in nameParts)
+	string fullName = @Model.AssignedToName;
+	string[] nameParts = fullName.Split(' ');
+	string initials = "";
+	foreach (string part in nameParts)
 	{
-		initials += part[0]; 
-	}*@
+		initials += part[0];
+	}
+	DateTime now = Model.UpdatedAt;
+	DateTime date = now.Date;
+	TimeSpan time = now.TimeOfDay;
+	var edited = "";
+	if (Model.UpdatedAt != Model.CreatedAt)
+	{
+		edited = "edited";
+	}
 }
 
 <div class=tile>
 	<div class="rectangle_292">
-		<div class=tiletitle><p class="design_system">@Model.TaskType</p>
-			<div class="ellipse_2"></div>
-		</div>
-		<h3 class="hero_section">@Model.Name</h3>
-		<p class="hero_content">@Model.Description</p>
-		<div class=user2>
-			<div class="ellipse_3"></div>
-			<p class="vh">@initials</p>
-		</div>
+		<a class="return" href="/tasks">
+			<p class="time">@edited @time.ToString()</p>
+			<p class="date">@date.ToString("d")</p>
+			<div class=tiletitle>
+				<p class="design_system">@Model.TaskType</p>
+				<div class="ellipse_2"></div>
+			</div>
+			<h3 class="hero_section">@Model.Name</h3>
+			<p class="hero_content">@Model.Description</p>
+			<a class=user2 href="@Url.Action("Index", "Employee", new { id = @Model.AssignedToId }, null)">
+				<div class="ellipse_3"></div>
+				<p class="vh">@initials</p>
+			</a>
+			<div class="creatorSection">
+				<p class="assigned">assigned by</p>
+				<a class="createdBy"
+					href="@Url.Action("Index", "Employee", new { id = @Model.AssignedFromId }, null)">@Model.AssignedFromName</a>
+			</div>
+		</a>
 	</div>
 </div>
 
@@ -48,34 +66,57 @@
 		border-bottom-right-radius: 20px;
 	}
 
+	a.return {
+		width: 100%;
+		display: block;
+		height: 100%;
+	}
+
+	p.time {
+		top: 15px;
+		margin: 0 auto;
+		left: 15px;
+		position: absolute;
+		font-size: 10px;
+		color: var(--default-color);
+	}
+
+	p.date {
+		top: 15px;
+		margin: 0 auto;
+		right: 10px;
+		position: absolute;
+		font-size: 10px;
+		color: var(--default-color);
+	}
+
 	.tiletitle {
-		width: 106px;
-		height: 18px;
+		top: 35px;
+		width: 90%;
+		height: 20px;
 		position: relative;
-		left: 24px;
+		left: 15px;
 	}
 
 	.design_system {
 		color: var(--default-color);
-		width: 92px;
-		height: 3px;
 		position: relative;
-		left: 20px;
-		top: 15px;
+		left: 15px;
+		margin-right: 15px;
 		font-family: Poppins;
-		text-align: left;
 		font-size: 12px;
 		letter-spacing: 0;
 	}
 
 	.ellipse_2 {
-		border-radius: 500px;
+		border-radius: 10px;
 		background-color: var(--default-color);
 		width: 9px;
 		height: 9px;
-		position: inherit;
+		margin: 0 auto;
+		position: absolute;
 		left: 0px;
-		top: 1px;
+		bottom: 7px;
 	}
 
 	.hero_section {
@@ -85,26 +126,51 @@
 		position: relative;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		left: 24px;
-		top: 25px;
+		left: 15px;
+		top: 35px;
 		font-family: Poppins;
 		text-align: left;
 		font-size: 18px;
 		letter-spacing: 0;
 	}
 
+	a.createdBy {
+		text-decoration: underline;
+		font-size: 12px;
+		color: var(--button-color);
+		cursor: pointer;
+		position: relative;
+		margin: 0 auto;
+		display: block;
+		height: min-content;
+	}
+
+	p.assigned {
+		font-size: 8px;
+		color: var(--default-color);
+		position: relative;
+		margin: 0 auto;
+	}
+
+	.creatorSection {
+		margin: 0 auto;
+		right: 10px;
+		position: absolute;
+		bottom: 15px;
+	}
+
 	.hero_content {
 		color: var(--text-color);
 		position: relative;
-		height: 84px;
+		height: 80px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		top: 27px;
 		font-family: Poppins;
 		font-size: 14px;
 		letter-spacing: 0;
-		margin-left: 25px;
-		margin-right: 25px;
+		margin-left: 15px;
+		margin-right: 15px;
 	}
 
 	.tilemore {
@@ -118,9 +184,10 @@
 	.user2 {
 		width: 29px;
 		height: 29px;
-		position: relative;
-		left: 24px;
-		top: 18px;
+		position: absolute;
+		left: 20px;
+		bottom: 15px;
+		margin: 0 auto;
 	}
 
 	.ellipse_3 {
@@ -135,9 +202,10 @@
 
 	.vh {
 		color: var(--primary-color);
+		cursor: pointer;
 		position: relative;
-		bottom: 23px;
-		left: 5px;
+		text-align: center;
+		margin: 5px auto;
 		font-family: Poppins;
 		font-size: 12px;
 		letter-spacing: 0;

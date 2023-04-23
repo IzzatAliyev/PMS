@@ -124,12 +124,12 @@ namespace PMS.Service.Services.Impl
             return matchingProjects;
         }
 
-        public IEnumerable<PTaskViewModel> GetTasksByProjectId(int projectId)
+        public IEnumerable<PTaskWithAssignedNamesViewModel> GetTasksByProjectId(int projectId)
         {
             var result = this.context.Projects
                 .Include(p => p.Tasks)
                 .Where(p => p.Id == projectId)
-                .SelectMany(p => p.Tasks.Select(t =>new PTaskViewModel
+                .SelectMany(p => p.Tasks.Select(t =>new PTaskWithAssignedNamesViewModel
                 {
                     Id = t.Id,
                     Name = t.Name,
@@ -138,7 +138,11 @@ namespace PMS.Service.Services.Impl
                     AssignedToId = t.AssignedToId,
                     AssignedFromId = t.AssignedFromId,
                     Status = t.Status,
-                    ProjectId = t.ProjectId
+                    ProjectId = t.ProjectId,
+                    AssignedToName = t.AssignedTo.UserName,
+                    AssignedFromName = t.AssignedFrom.UserName,
+                    CreatedAt = t.CreatedAt,
+                    UpdatedAt = t.UpdatedAt
                 }))
                 .ToList();
 

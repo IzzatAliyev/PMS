@@ -12,6 +12,6 @@ namespace PMS.Service.Services.Interfaces
         Task<ProjectViewModel> GetProjectById(int id);
         IEnumerable<ProjectViewModel> GetAllProjects();
         IEnumerable<EmployeeProjectSearchViewModel> GetProjectsBySearchInput(string input);
-        IEnumerable<PTaskViewModel> GetTasksByProjectId(int projectId);
+        IEnumerable<PTaskWithAssignedNamesViewModel> GetTasksByProjectId(int projectId);
     }
 }
