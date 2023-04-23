@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
+using PMS.Infrastructure.Enums;
 using PMS.Service.ViewModels.Auth;
 
 namespace PMS.Web.Controllers
@@ -95,7 +96,7 @@ namespace PMS.Web.Controllers
                         UserName = user.UserName,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
-                        Position = string.Empty,
+                        Position = EmployeePosition.Intern,
                         Email = user.Email,
                         Description = string.Empty,
                         PhoneNumber = string.Empty,

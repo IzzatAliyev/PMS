@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using PMS.Infrastructure.Enums;
 
 namespace PMS.Infrastructure.Entities
 {
@@ -7,7 +8,7 @@ namespace PMS.Infrastructure.Entities
         public int Id {get;set;}
         public int EmployeeId {get;set;}
         public int ProjectId {get;set;}
-        public string Task {get;set;}
+        public EmployeeTask Task {get;set;}
         public Employee Employee {get;set;}
         public Project Project {get;set;}
 

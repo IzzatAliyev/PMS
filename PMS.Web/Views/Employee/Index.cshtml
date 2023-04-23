@@ -2,6 +2,7 @@
 @using PMS.Service.ViewModels.Employee;
 @using PMS.Service.ViewModels.Project;
 @using PMS.Service.ViewModels.Skill;
+@using PMS.Infrastructure.Enums;
 
 @inject IViewLocalizer Localizer
 
@@ -68,7 +69,14 @@
 
                     <div class="col-sm-6 col-lg-6">
                         <h2>@Localizer["HeaderPosition"]</h2>
-                        <input type="text" name="position" name="position" value="@Model.Position">
+                        <select name="position" id="position">
+                            <option value="@Model.Position">@Model.Position</option>
+                            @foreach (var position in Enum.GetValues(typeof(EmployeePosition)))
+                            {
+                                <option value="@position.ToString()">@position.ToString()
+                                </option>
+                            }
+                        </select>
                     </div>
 
                     <div class="col-sm-6 col-lg-6">

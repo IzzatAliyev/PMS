@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PMS.Infrastructure.Interfaces;
 using PMS.Infrastructure.Entities;
-using Microsoft.Extensions.Logging;
+using PMS.Infrastructure.Enums;
 
 namespace PMS.Infrastructure.Data
 {
@@ -35,7 +35,7 @@ namespace PMS.Infrastructure.Data
                 LastName = "Adminov",
                 Email = "admin@gmail.com",
                 Description = "Hi There!!",
-                Position = "Admin",
+                Position = EmployeePosition.CEO,
                 PhoneNumber = "111",
                 ProfilePicture = ""
             };
@@ -47,7 +47,7 @@ namespace PMS.Infrastructure.Data
                 LastName = "Employov",
                 Email = "employee@gmail.com",
                 Description = "Hi There!!",
-                Position = "Employee",
+                Position = EmployeePosition.JuniorDeveloper,
                 PhoneNumber = "222",
                 ProfilePicture = ""
             };

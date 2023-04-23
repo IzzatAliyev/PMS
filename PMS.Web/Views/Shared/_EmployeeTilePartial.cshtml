@@ -6,7 +6,7 @@
     <div class="tile">
         <h2>@Model.UserName</h2>
         <p class="description">@Model.Description</p>
-        @if (!string.IsNullOrEmpty(Model.Position))
+        @if (Model.Position != null)
         {
             <div class="status success">@Model.Position</div>
         }

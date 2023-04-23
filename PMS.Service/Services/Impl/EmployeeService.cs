@@ -1,6 +1,7 @@
 using PMS.Core.Repositories;
 using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
+using PMS.Infrastructure.Enums;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
@@ -25,7 +26,7 @@ namespace PMS.Service.Services.Impl
                 UserName = employee.UserName != null ? employee.UserName : string.Empty,
                 FirstName = employee.FirstName != null ? employee.FirstName : string.Empty,
                 LastName = employee.LastName != null ? employee.LastName : string.Empty,
-                Position = employee.Position != null ? employee.Position : string.Empty,
+                Position = employee.Position != null ? employee.Position : EmployeePosition.Intern,
                 Email = employee.Email != null ? employee.Email : string.Empty,
                 Description = employee.Description != null ? employee.Description : string.Empty,
                 PhoneNumber = employee.PhoneNumber != null ? employee.PhoneNumber : string.Empty,

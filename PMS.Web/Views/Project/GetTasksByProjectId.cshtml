@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using PMS.Service.ViewModels.PTask
+@using PMS.Infrastructure.Enums
 
 @inject IViewLocalizer Localizer
 
@@ -35,7 +36,7 @@
 					{
 						foreach (var task in Model)
 						{
-							if (task.Status == "todo")
+							if (task.Status == PTaskStatus.Todo)
 							{
 								@await Html.PartialAsync("_TilePartial", task)
 							}
@@ -70,7 +71,7 @@
 					{
 						foreach (var task in Model)
 						{
-							if (task.Status == "inprogress")
+							if (task.Status == PTaskStatus.InProgress)
 							{
 								@await Html.PartialAsync("_TilePartial", task)
 							}
@@ -105,7 +106,7 @@
 					{
 						foreach (var task in Model)
 						{
-							if (task.Status == "done")
+							if (task.Status == PTaskStatus.Done)
 							{
 								@await Html.PartialAsync("_TilePartial", task)
 							}
