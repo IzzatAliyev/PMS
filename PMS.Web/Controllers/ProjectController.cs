@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PMS.Infrastructure.Enums;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.Project;
 using PMS.Service.ViewModels.PTask;
@@ -59,7 +60,7 @@ namespace PMS.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] IEnumerable<ProjectStatus> status)
         {
             using (var client = new HttpClient())
             {
@@ -68,6 +69,10 @@ namespace PMS.Web.Controllers
                 var projects = await response.Content.ReadFromJsonAsync<IEnumerable<ProjectViewModel>>();
                 if (projects != null)
                 {
+                    if (status != null && status.Any())
+                    {
+                        projects = projects.Where(p => status.Contains(p.Status));
+                    }
                     return View(projects);
                 }
                 else

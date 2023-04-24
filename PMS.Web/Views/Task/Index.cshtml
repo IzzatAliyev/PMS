@@ -1,47 +1,80 @@
+@using PMS.Infrastructure.Enums
+@using PMS.Service.ViewModels.PTask;
+
+@model PTaskViewModel
+
 <div class="boardmenu">
     <div class="container">
         <h1>Task Form</h1>
         <form id="taskform">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter task name">
+            <input type="text" id="name" name="name" value="@Model.Name" placeholder="Enter task name">
 
             <label for="description">Description:</label>
-            <textarea id="description" name="description" placeholder="Enter task description"></textarea>
+            <textarea id="description" name="description"
+                placeholder="Enter task description">@Model.Description</textarea>
 
             <label for="task-type">Task Type:</label>
             <select id="task-type" name="task-type">
-                <option value="feature">Feature</option>
-                <option value="bug">Bug</option>
-                <option value="enhancement">Enhancement</option>
+                <option value="@Model.TaskType">@Model.TaskType</option>
+                @foreach (var type in Enum.GetValues(typeof(PTaskType)))
+                {
+                    if (Model.TaskType.ToString() != type.ToString())
+                    {
+                        <option value="@type.ToString()">@type.ToString()
+                        </option>
+                    }
+                }
             </select>
 
             <label for="assigned-to">Assigned To:</label>
-            <input type="text" id="assigned-to" name="assigned-to" placeholder="Enter assignee name">
+            <input type="text" id="assigned-to" name="assigned-to" value="@Model.AssignedToId"
+                placeholder="Enter assignee name">
 
             <label for="assigned-from">Assigned From ID:</label>
-            <input type="text" id="assigned-from" name="assigned-from" placeholder="Enter assigner ID">
+            <input type="text" id="assigned-from" name="assigned-from" value="@Model.AssignedFromId"
+                placeholder="Enter assigner ID">
 
             <label for="status">Status:</label>
             <select id="status" name="status">
-                <option value="new">New</option>
-                <option value="in-progress">In Progress</option>
-                <option value="completed">Completed</option>
+                <option value="@Model.Status">@Model.Status</option>
+                @foreach (var status in Enum.GetValues(typeof(PTaskStatus)))
+                {
+                    if (Model.Status.ToString() != status.ToString())
+                    {
+                        <option value="@status.ToString()">@status.ToString()
+                        </option>
+                    }
+                }
             </select>
 
-            <input type="submit" value="Submit">
+            <button type="submit" class="myBtn">
+                <span class="material-symbols-outlined">
+                    save
+                </span>
+            </button>
         </form>
     </div>
 </div>
 
 <style>
-    /* Add your own styles here to customize the form's appearance */
     #taskform label {
         display: block;
         margin-bottom: 10px;
         font-weight: bold;
     }
 
+    .container label {
+        color: var(--default-color);
+    }
+
+    .container h1 {
+        color: var(--default-color);
+        text-align: center;
+    }
+
     #taskform input[type="text"],
+    #taskform textarea,
     #taskform select {
         width: 100%;
         padding: 10px;
@@ -51,20 +84,6 @@
         margin-bottom: 20px;
     }
 
-    #taskform input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        float: right;
-    }
-
-    #taskform input[type="submit"]:hover {
-        background-color: #45a049;
-    }
-
     .container {
         margin: auto;
         display: grid;
@@ -72,6 +91,15 @@
         padding: 20px;
         background-color: var(--third-color);
         border-radius: 10px;
-        box-shadow: 0 0 0 white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .myBtn {
+        border: none;
+        background-color: inherit;
+        display: block;
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>

@@ -8,6 +8,7 @@ using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeSkill;
 using PMS.Service.ViewModels.Project;
 using PMS.Service.ViewModels.Skill;
+using System.Text.Json;
 
 namespace PMS.Web.Controllers
 {
@@ -115,7 +116,7 @@ namespace PMS.Web.Controllers
                     };
 
                     var skills = updatedModel.Skills != null ? updatedModel.Skills.Split(",") : Array.Empty<string>();
-                    var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(employee));
+                    var content = new StringContent(JsonSerializer.Serialize(employee));
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     var response2 = await client.PatchAsync($"employees/{id}", content);
                     var responseMessage = await response2.Content.ReadAsStringAsync();
@@ -130,7 +131,7 @@ namespace PMS.Web.Controllers
                             EmployeeId = id,
                             SkillId = skillId
                         };
-                        var skillContent = new StringContent(System.Text.Json.JsonSerializer.Serialize(employeeSkill));
+                        var skillContent = new StringContent(JsonSerializer.Serialize(employeeSkill));
                         skillContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                         var response4 = await client.PostAsync("employee-skill", skillContent);
                         var response5 = await client.DeleteAsync("employee-skill/duplicate");

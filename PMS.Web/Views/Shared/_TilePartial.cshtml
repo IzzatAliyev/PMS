@@ -22,7 +22,7 @@
 
 <div class=tile>
 	<div class="rectangle_292">
-		<a class="return" href="/tasks">
+		<a class="return" href="@Url.Action("Index", "Task", new { id = @Model.Id }, null)">
 			<p class="time">@edited @time.ToString()</p>
 			<p class="date">@date.ToString("d")</p>
 			<div class=tiletitle>

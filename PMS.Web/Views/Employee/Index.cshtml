@@ -73,8 +73,11 @@
                             <option value="@Model.Position">@Model.Position</option>
                             @foreach (var position in Enum.GetValues(typeof(EmployeePosition)))
                             {
-                                <option value="@position.ToString()">@position.ToString()
-                                </option>
+                                if (Model.Position.ToString() != position.ToString())
+                                {
+                                    <option value="@position.ToString()">@position.ToString()
+                                    </option>
+                                }
                             }
                         </select>
                     </div>
@@ -238,7 +241,6 @@
         let data = @Html.Raw(Json.Serialize(filteredSkills));
         if (data) {
             const uniqueX = new Set(data);
-            console.log("uniqueX ", uniqueX);
             uniqueX.forEach(x => {
                 const obj = { selectedValue: x, backgroundColor: '#cccccc' };
                 if (!list.some(content => content.selectedValue === x)) {
@@ -247,7 +249,6 @@
             });
         }
         if (selectedValue) {
-            console.log("select ", selectedValue)
             if (!list.some(content => content.selectedValue === selectedValue)) {
                 list.push(content);
                 let firstParams = list.map(obj => Object.values(obj)[0]);
@@ -305,7 +306,6 @@
 
 
     function showSuccess(message) {
-        console.log("hi")
         var popup = document.getElementById("popup-container");
         popup.innerHTML = message;
         popup.style.backgroundColor = '#28a745'
@@ -324,7 +324,6 @@
     }
 
     function showError(message) {
-        console.log("hi")
         var popup = document.getElementById("popup-container");
         popup.innerHTML = message;
         popup.style.backgroundColor = '#dc3545'
