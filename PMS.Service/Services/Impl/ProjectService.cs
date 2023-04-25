@@ -148,5 +148,15 @@ namespace PMS.Service.Services.Impl
 
                 return result;
         }
+
+        public string GetProjectNameById(int id)
+        {
+            var result = this.context.Projects
+                .Where(p => p.Id == id)
+                .Select(p => p.Name)
+                .First();
+
+                return result;
+        }
     }
 }

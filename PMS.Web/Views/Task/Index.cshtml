@@ -3,8 +3,16 @@
 
 @model PTaskViewModel
 
+@{
+    string projectName = ViewBag.ProjectName;
+}
+
 <div class="boardmenu">
     <div class="container">
+        <span class="material-symbols-outlined" onclick="goBack()">
+            arrow_back
+        </span>
+        <p class="projectName">@projectName</p>
         <h1>Task Form</h1>
         <form id="taskform">
             <label for="name">Name:</label>
@@ -64,6 +72,13 @@
         font-weight: bold;
     }
 
+    p.projectName {
+        color: var(--default-color);
+        font-size: 18px;
+        margin: -1px auto auto 30px;
+        position: absolute;
+    }
+
     .container label {
         color: var(--default-color);
     }
@@ -71,6 +86,11 @@
     .container h1 {
         color: var(--default-color);
         text-align: center;
+    }
+
+    .material-symbols-outlined {
+        width: min-content;
+        cursor: pointer;
     }
 
     #taskform input[type="text"],
@@ -103,3 +123,9 @@
         margin-right: auto;
     }
 </style>
+
+<script>
+    function goBack(){
+        window.history.back();
+    }
+</script>

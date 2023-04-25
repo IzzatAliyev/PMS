@@ -18,6 +18,10 @@ namespace PMS.Web.Controllers
                 var task = await response.Content.ReadFromJsonAsync<PTaskViewModel>();
                 if (task != null)
                 {
+                    var projectId = task.ProjectId;
+                    var response2 = await client.GetAsync($"projects/{projectId}/name");
+                    var projectName = await response2.Content.ReadAsStringAsync();
+                    ViewBag.ProjectName = projectName;
                     return View(task);
                 }
                 else
