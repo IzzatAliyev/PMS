@@ -1,10 +1,14 @@
 @using PMS.Infrastructure.Enums
 @using PMS.Service.ViewModels.PTask;
+@using PMS.Service.ViewModels.Employee;
 
 @model PTaskViewModel
 
 @{
     string projectName = ViewBag.ProjectName;
+    List<EmployeeViewModel> employees = ViewBag.Employees;
+    string assignedToName = employees.Find(x => x.Id == Model.AssignedToId).UserName;
+    var projectId = ViewData["projectId"] as string;
 }
 
 <div class="boardmenu">
@@ -14,7 +18,8 @@
         </span>
         <p class="projectName">@projectName</p>
         <h1>Task Form</h1>
-        <form id="taskform">
+        <form id="taskform" method="post" action="/tasks/update">
+            <input type="hidden" name="id" value="@Model.Id">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" value="@Model.Name" placeholder="Enter task name">
 
@@ -23,7 +28,7 @@
                 placeholder="Enter task description">@Model.Description</textarea>
 
             <label for="task-type">Task Type:</label>
-            <select id="task-type" name="task-type">
+            <select id="task-type" name="taskType">
                 <option value="@Model.TaskType">@Model.TaskType</option>
                 @foreach (var type in Enum.GetValues(typeof(PTaskType)))
                 {
@@ -36,12 +41,20 @@
             </select>
 
             <label for="assigned-to">Assigned To:</label>
-            <input type="text" id="assigned-to" name="assigned-to" value="@Model.AssignedToId"
-                placeholder="Enter assignee name">
+            <select id="assigned-to" name="assignedToId">
+                <option value="@Model.AssignedToId">@assignedToName</option>
+                @foreach (var employee in employees)
+                {
+                    if (Model.AssignedToId != employee.Id)
+                    {
+                        <option value="@employee.Id">@employee.UserName
+                        </option>
+                    }
+                }
+            </select>
 
-            <label for="assigned-from">Assigned From ID:</label>
-            <input type="text" id="assigned-from" name="assigned-from" value="@Model.AssignedFromId"
-                placeholder="Enter assigner ID">
+            <input type="hidden" name="assignedFromId" value="@Model.AssignedFromId">
+            <input type="hidden" name="projectId" value="@projectId">
 
             <label for="status">Status:</label>
             <select id="status" name="status">
@@ -112,7 +125,7 @@
         background-color: var(--third-color);
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
+    } 
 
     .myBtn {
         border: none;
@@ -125,7 +138,7 @@
 </style>
 
 <script>
-    function goBack(){
+    function goBack() {
         window.history.back();
     }
 </script>

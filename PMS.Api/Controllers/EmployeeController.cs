@@ -83,5 +83,19 @@ namespace PMS.Api.Controllers
                 return this.NotFound(ex.Message);
             }
         }
+
+        [HttpGet("employee")]
+        public IActionResult GetEmployeeByEmail([FromQuery] string email)
+        {
+            try
+            {
+                var employee = this.employeeService.GetEmployeeByEmail(email);
+                return this.Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
     }
 }

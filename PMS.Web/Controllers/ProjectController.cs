@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PMS.Infrastructure.Entities;
 using PMS.Infrastructure.Enums;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.Project;
@@ -11,10 +13,12 @@ namespace PMS.Web.Controllers
     [Route("projects")]
     public class ProjectController : Controller
     {
+        private readonly UserManager<User> userManager;
         private readonly ILogger<ProjectController> logger;
 
-        public ProjectController(ILogger<ProjectController> logger)
+        public ProjectController(UserManager<User> userManager, ILogger<ProjectController> logger)
         {
+            this.userManager = userManager;
             this.logger = logger;
         }
 
@@ -45,11 +49,22 @@ namespace PMS.Web.Controllers
         {
             using (var client = new HttpClient())
             {
+                var user = await this.userManager.GetUserAsync(User);
+                var email = user.Email;
                 client.BaseAddress = new Uri("http://localhost:5108/api/");
                 var response = await client.GetAsync($"projects/{id}/tasks");
                 var projectTasks = await response.Content.ReadFromJsonAsync<IEnumerable<PTaskWithAssignedNamesViewModel>>();
                 if (projectTasks != null)
                 {
+                    var response2 = await client.GetAsync("employees");
+                    var employees = await response2.Content.ReadFromJsonAsync<IEnumerable<EmployeeViewModel>>();
+                    ViewData["employees"] = employees;
+
+                    var response3 = await client.GetAsync($"employees/employee?email={email}");
+                    var employee = await response3.Content.ReadFromJsonAsync<EmployeeViewModel>();
+                    ViewData["employee"] = employee;
+                    ViewData["projectId"] = id.ToString();
+
                     return View(projectTasks);
                 }
                 else

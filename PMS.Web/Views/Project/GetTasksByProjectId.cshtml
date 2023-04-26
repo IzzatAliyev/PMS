@@ -12,9 +12,12 @@
 
 <div class=boardmenu>
 	<div class="motiv">
-		<span>To all our dedicated employees: Thank you for your hard work and contributions to our company's success. Let's continue to work together with passion, enthusiasm, and a commitment to excellence. Remember the impact of your work and stay motivated towards your goals. You are valued and appreciated. <span style="float: right;margin-top: 30px;margin-right: 30px; ">Sincerely, <i>Izzat Aliyev</i></span></span>
+		<span>To all our dedicated employees: Thank you for your hard work and contributions to our company's success.
+			Let's continue to work together with passion, enthusiasm, and a commitment to excellence. Remember the
+			impact of your work and stay motivated towards your goals. You are valued and appreciated. <span
+				style="float: right;margin-top: 30px;margin-right: 30px; ">Sincerely, <i>Izzat Aliyev</i></span></span>
 	</div>
-	@Html.Partial("_PopUpAddTask")
+	@Html.Partial("_PopUpAddTask", ViewData)
 	<div class=todoselection>
 		<div class="rectangle_3">
 			<div class="title">
@@ -23,7 +26,7 @@
 					<span class="material-symbols-outlined">
 						add
 					</span>
-				</div>  
+				</div>
 				<div class=more>
 					<span class="material-symbols-outlined">
 						more_horiz
@@ -239,24 +242,23 @@
 </style>
 
 <script>
-	window.onload = function() {
-			document.querySelector('.motiv').classList.add('loaded');
+	window.onload = function () {
+		document.querySelector('.motiv').classList.add('loaded');
 	}
-    var addTaskButton = document.getElementById("add-task-button");
-    var addTaskForm = document.getElementById("add-task-form");
-    var closeButton = document.getElementById("close-button");
+	var addTaskButton = document.getElementById("add-task-button");
+	var addTaskForm = document.getElementById("add-task-form");
+	var closeButton = document.getElementById("close-button");
 
-    addTaskButton.onclick = function () {
-        addTaskForm.style.display = "block";
-    }
+	addTaskButton.onclick = function () {
+		addTaskForm.style.display = "block";
+	}
 
-    closeButton.onclick = function() {
-  addTaskForm.style.display = "none";
-}
+	closeButton.onclick = function () {
+		addTaskForm.style.display = "none";
+	}
 
-    addTaskForm.onsubmit = function () {
-        // Handle form submission here
-        addTaskForm.style.display = "none";
-        return false;
-    }
+	addTaskForm.onsubmit = function () {
+		addTaskForm.style.display = "none";
+		return false;
+	}
 </script>
