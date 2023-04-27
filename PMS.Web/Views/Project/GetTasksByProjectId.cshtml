@@ -22,7 +22,7 @@
 		<div class="rectangle_3">
 			<div class="title">
 				<h4 class="names">@Localizer["HeaderTodo"]</h4>
-				<div class="add pointer" id="add-task-button">
+				<div class="add pointer add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -57,7 +57,7 @@
 		<div class="rectangle_3">
 			<div class="title">
 				<h4 class="names">@Localizer["HeaderInProgress"]</h4>
-				<div class="add pointer">
+				<div class="add pointer add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -92,7 +92,7 @@
 		<div class="rectangle_3">
 			<div class="title">
 				<h4 class="names">@Localizer["HeaderDone"]</h4>
-				<div class="add pointer">
+				<div class="add pointer add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -245,18 +245,22 @@
 	window.onload = function () {
 		document.querySelector('.motiv').classList.add('loaded');
 	}
-	var addTaskButton = document.getElementById("add-task-button");
+	var addTaskButtons = document.querySelectorAll('.add-task-button');
 	var addTaskForm = document.getElementById("add-task-form");
 	var closeButton = document.getElementById("closeBtn");
 
-	addTaskButton.onclick = function () {
-		addTaskForm.style.display = "block";
+	for (var i = 0; i < addTaskButtons.length; i++) {
+		addTaskButtons[i].addEventListener('click', function () {
+			addTaskForm.style.display = 'block';
+		});
 	}
+
 	closeButton.onclick = function () {
 		addTaskForm.style.display = "none";
 	}
 	addTaskForm.onsubmit = function () {
 		addTaskForm.style.display = "none";
+		location.reload();
 		return false;
 	}
 
