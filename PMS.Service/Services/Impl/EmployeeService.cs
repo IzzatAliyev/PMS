@@ -123,6 +123,31 @@ namespace PMS.Service.Services.Impl
             }
         }
 
+        public EmployeeViewModel GetEmployeeByName(string name)
+        {
+            var employeeDb = this.context.Employees.Where(e => e.UserName == name).First();
+            if (employeeDb != null)
+            {
+                var employee = new EmployeeViewModel()
+                {
+                    Id = employeeDb.Id,
+                    UserName = employeeDb.UserName,
+                    FirstName = employeeDb.FirstName,
+                    LastName = employeeDb.LastName,
+                    Position = employeeDb.Position,
+                    Email = employeeDb.Email,
+                    Description = employeeDb.Description,
+                    PhoneNumber = employeeDb.PhoneNumber,
+                    ProfilePicture = employeeDb.ProfilePicture
+                };
+                return employee;
+            }
+            else
+            {
+                throw new Exception("name doesn't exist");
+            }
+        }
+
         public IEnumerable<EmployeeViewModel> GetAllEmployees()
         {
             var employees = new List<EmployeeViewModel>();

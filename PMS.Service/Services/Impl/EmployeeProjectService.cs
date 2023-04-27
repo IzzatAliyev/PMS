@@ -64,6 +64,20 @@ namespace PMS.Service.Services.Impl
             }
         }
 
+        public async Task DeleteDuplicateEmployeeProjects()
+        {
+            var groupedRecords = await dbcontext.EmployeeProjects
+            .GroupBy(es => new { es.EmployeeId, es.ProjectId })
+            .ToListAsync();
+
+            var duplicateRecords = groupedRecords
+                .Where(grp => grp.Count() > 1)
+                .SelectMany(grp => grp.Skip(1));
+
+            dbcontext.EmployeeProjects.RemoveRange(duplicateRecords);
+            await dbcontext.SaveChangesAsync();
+        }
+
         public async Task<EmployeeProjectViewModel> GetEmployeeProjectById(int id)
         {
             var employeeProjectDb = await this.unitOfWork.GenericRepository<EmployeeProject>().GetByIdAsync(id);
@@ -90,7 +104,7 @@ namespace PMS.Service.Services.Impl
             var employeeProjectsDb = this.unitOfWork.GenericRepository<EmployeeProject>().GetAll();
             if (employeeProjectsDb != null)
             {
-                foreach(var employeeProject in employeeProjectsDb)
+                foreach (var employeeProject in employeeProjectsDb)
                 {
                     var currentEmployeeProject = new EmployeeProjectViewModel()
                     {
@@ -123,30 +137,30 @@ namespace PMS.Service.Services.Impl
                 }))
                 .ToList();
 
-                return result;
+            return result;
         }
 
         public IEnumerable<EmployeeWithRoleViewModel> GetEmployeesByProjectId(int projectId)
         {
-             var result = this.dbcontext.Projects
-                .Include(p => p.Employees)
-                .Where(p => p.Id == projectId)
-                .SelectMany(p => p.Employees.Select(e => new EmployeeWithRoleViewModel
-                {
-                    Id = e.Employee.Id,
-                    UserName = e.Employee.UserName,
-                    FirstName = e.Employee.FirstName,
-                    LastName = e.Employee.LastName,
-                    Position = e.Employee.Position,
-                    Email = e.Employee.Email,
-                    Description = e.Employee.Description,
-                    PhoneNumber = e.Employee.PhoneNumber,
-                    ProfilePicture = e.Employee.ProfilePicture,
-                    Role = e.Task
-                }))
-                .ToList();
+            var result = this.dbcontext.Projects
+               .Include(p => p.Employees)
+               .Where(p => p.Id == projectId)
+               .SelectMany(p => p.Employees.Select(e => new EmployeeWithRoleViewModel
+               {
+                   Id = e.Employee.Id,
+                   UserName = e.Employee.UserName,
+                   FirstName = e.Employee.FirstName,
+                   LastName = e.Employee.LastName,
+                   Position = e.Employee.Position,
+                   Email = e.Employee.Email,
+                   Description = e.Employee.Description,
+                   PhoneNumber = e.Employee.PhoneNumber,
+                   ProfilePicture = e.Employee.ProfilePicture,
+                   Role = e.Task
+               }))
+               .ToList();
 
-                return result;
+            return result;
         }
     }
 }

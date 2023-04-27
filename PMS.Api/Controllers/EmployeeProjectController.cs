@@ -46,6 +46,20 @@ namespace PMS.Api.Controllers
             return this.Ok(projects);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateEmployeeProject([FromBody] EmployeeProjectViewModel employeeProject)
+        {
+            await this.employeeProjectService.CreateEmployeeProject(employeeProject);
+            return this.Created(nameof(CreateEmployeeProject), "Successfully created!");
+        }
+
+        [HttpDelete("duplicate")]
+        public async Task<IActionResult> DeleteDuplicateEmployeeProjects()
+        {
+            await this.employeeProjectService.DeleteDuplicateEmployeeProjects();
+            return this.Ok("Successfully deleted!");
+        }
+
         [HttpGet("search")]
         public IActionResult SearchEmployeesAndProjects([FromQuery] string query)
         {

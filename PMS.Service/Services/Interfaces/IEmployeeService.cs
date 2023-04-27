@@ -10,6 +10,7 @@ namespace PMS.Service.Services.Interfaces
         Task DeleteEmployeeById(int id);
         Task<EmployeeViewModel> GetEmployeeById(int id);
         EmployeeViewModel GetEmployeeByEmail(string email);
+        EmployeeViewModel GetEmployeeByName(string name);
         IEnumerable<EmployeeViewModel> GetAllEmployees();
         IEnumerable<EmployeeProjectSearchViewModel> GetEmployeesBySearchInput(string input);
         Task SetProfilePictureByEmployeeId(int id, string url);
