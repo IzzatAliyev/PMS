@@ -99,7 +99,7 @@ namespace PMS.Service.Services.Impl
             var tasksDb = this.unitOfWork.GenericRepository<PTask>().GetAll();
             if (tasksDb != null)
             {
-                foreach(var task in tasksDb)
+                foreach (var task in tasksDb)
                 {
                     var currentProject = new PTaskViewModel()
                     {

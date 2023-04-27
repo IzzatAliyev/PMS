@@ -8,7 +8,7 @@
 }
 
 <div class="popup-form" id="add-task-form">
-    <form method="post" action="/tasks">
+    <form id="taskForm" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" placeholder="Enter task name">
 
@@ -115,9 +115,24 @@
 </style>
 
 <script>
-    const close = document.getElementById("closeBtn");
-
-    close.addEventListener('click', () => {
+    const taskForm = document.getElementById('taskForm');
+    taskForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        await submitForm();
         location.reload();
-    })
+    });
+
+    async function submitForm() {
+        var formData = new FormData(taskForm);
+        fetch("/tasks", {
+            method: "POST",
+            body: formData
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+               console.error(error)
+            });
+    }
 </script>

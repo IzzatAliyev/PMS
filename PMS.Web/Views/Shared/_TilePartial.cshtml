@@ -20,9 +20,9 @@
 	}
 }
 
-<div class=tile>
+<div class=tile draggable="true" data-task-id="@Model.Id">
 	<div class="rectangle_292">
-		<a class="return" href="@Url.Action("Index", "Task", new { id = @Model.Id }, null)">
+		<a class="return rectangle_292 tile" href="@Url.Action("Index", "Task", new { id = @Model.Id }, null)" draggable="true" data-task-id="@Model.Id">
 			<p class="time">@edited @time.ToString()</p>
 			<p class="date">@date.ToString("d")</p>
 			<div class=tiletitle>

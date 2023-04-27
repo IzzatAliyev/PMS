@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PMS.Infrastructure.Enums;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.PTask;
 
@@ -87,6 +88,41 @@ namespace PMS.Web.Controllers
                     };
 
                     ViewData["projectId"] = taskDb.ProjectId;
+
+                    var content = new StringContent(JsonSerializer.Serialize(task));
+                    content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                    var response2 = await client.PatchAsync($"tasks/{id}", content);
+                    var responseMessage = await response2.Content.ReadAsStringAsync();
+
+                    return RedirectToAction("GetTasksByProjectId", "Project", new { id = taskDb.ProjectId });
+                }
+                else
+                {
+                    return this.RedirectToAction("NotFound", "Home");
+                }
+            }
+        }
+
+        [HttpPost("update/{id:int}/status")]
+        public async Task<ActionResult> UpdateStatusAsync([FromRoute] int id, [FromQuery] PTaskStatus status)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:5108/api/");
+                var response = await client.GetAsync($"tasks/{id}");
+                var taskDb = await response.Content.ReadFromJsonAsync<PTaskViewModel>();
+                if (taskDb != null)
+                {
+                    var task = new PTaskViewModel()
+                    {
+                        Name = taskDb.Name,
+                        Description = taskDb.Description,
+                        TaskType = taskDb.TaskType,
+                        AssignedToId = taskDb.AssignedToId,
+                        AssignedFromId = taskDb.AssignedFromId,
+                        Status = status != null ? status : taskDb.Status,
+                        ProjectId = taskDb.ProjectId
+                    };
 
                     var content = new StringContent(JsonSerializer.Serialize(task));
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
