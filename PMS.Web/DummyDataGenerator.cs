@@ -1,4 +1,5 @@
 using Bogus;
+using PMS.Infrastructure.Enums;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
 using PMS.Service.ViewModels.EmployeeProject;
@@ -69,7 +70,6 @@ namespace PMS.Web
 
                     var task = taskFaker.Generate();
                     {
-                        task.Status = "todo";
                         task.AssignedToId = employeeIds.Find(x => x % 2 == 0);
                         task.AssignedFromId = employeeIds.Find(x => x % 2 == 1);
                         task.ProjectId = projectIds.Find(x => x % 2 == 0);
@@ -111,9 +111,11 @@ namespace PMS.Web
     {
         public EmployeeFaker()
         {
-            RuleFor(e => e.Id, f => f.IndexFaker + 1);
-            RuleFor(e => e.Name, f => f.Person.FullName);
-            RuleFor(e => e.Position, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.Id, f => f.IndexFaker + 3);
+            RuleFor(e => e.UserName, f => f.Person.FullName);
+            RuleFor(e => e.FirstName, f => f.Person.FirstName);
+            RuleFor(e => e.LastName, f => f.Person.LastName);
+            RuleFor(e => e.Position, f => f.PickRandom<EmployeePosition>());
             RuleFor(e => e.Email, f => f.Person.Email);
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
             RuleFor(e => e.PhoneNumber, f => f.Person.Phone);
@@ -128,7 +130,7 @@ namespace PMS.Web
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
-            RuleFor(e => e.Status, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.Status, f => f.PickRandom<ProjectStatus>());
         }
     }
 
@@ -139,7 +141,7 @@ namespace PMS.Web
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
-            RuleFor(e => e.ColorCode, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.ColorCode, f => f.PickRandomParam("#ff0000", "#134000","#ff3543","#345433","#123123","#657656","#977643","#345432","#356811","#765432","#ccc455"));
         }
     }
 
@@ -150,7 +152,8 @@ namespace PMS.Web
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
             RuleFor(e => e.Name, f => f.Lorem.Sentence(1));
             RuleFor(e => e.Description, f => f.Lorem.Sentences(1));
-            RuleFor(e => e.TaskType, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.TaskType, f => f.PickRandom<PTaskType>());
+            RuleFor(e => e.Status, f => f.PickRandom<PTaskStatus>());
         }
     }
 
@@ -159,7 +162,7 @@ namespace PMS.Web
         public EmployeeProjectFaker()
         {
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
-            RuleFor(e => e.Task, f => f.Lorem.Sentence(1));
+            RuleFor(e => e.Task, f => f.PickRandom<EmployeeTask>());
         }
     }
 
@@ -177,7 +180,7 @@ namespace PMS.Web
         public EmployeeSkillFaker()
         {
             RuleFor(e => e.Id, f => f.IndexFaker + 1);
-            RuleFor(e => e.Level, f => f.UniqueIndex);
+            RuleFor(e => e.Level, f => f.PickRandom<SkillLevel>());
         }
     }
 

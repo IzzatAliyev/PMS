@@ -1,41 +1,45 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using PMS.Service.ViewModels.PTask
+@using PMS.Infrastructure.Enums
 
 @inject IViewLocalizer Localizer
 
-@model List<PTaskViewModel>
+@model List<PTaskWithAssignedNamesViewModel>
 
 @{
-	ViewData["Title"] = "Project";
+	ViewData["Title"] = "Tasks";
 }
 
 <div class=boardmenu>
 	<div class="motiv">
-		<span>To all our dedicated employees: Thank you for your hard work and contributions to our company's success. Let's continue to work together with passion, enthusiasm, and a commitment to excellence. Remember the impact of your work and stay motivated towards your goals. You are valued and appreciated. <span style="float: right;margin-top: 30px;margin-right: 30px; ">Sincerely, <i>Izzat Aliyev</i></span></span>
+		<span>To all our dedicated employees: Thank you for your hard work and contributions to our company's success.
+			Let's continue to work together with passion, enthusiasm, and a commitment to excellence. Remember the
+			impact of your work and stay motivated towards your goals. You are valued and appreciated. <span
+				style="float: right;margin-top: 30px;margin-right: 30px; ">Sincerely, <i>Izzat Aliyev</i></span></span>
 	</div>
-	@Html.Partial("_PopUpAddTask")
+	@Html.Partial("_PopUpAddTask", ViewData)
 	<div class=todoselection>
 		<div class="rectangle_3">
 			<div class="title">
 				<h4 class="names">@Localizer["HeaderTodo"]</h4>
-				<div class="add pointer" id="add-task-button">
+				<div class="add pointer add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
-				</div>  
+				</div>
 				<div class=more>
 					<span class="material-symbols-outlined">
 						more_horiz
 					</span>
 				</div>
 			</div>
-			<div class="list">
+			<div class="list" data-status="Todo">
 				@{
 					if (@Model.Count != 0)
 					{
 						foreach (var task in Model)
 						{
-							if (task.Status == "todo")
+							if (task.Status == PTaskStatus.Todo)
 							{
 								@await Html.PartialAsync("_TilePartial", task)
 							}
@@ -53,7 +57,7 @@
 		<div class="rectangle_3">
 			<div class="title">
 				<h4 class="names">@Localizer["HeaderInProgress"]</h4>
-				<div class="add pointer">
+				<div class="add pointer add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -64,13 +68,13 @@
 					</span>
 				</div>
 			</div>
-			<div class="list">
+			<div class="list" data-status="InProgress">
 				@{
 					if (@Model.Count != 0)
 					{
 						foreach (var task in Model)
 						{
-							if (task.Status == "inprogress")
+							if (task.Status == PTaskStatus.InProgress)
 							{
 								@await Html.PartialAsync("_TilePartial", task)
 							}
@@ -88,7 +92,7 @@
 		<div class="rectangle_3">
 			<div class="title">
 				<h4 class="names">@Localizer["HeaderDone"]</h4>
-				<div class="add pointer">
+				<div class="add pointer add-task-button">
 					<span class="material-symbols-outlined">
 						add
 					</span>
@@ -99,13 +103,13 @@
 					</span>
 				</div>
 			</div>
-			<div class="list">
+			<div class="list" data-status="Done">
 				@{
 					if (@Model.Count != 0)
 					{
 						foreach (var task in Model)
 						{
-							if (task.Status == "done")
+							if (task.Status == PTaskStatus.Done)
 							{
 								@await Html.PartialAsync("_TilePartial", task)
 							}
@@ -227,7 +231,7 @@
 		padding: 10px;
 		font-size: 21px;
 		line-height: 35px;
-		transition: height 10s;
+		transition: height 5s;
 		overflow: hidden;
 	}
 
@@ -238,24 +242,83 @@
 </style>
 
 <script>
-	window.onload = function() {
-			document.querySelector('.motiv').classList.add('loaded');
+	window.onload = function () {
+		document.querySelector('.motiv').classList.add('loaded');
 	}
-    var addTaskButton = document.getElementById("add-task-button");
-    var addTaskForm = document.getElementById("add-task-form");
-    var closeButton = document.getElementById("close-button");
+	var addTaskButtons = document.querySelectorAll('.add-task-button');
+	var addTaskForm = document.getElementById("add-task-form");
+	var closeButton = document.getElementById("closeBtn");
 
-    addTaskButton.onclick = function () {
-        addTaskForm.style.display = "block";
-    }
+	for (var i = 0; i < addTaskButtons.length; i++) {
+		addTaskButtons[i].addEventListener('click', function () {
+			addTaskForm.style.display = 'block';
+		});
+	}
 
-    closeButton.onclick = function() {
-  addTaskForm.style.display = "none";
-}
+	closeButton.onclick = function () {
+		addTaskForm.style.display = "none";
+	}
+	addTaskForm.onsubmit = function () {
+		addTaskForm.style.display = "none";
+		location.reload();
+		return false;
+	}
 
-    addTaskForm.onsubmit = function () {
-        // Handle form submission here
-        addTaskForm.style.display = "none";
-        return false;
-    }
+
+	const tasks = document.querySelectorAll('.tile');
+
+	tasks.forEach(task => {
+		task.addEventListener('dragstart', handleDragStart);
+	});
+
+	const containers = document.querySelectorAll('.list');
+	containers.forEach(container => {
+		container.addEventListener('dragover', handleDragOver);
+		container.addEventListener('drop', handleDrop);
+	});
+
+	function handleDragStart(event) {
+		event.dataTransfer.setData('text/plain', event.target.dataset.taskId);
+		event.target.classList.add('dragging');
+	}
+
+	function handleDragOver(event) {
+		event.preventDefault();
+		event.currentTarget.classList.add('dragging-over');
+	}
+
+	async function handleDrop(event) {
+		event.preventDefault();
+		var data = event.dataTransfer.getData("text");
+		var draggedElement = document.querySelector("[data-task-id='" + data + "']");
+		var newElement = document.createElement("div");
+		newElement.classList.add("tile")
+		newElement.innerHTML = draggedElement.innerHTML;
+		event.currentTarget.appendChild(newElement);
+
+		var container = event.currentTarget;
+		var status = container.getAttribute("data-status");
+		await updateTaskStatus(data, status);
+		location.reload();
+	}
+
+
+	async function updateTaskStatus(taskId, status) {
+		const url = `/tasks/update/${taskId}/status?status=${status}`;
+
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+			});
+
+			if (response.ok) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (error) {
+			return false;
+		}
+	}
 </script>

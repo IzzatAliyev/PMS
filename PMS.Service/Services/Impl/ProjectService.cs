@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PMS.Core.Repositories;
 using PMS.Infrastructure.Data;
 using PMS.Infrastructure.Entities;
+using PMS.Infrastructure.Enums;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.EmployeeProject;
 using PMS.Service.ViewModels.Project;
@@ -26,7 +27,7 @@ namespace PMS.Service.Services.Impl
                 Id = project.Id,
                 Name = project.Name != null ? project.Name : string.Empty,
                 Description = project.Description != null ? project.Description : string.Empty,
-                Status = project.Status != null ? project.Status : string.Empty
+                Status = project.Status != null ? project.Status : ProjectStatus.NotStarted
             };
             await this.unitOfWork.GenericRepository<Project>().AddAsync(newProject);
             await this.unitOfWork.SaveAsync();
@@ -40,6 +41,7 @@ namespace PMS.Service.Services.Impl
                 projectOld.Name = project.Name != null ? project.Name : projectOld.Name;
                 projectOld.Description = project.Description != null ? project.Description : projectOld.Description;
                 projectOld.Status = project.Status != null ? project.Status : projectOld.Status;
+                projectOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<Project>().UpdateAsync(projectOld);
                 await this.unitOfWork.SaveAsync();
             }
@@ -122,12 +124,12 @@ namespace PMS.Service.Services.Impl
             return matchingProjects;
         }
 
-        public IEnumerable<PTaskViewModel> GetTasksByProjectId(int projectId)
+        public IEnumerable<PTaskWithAssignedNamesViewModel> GetTasksByProjectId(int projectId)
         {
             var result = this.context.Projects
                 .Include(p => p.Tasks)
                 .Where(p => p.Id == projectId)
-                .SelectMany(p => p.Tasks.Select(t =>new PTaskViewModel
+                .SelectMany(p => p.Tasks.Select(t =>new PTaskWithAssignedNamesViewModel
                 {
                     Id = t.Id,
                     Name = t.Name,
@@ -136,9 +138,23 @@ namespace PMS.Service.Services.Impl
                     AssignedToId = t.AssignedToId,
                     AssignedFromId = t.AssignedFromId,
                     Status = t.Status,
-                    ProjectId = t.ProjectId
+                    ProjectId = t.ProjectId,
+                    AssignedToName = t.AssignedTo.UserName,
+                    AssignedFromName = t.AssignedFrom.UserName,
+                    CreatedAt = t.CreatedAt,
+                    UpdatedAt = t.UpdatedAt
                 }))
                 .ToList();
+
+                return result;
+        }
+
+        public string GetProjectNameById(int id)
+        {
+            var result = this.context.Projects
+                .Where(p => p.Id == id)
+                .Select(p => p.Name)
+                .First();
 
                 return result;
         }

@@ -26,8 +26,16 @@ namespace PMS.MediaStorage.Controllers
         [HttpGet("media")]
         public IActionResult Media([FromQuery] string mediaUrl)
         {
-            byte[] mediaData = mediaStore.GetMedia(mediaUrl);
-            return this.File(mediaData, "image/jpeg");
+            try
+            {
+                byte[] mediaData = mediaStore.GetMedia(mediaUrl);
+                return this.File(mediaData, "image/jpeg");
+            }
+            catch(Exception)
+            {
+                Console.WriteLine($"cannot find {mediaUrl}");
+                return this.Ok($"cannot find {mediaUrl}");
+            }
         }
 
         [HttpGet]

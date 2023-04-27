@@ -39,6 +39,7 @@ namespace PMS.Service.Services.Impl
                 employeeSkillOld.EmployeeId = employeeSkill.EmployeeId;
                 employeeSkillOld.SkillId = employeeSkill.SkillId;
                 employeeSkillOld.Level = employeeSkill.Level;
+                employeeSkillOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<EmployeeSkill>().UpdateAsync(employeeSkillOld);
                 await this.unitOfWork.SaveAsync();
             }
@@ -60,6 +61,20 @@ namespace PMS.Service.Services.Impl
             {
                 throw new Exception("id doesn't exist");
             }
+        }
+
+        public async Task DeleteDuplicateEmployeeSkills()
+        {
+            var groupedRecords = await dbcontext.EmployeeSkills
+            .GroupBy(es => new { es.EmployeeId, es.SkillId })
+            .ToListAsync();
+
+            var duplicateRecords = groupedRecords
+                .Where(grp => grp.Count() > 1)
+                .SelectMany(grp => grp.Skip(1));
+
+            dbcontext.EmployeeSkills.RemoveRange(duplicateRecords);
+            await dbcontext.SaveChangesAsync();
         }
 
         public async Task<EmployeeSkillViewModel> GetEmployeeSkillById(int id)
@@ -88,7 +103,7 @@ namespace PMS.Service.Services.Impl
             var employeeSkillsDb = this.unitOfWork.GenericRepository<EmployeeSkill>().GetAll();
             if (employeeSkillsDb != null)
             {
-                foreach(var employeeSkill in employeeSkillsDb)
+                foreach (var employeeSkill in employeeSkillsDb)
                 {
                     var currentEmployeeSkill = new EmployeeSkillViewModel()
                     {
@@ -121,7 +136,7 @@ namespace PMS.Service.Services.Impl
                 }))
                 .ToList();
 
-                return result;
+            return result;
         }
     }
 }

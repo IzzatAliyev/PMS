@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using PMS.Infrastructure.Entities;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.Employee;
+using PMS.Service.ViewModels.EmployeeSkill;
 using PMS.Service.ViewModels.Project;
 using PMS.Service.ViewModels.Skill;
+using System.Text.Json;
 
 namespace PMS.Web.Controllers
 {
@@ -41,6 +43,10 @@ namespace PMS.Web.Controllers
                     var response3 = await client.GetAsync($"employee-skill/employee/{id}/skills");
                     var skills = await response3.Content.ReadFromJsonAsync<IEnumerable<SkillViewModel>>();
                     ViewBag.Skills = skills;
+                    ViewBag.SkillsName = skills.Select(x => x.Name).ToList();
+                    var response4 = await client.GetAsync("skills");
+                    var allSkills = await response4.Content.ReadFromJsonAsync<IEnumerable<SkillViewModel>>();
+                    ViewBag.AllSkills = allSkills;
                     return View(employee);
                 }
                 else
@@ -85,6 +91,57 @@ namespace PMS.Web.Controllers
                 var res = await response.Content.ReadAsStringAsync();
                 await this.employeeService.SetProfilePictureByEmployeeId(employeeId, res);
                 return response.IsSuccessStatusCode ? RedirectToAction("Index", new { id = employeeId} ) : RedirectToAction("SomethingWentWrong", "Home");
+            }
+        }
+
+        [HttpPost("update")]
+        public async Task<ActionResult> UpdateAsync(int id, EmployeeWithSkillsViewModel updatedModel)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:5108/api/");
+                var response = await client.GetAsync($"employees/{id}");
+                var employeeDb = await response.Content.ReadFromJsonAsync<EmployeeViewModel>();
+                if (employeeDb != null)
+                {
+                    var employee = new EmployeeViewModel()
+                    {
+                        UserName = updatedModel.UserName,
+                        FirstName = updatedModel.FirstName,
+                        LastName = updatedModel.LastName,
+                        Position = updatedModel.Position,
+                        Email = updatedModel.Email,
+                        Description = updatedModel.Description,
+                        PhoneNumber = updatedModel.PhoneNumber
+                    };
+
+                    var skills = updatedModel.Skills != null ? updatedModel.Skills.Split(",") : Array.Empty<string>();
+                    var content = new StringContent(JsonSerializer.Serialize(employee));
+                    content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                    var response2 = await client.PatchAsync($"employees/{id}", content);
+                    var responseMessage = await response2.Content.ReadAsStringAsync();
+
+                    foreach(var skill in skills){
+                        var response3 = await client.GetAsync($"skills/name?name={skill}");
+                        var skillDb = await response3.Content.ReadFromJsonAsync<SkillViewModel>();
+                        var skillId = skillDb!.Id;
+
+                        var employeeSkill = new EmployeeSkillViewModel()
+                        {
+                            EmployeeId = id,
+                            SkillId = skillId
+                        };
+                        var skillContent = new StringContent(JsonSerializer.Serialize(employeeSkill));
+                        skillContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                        var response4 = await client.PostAsync("employee-skill", skillContent);
+                        var response5 = await client.DeleteAsync("employee-skill/duplicate");
+                    }
+                    return RedirectToAction("Index", new { id = id} );
+                }
+                else
+                {
+                    return this.RedirectToAction("NotFound", "Home");
+                }
             }
         }
     }

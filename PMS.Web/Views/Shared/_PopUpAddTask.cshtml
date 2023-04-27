@@ -1,21 +1,65 @@
+@using PMS.Infrastructure.Enums
+@using PMS.Service.ViewModels.Employee;
+
+@{
+    var employees = ViewData["employees"] as IEnumerable<EmployeeViewModel>;
+    var userEmployee = ViewData["employee"] as EmployeeViewModel;
+    var projectId = ViewData["projectId"] as string;
+}
+
 <div class="popup-form" id="add-task-form">
-    <form>
-        <label for="task-name">Task Name:</label>
-        <input type="text" id="task-name" name="task-name" required>
+    <form id="taskForm" method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter task name">
 
-        <label for="task-description">Description:</label>
-        <textarea id="task-description" name="task-description"></textarea>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" placeholder="Enter task description"></textarea>
 
-        <label for="user">Assigned To:</label>
-        <select id="user" name="user" required>
-            <option value="" disabled selected>Select User</option>
-            <option value="user1">User 1</option>
-            <option value="user2">User 2</option>
-            <option value="user3">User 3</option>
+        <label for="task-type">Task Type:</label>
+        <select id="task-type" name="taskType">
+            <option value="">Select the task type</option>
+            @foreach (var type in Enum.GetValues(typeof(PTaskType)))
+            {
+                <option value="@type.ToString()">@type.ToString()
+                </option>
+            }
         </select>
 
-        <button type="button" id="close-button">Close</button>
-        <button type="submit">Create Task</button>
+        <label for="assigned-to">Assigned To:</label>
+        <select id="assigned-to" name="assignedToId">
+            @foreach (var employee in employees)
+            {
+                if (userEmployee.UserName != employee.UserName)
+                {
+                    <option value="@employee.Id">@employee.UserName
+                    </option>
+                }
+            }
+        </select>
+
+        <input type="hidden" name="assignedFromId" value="@userEmployee.Id">
+        <input type="hidden" name="projectId" value="@projectId">
+
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            @foreach (var status in Enum.GetValues(typeof(PTaskStatus)))
+            {
+                <option value="@status.ToString()">@status.ToString()
+                </option>
+            }
+        </select>
+
+        <div class="buttons">
+            <span id="closeBtn" class="material-symbols-outlined">
+                close
+            </span>
+
+            <button type="submit" class="myBtn">
+                <span class="material-symbols-outlined">
+                    save
+                </span>
+            </button>
+        </div>
     </form>
 </div>
 
@@ -33,9 +77,26 @@
         z-index: 9999;
     }
 
+    #closeBtn {
+        cursor: pointer;
+        color: var(--text-color);
+    }
+
+    .buttons {
+        margin: 0 auto;
+        position: relative;
+        text-align: center;
+    }
+
     .popup-form label {
         display: block;
         margin-bottom: 5px;
+    }
+
+    button.myBtn {
+        border: none;
+        background-color: inherit;
+        color: var(--text-color);
     }
 
     .popup-form input[type="text"],
@@ -53,32 +114,27 @@
     .popup-form select option {
         color: var(--default-color);
     }
-
-    .popup-form button[type="submit"] {
-        background-color: var(--button-color);
-        color: var(--primary-color);
-        border: none;
-        border-radius: 5px;
-        float: right;
-        cursor: pointer;
-    }
-
-    .popup-form button[type="submit"]:hover {
-        background-color: var(--default-color);
-        color: var(--text-color)
-    }
-
-    .popup-form button[type="button"] {
-        background-color: var(--button-color);
-        color: var(--primary-color);
-        border: none;
-        border-radius: 5px;
-        float: left;
-        cursor: pointer;
-    }
-
-    .popup-form button[type="button"]:hover {
-        background-color: var(--default-color);
-        color: var(--text-color)
-    }
 </style>
+
+<script>
+    const taskForm = document.getElementById('taskForm');
+    taskForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        await submitForm();
+        location.reload();
+    });
+
+    async function submitForm() {
+        var formData = new FormData(taskForm);
+        fetch("/tasks", {
+            method: "POST",
+            body: formData
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+               console.error(error)
+            });
+    }
+</script>

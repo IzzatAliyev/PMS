@@ -32,6 +32,7 @@ namespace PMS.Service.Services.Impl
             {
                 employeeRoleOld.EmployeeId = employeeRole.EmployeeId;
                 employeeRoleOld.Role = employeeRole.Role;
+                employeeRoleOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<EmployeeRole>().UpdateAsync(employeeRoleOld);
                 await this.unitOfWork.SaveAsync();
             }

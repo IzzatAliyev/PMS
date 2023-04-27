@@ -1,0 +1,31 @@
+namespace PMS.Infrastructure.Enums
+{
+    public enum PTaskType
+    {
+        Database,
+        Networking,
+        Graphics,
+        Security,
+        Web,
+        Mobile,
+        Game,
+        AI,
+        Cloud,
+        Testing,
+        Algorithm,
+        UI,
+        Audio,
+        Video,
+        IoT,
+        DevOps,
+        MachineLearning,
+        NaturalLanguageProcessing,
+        EmbeddedSystems,
+        VR,
+        Cryptography,
+        Ecommerce,
+        DataMining,
+        OperatingSystems,
+        Blockchain
+    }
+}

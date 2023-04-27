@@ -1,117 +1,412 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using PMS.Service.ViewModels.Project;
 @using PMS.Service.ViewModels.Employee;
+@using PMS.Infrastructure.Enums;
 
 @inject IViewLocalizer Localizer
 
 @model ProjectViewModel
 
 @{
-	List<EmployeeWithRoleViewModel> employees = ViewBag.Employees; 
+    List<EmployeeViewModel> allEmployees = ViewBag.AllEmployees;
+    List<EmployeeWithRoleViewModel> employees = ViewBag.Employees;
+    List<string> filteredEmployees = ViewBag.EmployeesName;
 }
 
 @{
-	ViewData["Title"] = "Project";
+    ViewData["Title"] = "Project";
 }
 
-<div class=boardmenu>
-	<div class="container">
-		<h1>@Localizer["HeaderProject"]</h1>
+<div class="boardmenu">
+    <div class="container">
+        <h1>@Localizer["HeaderProject"]</h1>
 
-		<h2>@Localizer["HeaderName"]</h2>
-		<p>@Model.Name</p>
+        <a id="edit">
+            <span class="material-symbols-outlined">
+                edit
+            </span>
+        </a>
 
-		<h2>@Localizer["HeaderDesc"]</h2>
-		<p>@Model.Description</p>
+        <form id="edit-form" method="post" enctype="multipart/form-data" style="display:none;">
 
-		<h2>@Localizer["HeaderStatus"]</h2>
-		<p>The current status of the project is: <span class="status in-progress">@Model.Status</span></p>
+            <input type="hidden" name="id" value="@Model.Id">
+            <div class="card-body">
+                <h2>@Localizer["HeaderName"]</h2>
+                <input type="text" name="name" value="@Model.Name">
 
-		<h2>@Localizer["HeaderEmployees"]</h2>
-		<ul class="list">
-			@{
-				if (employees.Count != 0)
-				{
-					foreach (var employee in employees)
-					{
-						@await Html.PartialAsync("_EmployeeSmallPartial", employee)
-					}
-				}
-				else
-				{
-					<p class="nocontent">No Employees</p>
-				}
-			}
-		</ul>
-	</div>
+                <h2>@Localizer["HeaderStatus"]</h2>
+                <select name="status" id="status">
+                    <option value="@Model.Status">@Model.Status</option>
+                    @foreach (var status in Enum.GetValues(typeof(ProjectStatus)))
+                    {
+                        if (Model.Status.ToString() != status.ToString())
+                        {
+                            <option value="@status.ToString()">@status.ToString()
+                            </option>
+                        }
+                    }
+                </select>
+
+
+
+                <h2>@Localizer["HeaderDesc"]</h2>
+                <textarea name="description" name="description">@Model.Description</textarea>
+
+                <h2>@Localizer["HeaderEmployees"]</h2>
+                <select name="element-select" onchange="addToList()">
+                    <option value="">Select a employee</option>
+                    @foreach (var employee in allEmployees)
+                    {
+                        <option value=@employee.UserName style="background-color: #ccc">@employee.UserName</option>
+                    }
+                </select>
+
+                <div id="list-container" class="list">
+                    @foreach (var employee in employees)
+                    {
+                        <div class="employee" style="background-color: #ccc">@employee.UserName</div>
+                    }
+                </div>
+
+                <input type="hidden" name="employees" id="selected-employees" value="" />
+
+                <button type="submit" class="myBtn">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span>
+                </button>
+                <a id="cancel">
+                    <span class="material-symbols-outlined">
+                        cancel
+                    </span>
+                </a>
+            </div>
+        </form>
+
+        <div id="popup-container"></div>
+
+        <div class="editable">
+            <div class="card-body">
+
+                <h2>@Localizer["HeaderName"]</h2>
+                <p>@Model.Name</p>
+
+                <h2>@Localizer["HeaderStatus"]</h2>
+                <p><span class="status in-progress">@Model.Status</span></p>
+
+                <h2>@Localizer["HeaderDesc"]</h2>
+                <p>@Model.Description</p>
+
+                <h2>@Localizer["HeaderEmployees"]</h2>
+                <ul class="list">
+                    @{
+                        if (employees.Count != 0)
+                        {
+                            foreach (var employee in employees)
+                            {
+                                @await Html.PartialAsync("_EmployeeSmallPartial", employee)
+                            }
+                        }
+                        else
+                        {
+                            <p class="nocontent">No Employees</p>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
-	.container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 20px;
-		background-color: var(--third-color);
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-		border-radius: 5px;
-		margin-top: 50px;
-	}
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        padding: 20px;
+        background-color: var(--third-color);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        margin-top: 20px;
+    }
 
-	.nocontent{
+    .nocontent {
         color: var(--default-color);
     }
 
-	h1 {
-		font-size: 36px;
-		margin: 0;
-		margin-bottom: 20px;
-		color: var(--default-color);
-		text-align: center;
-	}
+    h1 {
+        font-size: 36px;
+        margin: 0;
+        margin-bottom: 20px;
+        color: var(--default-color);
+        text-align: center;
+    }
 
-	h2 {
-		font-size: 24px;
-		margin: 0;
-		margin-bottom: 10px;
-		color: var(--default-color);
-	}
+    h2 {
+        font-size: 24px;
+        margin: 0;
+        margin-bottom: 15px;
+        color: var(--default-color);
+        text-align: center;
+    }
 
-	p {
-		color: var(--text-color);
-		font-size: 16px;
-		line-height: 1.5;
-		margin: 0;
-		margin-bottom: 20px;
-	}
+    p {
+        color: var(--text-color);
+        font-size: 18px;
+        line-height: 1.5;
+        margin: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-	.list {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-	}
+    a#edit {
+        color: var(--text-color);
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 25px;
+    }
 
-	.status {
-		display: inline-block;
-		color: var(--default-color);
-		padding: 5px 10px;
-		border-radius: 20px;
-		font-size: 14px;
-		margin-right: 10px;
-		text-transform: uppercase;
-	}
+    .status {
+        display: inline-block;
+        color: var(--default-color);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-right: 10px;
+        text-transform: uppercase;
+    }
 
-	.status.in-progress {
-		background-color: #F5A623;
-	}
+    .status.in-progress {
+        background-color: #F5A623;
+    }
 
-	.status.completed {
-		background-color: #27AE60;
-	}
+    .status.completed {
+        background-color: #27AE60;
+    }
+
+    #edit-form select:focus,
+    #edit-form textarea:focus,
+    #edit-form input:focus {
+        outline: none;
+        border-color: #eee;
+    }
+
+    #edit-form select,
+    #edit-form input,
+    #edit-form textarea {
+        color: black;
+        border: 1px solid #ccc;
+        background-color: var(--default-color);
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 0;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 250px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        border: none;
+        color: var(--primary-color);
+        font-family: "Montserrat", sans-serif;
+    }
+
+    form#edit-form {
+        display: block;
+        text-align: -webkit-center;
+    }
+
+    .employee {
+        color: var(--primary-color);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .list {
+        margin: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .myBtn {
+        border: none;
+        background-color: inherit;
+    }
+
+    a#cancel {
+        color: var(--text-color);
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 25px;
+    }
+
+    #popup-container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
 </style>
+
+<script>
+    const editButton = document.getElementById('edit');
+    const editForm = document.getElementById('edit-form');
+    const editableFields = document.querySelectorAll('.editable');
+    const cancel = document.getElementById('cancel');
+    const listContainer = document.getElementById('list-container');
+    let list = [];
+    editButton.addEventListener('click', () => {
+        editForm.style.display = 'block';
+        editableFields.forEach(field => field.style.display = 'none');
+        editButton.style.display = 'none'
+    });
+    cancel.addEventListener('click', () => {
+        location.reload();
+    })
+
+    editForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        submitForm();
+    });
+    function addToList() {
+        const selectElement = document.querySelector('select[name="element-select"]');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const backgroundColor = selectedOption.style.backgroundColor;
+        const selectedValue = selectElement.value;
+        const content = { selectedValue, backgroundColor };
+        let data = @Html.Raw(Json.Serialize(filteredEmployees));
+        if (data) {
+            const uniqueX = new Set(data);
+            uniqueX.forEach(x => {
+                const obj = { selectedValue: x, backgroundColor: '#27AE60' };
+                if (!list.some(content => content.selectedValue === x)) {
+                    list.push(obj);
+                }
+            });
+        }
+        if (selectedValue) {
+            if (!list.some(content => content.selectedValue === selectedValue)) {
+                list.push(content);
+                let firstParams = list.map(obj => Object.values(obj)[0]);
+                document.querySelector('#selected-employees').value = firstParams;
+            }
+
+            displayList(list, backgroundColor);
+        }
+    }
+
+    function displayList(backgroundColor) {
+        listContainer.innerHTML = '';
+        list.forEach((element) => {
+            const elementDiv = document.createElement('div');
+            elementDiv.textContent = element.selectedValue;
+            elementDiv.style.backgroundColor = element.backgroundColor;
+            elementDiv.classList.add('employee');
+            listContainer.appendChild(elementDiv);
+        });
+    }
+
+    function submitForm() {
+        var formData = new FormData(editForm);
+        fetch("/projects/update", {
+            method: "POST",
+            body: formData
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    showSuccessPopUp()
+                } else {
+                    showErrorPopUp()
+                }
+            })
+            .catch(function (error) {
+                showErrorPopUp()
+            });
+    }
+
+    function showSuccessPopUp() {
+        localStorage.setItem("showSuccessPopup", "true");
+        location.reload();
+    }
+
+    function showErrorPopUp() {
+        localStorage.setItem("showErrorPopup", "true");
+        location.reload();
+    }
+
+    window.onload = checkForPopup();
+
+    function checkForPopup() {
+        var showSuccessPopu = localStorage.getItem("showSuccessPopup");
+        var showErrorPopu = localStorage.getItem("showErrorPopup");
+        if (showSuccessPopu === "true") {
+            showSuccess("Successfully updated!");
+            localStorage.removeItem("showSuccessPopup");
+            localStorage.removeItem("showErrorPopup");
+        }
+        else if (showErrorPopu === "true") {
+            showError("Something went wrong!");
+            localStorage.removeItem("showSuccessPopup");
+            localStorage.removeItem("showErrorPopup");
+        }
+    }
+
+    function showSuccess(message) {
+        var popup = document.getElementById("popup-container");
+        popup.innerHTML = message;
+        popup.style.backgroundColor = '#28a745'
+        popup.style.opacity = "0";
+        popup.style.display = "block";
+        setTimeout(function () {
+            popup.style.opacity = "1";
+        }, 100);
+
+        setTimeout(function () {
+            popup.style.opacity = "0";
+            setTimeout(function () {
+                popup.style.display = "none";
+            }, 500);
+        }, 3000);
+    }
+
+    function showError(message) {
+        var popup = document.getElementById("popup-container");
+        popup.innerHTML = message;
+        popup.style.backgroundColor = '#dc3545'
+        popup.style.opacity = "0";
+        popup.style.display = "block";
+        setTimeout(function () {
+            popup.style.opacity = "1";
+        }, 100);
+
+        setTimeout(function () {
+            popup.style.opacity = "0";
+            setTimeout(function () {
+                popup.style.display = "none";
+            }, 500);
+        }, 3000);
+    }
+</script>

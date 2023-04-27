@@ -1,5 +1,6 @@
 using PMS.Core.Repositories;
 using PMS.Infrastructure.Entities;
+using PMS.Infrastructure.Enums;
 using PMS.Service.Services.Interfaces;
 using PMS.Service.ViewModels.PTask;
 
@@ -20,11 +21,11 @@ namespace PMS.Service.Services.Impl
                 Id = task.Id,
                 Name = task.Name != null ? task.Name : string.Empty,
                 Description = task.Description != null ? task.Description : string.Empty,
-                TaskType = task.TaskType != null ? task.TaskType : string.Empty,
+                TaskType = task.TaskType != null ? task.TaskType : PTaskType.Testing,
                 AssignedToId = task.AssignedToId,
                 AssignedFromId = task.AssignedFromId,
                 ProjectId = task.ProjectId,
-                Status = task.Status != null ? task.Status : string.Empty
+                Status = task.Status != null ? task.Status : PTaskStatus.Todo
             };
             await this.unitOfWork.GenericRepository<PTask>().AddAsync(newTask);
             await this.unitOfWork.SaveAsync();
@@ -42,6 +43,7 @@ namespace PMS.Service.Services.Impl
                 taskOld.AssignedFromId = task.AssignedFromId != 0 ? task.AssignedFromId : taskOld.AssignedFromId;
                 taskOld.ProjectId = task.ProjectId != 0 ? task.ProjectId : taskOld.ProjectId;
                 taskOld.Status = task.Status != null ? task.Status : taskOld.Status;
+                taskOld.UpdatedAt = DateTime.UtcNow;
                 await this.unitOfWork.GenericRepository<PTask>().UpdateAsync(taskOld);
                 await this.unitOfWork.SaveAsync();
             }
@@ -79,7 +81,9 @@ namespace PMS.Service.Services.Impl
                     AssignedToId = taskDb.AssignedToId,
                     AssignedFromId = taskDb.AssignedFromId,
                     ProjectId = taskDb.ProjectId,
-                    Status = taskDb.Status
+                    Status = taskDb.Status,
+                    CreatedAt = taskDb.CreatedAt,
+                    UpdatedAt = taskDb.UpdatedAt
                 };
                 return task;
             }
@@ -95,7 +99,7 @@ namespace PMS.Service.Services.Impl
             var tasksDb = this.unitOfWork.GenericRepository<PTask>().GetAll();
             if (tasksDb != null)
             {
-                foreach(var task in tasksDb)
+                foreach (var task in tasksDb)
                 {
                     var currentProject = new PTaskViewModel()
                     {

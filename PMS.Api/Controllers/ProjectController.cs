@@ -86,5 +86,19 @@ namespace PMS.Api.Controllers
             var tasks = this.projectService.GetTasksByProjectId(projectId);
             return this.Ok(tasks);
         }
+
+        [HttpGet("{id:int}/name")]
+        public IActionResult GetProjectNameById([FromRoute] int id)
+        {
+            try
+            {
+                var projectName = this.projectService.GetProjectNameById(id);
+                return this.Ok(projectName);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
     }
 }

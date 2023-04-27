@@ -16,14 +16,6 @@
 			onerror="this.src='/images/profile.png'" alt="Profile Picture">
 	</a>
 	<span class="name">@ViewData["Title"]</span>
-	<div class=filter>
-		<span class="this_week">This week</span>
-		<div class="vector_14">
-			<span class="material-symbols-outlined">
-				expand_more
-			</span>
-		</div>
-	</div>
 	<div class=notif>
 		<span class="material-symbols-outlined">
 			notifications
@@ -94,12 +86,17 @@
 
 <style>
 	.topbar {
-		width: 1127px;
-		height: 121px;
-		position: inherit;
-		left: 1px;
-		top: 0px;
-	}
+    width: 1127px;
+    height: 115px;
+    position: inherit;
+    left: 1px;
+    top: 0px;
+}
+
+	input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
 
 	.ellipse_1 {
 		position: inherit;
@@ -126,35 +123,6 @@
 		text-align: left;
 		font-size: 29px;
 		letter-spacing: 0;
-	}
-
-	.filter {
-		width: 96px;
-		height: 24px;
-		position: inherit;
-		left: 1025px;
-		top: 89px;
-	}
-
-	.this_week {
-		color: var(--text-color);
-		width: 77px;
-		height: 24px;
-		position: inherit;
-		left: 0px;
-		top: 0px;
-		font-family: Poppins;
-		text-align: center;
-		font-size: 16px;
-		letter-spacing: 0;
-	}
-
-	.vector_14 {
-		width: 11px;
-		height: 5px;
-		position: inherit;
-		left: 80px;
-		top: 0px;
 	}
 
 	.notif {

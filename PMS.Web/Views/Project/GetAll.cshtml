@@ -1,32 +1,66 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using PMS.Service.ViewModels.Project
+@using PMS.Infrastructure.Enums
 
 @inject IViewLocalizer Localizer
 
-@model IEnumerable<ProjectViewModel>
+@model List<ProjectViewModel>
 
 @{
-    ViewData["Title"] = "Projects";
+	ViewData["Title"] = "Projects";
 }
 
 <div class=boardmenu>
-    @Html.Partial("_TopBarPartial")
-	<div class="container-list">
-		@{
-			foreach(ProjectViewModel project in @Model)
+	@Html.Partial("_TopBarPartial")
+	<div class="main-container">
+		<div class="filter-section">
+			<select id="status-filter">
+				<option value="">All</option>
+				@foreach (var status in Enum.GetValues(typeof(ProjectStatus)))
+				{
+					<option value="@status">@status</option>
+				}
+			</select>
+			<div id="selected-filters"></div>
+			<p id="found"></p>
+		</div>
+		<div class="container-list">
+			@foreach (var project in Model)
 			{
-				@await Html.PartialAsync("_ProjectTilePartial", project);
+				<div class="project-tile active" data-status="@project.Status">
+					@await Html.PartialAsync("_ProjectTilePartial", project)
+				</div>
 			}
-		}
+		</div>
 	</div>
 </div>
 
 <style>
-    .container-list {
+	.container-list {
 		padding: 20px;
-		margin-top: 140px;
 		height: 850px;
 		overflow-y: scroll;
+		margin-top: 20px;
+	}
+
+	.main-container {
+		margin-top: 97px;
+	}
+
+	select#status-filter {
+		right: 0;
+		position: absolute;
+		background-color: inherit;
+		color: var(--default-color);
+		padding-right: 5px;
+		border: none;
+		text-align: end;
+		height: min-content;
+	}
+
+	select#status-filter:focus {
+		outline: none;
+		border-color: inherit;
 	}
 
 	.container-list::-webkit-scrollbar-thumb {
@@ -38,4 +72,102 @@
 		width: 0.3em;
 		background-color: var(--primary-color);
 	}
+
+	.filter-section {
+		margin-left: 140px;
+		display: flex;
+		padding-top: 20px;
+	}
+
+	.filter-section>* {
+		margin-right: 10px;
+	}
+
+	.project-tile {
+		margin-bottom: 20px;
+		display: none;
+	}
+
+	.project-tile.active {
+		display: block;
+	}
+
+	p#found {
+		margin: 25px 15px 0px auto;
+		color: var(--default-color);
+		font-size: 12px;
+	}
+
+	.selected-filter {
+		display: inline-block;
+		margin-right: 10px;
+		padding: 5px;
+		background-color: var(--default-color);
+		color: var(--text-color);
+		border-radius: 20px;
+	}
+
+	.selected-filter:hover {
+		cursor: pointer;
+		background-color: var(--button-color);
+		color: var(--primary-color);
+	}
 </style>
+
+<script>
+	var statusFilter = document.getElementById("status-filter");
+	var projectTiles = document.getElementsByClassName("project-tile");
+	var found = document.getElementById("found");
+	var selectedFilters = [];
+	statusFilter.addEventListener("change", function () {
+		let selectedFilter = Array.from(this.selectedOptions, option => option.value)[0];
+		if (!selectedFilters.some(x => x === selectedFilter)) {
+			selectedFilters.push(selectedFilter);
+			applyFilters();
+		}
+	});
+
+	function applyFilters() {
+		var count = 0;
+		found.textContent = "found " + count;
+		for (var i = 0; i < projectTiles.length; i++) {
+			var status = projectTiles[i].dataset.status;
+			if (selectedFilters.length === 0 || selectedFilters.some(x => x === status) || selectedFilters.some(filter => filter == "")) {
+				projectTiles[i].classList.add("active");
+				count++;
+				found.textContent = "found " + count;
+			} else {
+				projectTiles[i].classList.remove("active");
+			}
+		}
+		updateFilters();
+	}
+
+
+	function updateFilters() {
+		var container = document.getElementById("selected-filters");
+		container.innerHTML = "";
+		for (var i = 0; i < selectedFilters.length; i++) {
+			var filter = selectedFilters[i];
+			if (filter != '') {
+				var div = document.createElement("div");
+				div.className = "selected-filter";
+				div.innerText = filter;
+				div.setAttribute("data-index", i);
+				div.addEventListener("click", function () {
+					var index = parseInt(this.getAttribute("data-index"));
+					selectedFilters.splice(index, 1);
+					applyFilters();
+				});
+				container.appendChild(div);
+			}
+			else {
+				selectedFilters.splice(0, selectedFilters.length)
+				applyFilters();
+			}
+		}
+	}
+	applyFilters();
+
+</script>
+

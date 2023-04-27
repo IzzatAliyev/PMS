@@ -9,6 +9,7 @@ namespace PMS.Service.Services.Interfaces
         Task CreateEmployeeProject(EmployeeProjectViewModel employeeProject);
         Task UpdateEmployeeProjectById(int id, EmployeeProjectViewModel employeeProject);
         Task DeleteEmployeeProjectById(int id);
+        Task DeleteDuplicateEmployeeProjects();
         Task<EmployeeProjectViewModel> GetEmployeeProjectById(int id);
         IEnumerable<EmployeeProjectViewModel> GetAllEmployeeProjects();
         IEnumerable<ProjectViewModel> GetProjectsByEmployeeId(int employeeId);
