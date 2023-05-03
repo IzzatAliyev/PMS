@@ -1,0 +1,171 @@
+<div class="boardmenu">
+  <div class="chat-container">
+    <div class="chat-header">
+      <span class="material-symbols-outlined goback" onclick="goBack()">
+        arrow_back
+      </span>
+      <h3>Kiril</h3>
+      <a>
+        <img class="avatar" src="/images/profile.png" alt="Profile Picture">
+        </img>
+      </a>
+    </div>
+    <div class="chat-body">
+      <ul class="chat-messages">
+      </ul>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="message" placeholder="Type your message">
+      <button id="send">Send</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/chathub")
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
+
+  connection.start().then(function () {
+    console.log("SignalR Connected!");
+  }).catch(function (err) {
+    return console.error(err.toString());
+  });
+
+  connection.on("ReceiveMessage", function (user, message) {
+    var li = document.createElement("li");
+    li.textContent = user + " says: " + message;
+    document.querySelector(".chat-messages").appendChild(li);
+  });
+
+  document.querySelector("#send").addEventListener("click", function (event) {
+    var message = document.querySelector("#message").value;
+    console.log(message)
+    fetch("/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(message)
+    })
+      .then(response => {
+        console.log("Message sent successfully");
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    event.preventDefault();
+  });
+
+</script>
+
+<style>
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 850px;
+    background-color: var(--third-color);
+    font-family: Arial, sans-serif;
+  }
+
+  .chat-header .avatar {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: var(--third-color);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+	}
+
+  .chat-header {
+    background-color: var(--third-color);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--secondary-color);
+  }
+
+  .chat-body {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 10px;
+  }
+
+  .chat-body::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+  }
+
+  .chat-body::-webkit-scrollbar {
+    width: 0.3em;
+    background-color: var(--primary-color);
+  }
+
+  .chat-messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chat-messages li {
+    margin-bottom: 10px;
+    width: max-content;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .goback{
+    cursor: pointer;
+    float: left;
+  }
+
+  .chat-footer {
+    border-top: 2px solid var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--third-color);
+  }
+
+  #message {
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  #send {
+    background-color: var(--button-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  #send:hover {
+    background-color: var(--default-color);
+    color: var(--text-color);
+  }
+</style>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>

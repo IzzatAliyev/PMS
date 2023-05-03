@@ -1,0 +1,53 @@
+<a class="user" href="@Url.Action("Index", "Chat")">
+    <img src="/images/profile.png" alt="User 1">
+    <p class="username">John Doe</p>
+    <span class="last-message">I'm sorry but you need to write him right now dsfbhjdsbfj sdhjfbdsjhfbjds sjdhbfjhsdbfj
+        hsdbfjhsdbjf hsdbfjsdbj shdbfhjdsbf</span>
+    <p class="datetime">11:00 12/12/2001</p>
+</a>
+
+<style>
+    .user img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .user {
+        display: flex;
+        padding: 10px;
+        background-color: var(--third-color);
+        border-bottom: 1px solid var(--secondary-color);
+        cursor: pointer;
+        border-radius: 5px;
+        margin-bottom: 3px;
+    }
+
+    .user:hover {
+        background-color: var(--default-color);
+    }
+
+    .username {
+        margin: 10px;
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: bold;
+    }
+
+    p.datetime {
+        font-size: 12px;
+        margin: 0 0 0 25px;
+        color: var(--secondary-color);
+    }
+
+    .last-message {
+        position: relative;
+        margin: 5px;
+        color: var(--button-color);
+        display: block;
+        margin-left: 245px;
+        width: 545px;
+    }
+</style>

@@ -8,6 +8,7 @@ using PMS.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PMS.Infrastructure.Entities;
+using PMS.Web.Hubs;
 
 namespace PMS.Web
 {
@@ -32,6 +33,7 @@ namespace PMS.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSignalR();
 
             builder.Services.AddStorage(builder.Configuration);
             builder.Services.AddIdentityStorage(builder.Configuration);
@@ -88,6 +90,8 @@ namespace PMS.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.MapHub<ChatHub>("/chathub");
 
             app.MapControllerRoute(
                     name: "default",
