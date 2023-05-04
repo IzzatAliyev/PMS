@@ -1,6 +1,18 @@
-<a class="user" href="@Url.Action("Index", "Chat")">
+@using PMS.Service.ViewModels.Employee
+@using Microsoft.AspNetCore.Identity;
+@using PMS.Infrastructure.Entities;
+
+@inject UserManager<User> userManager
+
+@model EmployeeViewModel
+
+@{
+    var employeeId = ViewData["employeeId"] as string;
+}
+
+<a class="user" href="@Url.Action("Index", "Chat", new { sId = employeeId, id = Model.Id }, null)">
     <img src="/images/profile.png" alt="User 1">
-    <p class="username">John Doe</p>
+    <p class="username">@Model.UserName</p>
     <span class="last-message">I'm sorry but you need to write him right now dsfbhjdsbfj sdhjfbdsjhfbjds sjdhbfjhsdbfj
         hsdbfjhsdbjf hsdbfjsdbj shdbfhjdsbf</span>
     <p class="datetime">11:00 12/12/2001</p>
@@ -39,7 +51,7 @@
     p.datetime {
         font-size: 12px;
         margin: 0 0 0 25px;
-        color: var(--secondary-color);
+        color: var(--button-color);
     }
 
     .last-message {

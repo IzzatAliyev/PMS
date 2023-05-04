@@ -4,7 +4,7 @@
       <span class="material-symbols-outlined goback" onclick="goBack()">
         arrow_back
       </span>
-      <h3>Kiril</h3>
+      <h3 class="name">Kiril</h3>
       <a>
         <img class="avatar" src="/images/profile.png" alt="Profile Picture">
         </img>
@@ -40,23 +40,41 @@
     document.querySelector(".chat-messages").appendChild(li);
   });
 
+  connection.on("UserConnected", function (connectionId) {
+    console.log(`User connected: ${connectionId}`);
+  });
+
+  connection.on("UserDisconnected", function (connectionId) {
+    console.log(`User disconnected: ${connectionId}`);
+  });
+
+  document.querySelector("#message").addEventListener("keydown", function (event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.querySelector("#send").click();
+    }
+  });
+
+
   document.querySelector("#send").addEventListener("click", function (event) {
     var message = document.querySelector("#message").value;
-    console.log(message)
-    fetch("/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(message)
-    })
-      .then(response => {
-        console.log("Message sent successfully");
+    if (message != '') {
+      fetch("/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message)
       })
-      .catch(error => {
-        console.error(error);
-      });
-    event.preventDefault();
+        .then(response => {
+          console.log("Message sent successfully");
+          document.querySelector("#message").value = "";
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      event.preventDefault();
+    }
   });
 
 </script>
@@ -82,7 +100,7 @@
     position: absolute;
     right: 10px;
     top: 10px;
-	}
+  }
 
   .chat-header {
     background-color: var(--third-color);
@@ -92,10 +110,15 @@
     border-bottom: 2px solid var(--secondary-color);
   }
 
+  .chat-header .name {
+    color: var(--text-color);
+  }
+
   .chat-body {
     flex: 1;
     overflow-y: scroll;
     padding: 10px;
+    display: grid;
   }
 
   .chat-body::-webkit-scrollbar-thumb {
@@ -112,6 +135,8 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    align-self: flex-end;
+    display: block;
   }
 
   .chat-messages li {
@@ -123,9 +148,10 @@
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   }
 
-  .goback{
+  .goback {
     cursor: pointer;
     float: left;
+    color: var(--text-color);
   }
 
   .chat-footer {

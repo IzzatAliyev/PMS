@@ -123,6 +123,19 @@ namespace PMS.Service.Services.Impl
             }
         }
 
+        public int GetEmployeeIdByEmail(string email)
+        {
+            var employeeId = this.context.Employees.Where(e => e.Email == email).Select(x => x.Id).First();
+            if (employeeId != 0)
+            {
+                return employeeId;
+            }
+            else
+            {
+                throw new Exception("email doesn't exist");
+            }
+        }
+
         public EmployeeViewModel GetEmployeeByName(string name)
         {
             var employeeDb = this.context.Employees.Where(e => e.UserName == name).First();

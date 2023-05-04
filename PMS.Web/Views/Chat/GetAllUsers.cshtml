@@ -1,10 +1,21 @@
+@using PMS.Service.ViewModels.Employee
+
+@model IEnumerable<EmployeeViewModel>
+
+@{
+    var employeeId = ViewData["employeeId"] as string;
+}
+
 <div class="boardmenu">
   <div class="user-list-container">
     <div class="search-container">
       <input type="text" id="search-input" placeholder="Search">
     </div>
     <div class="user-list">
-      @Html.Partial("_ChatTilePartial")
+      @foreach (var employee in Model)
+      {
+        @Html.Partial("_ChatTilePartial", employee)
+      }
     </div>
   </div>
 </div>

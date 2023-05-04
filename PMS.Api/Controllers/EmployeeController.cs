@@ -98,6 +98,20 @@ namespace PMS.Api.Controllers
             }
         }
 
+        [HttpGet("id")]
+        public IActionResult GetEmployeeIdByEmail([FromQuery] string email)
+        {
+            try
+            {
+                var employeeId = this.employeeService.GetEmployeeIdByEmail(email);
+                return this.Ok(employeeId);
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
         [HttpGet("name")]
         public IActionResult GetEmployeeByName([FromQuery] string name)
         {

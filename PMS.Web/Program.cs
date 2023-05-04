@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PMS.Infrastructure.Entities;
 using PMS.Web.Hubs;
+using PMS.Service.Services;
 
 namespace PMS.Web
 {
@@ -48,6 +49,7 @@ namespace PMS.Web
             builder.Services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
             builder.Services.AddScoped<IEmployeeSkillService, EmployeeSkillService>();
             builder.Services.AddScoped<IProjectRoleService, ProjectRoleService>();
+            builder.Services.AddSingleton<ChatService>();
 
 
             builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
@@ -82,6 +84,29 @@ namespace PMS.Web
                 app.UseHsts();
             }
 
+            // try
+            // {
+            //     var chatService = app.Services.GetRequiredService<ChatService>();
+
+            //     var message = new Message
+            //     {
+            //         SenderId = 1,
+            //         RecipientId = 2,
+            //         Content = "hsadas",
+            //         CreatedAt = DateTime.Now,
+            //         UpdatedAt  = DateTime.Now
+            //     };
+
+            //     // Use the chatService to interact with the MongoDB database.
+            //     // For example:
+            //     await chatService.Create(message);
+            //     System.Console.WriteLine("created");
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine("An error occurred while seeding the database: " + ex.Message);
+            // }
+
             app.UseDeveloperExceptionPage();
             // app.UseHttpsRedirection();
             app.UseRequestLocalization();
@@ -92,6 +117,7 @@ namespace PMS.Web
             app.UseAuthorization();
 
             app.MapHub<ChatHub>("/chathub");
+            app.MapHub<NotificationHub>("/notificationhub");
 
             app.MapControllerRoute(
                     name: "default",
