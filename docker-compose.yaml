@@ -1,0 +1,35 @@
+version: "3"
+services:
+  media:
+    container_name: media
+    build: 
+      dockerfile: Dockerfile.Media
+    ports:
+      - "5275:80"
+    networks:
+      - backend
+  api:
+    container_name: api
+    build: 
+      dockerfile: Dockerfile.Api
+    ports:
+      - "5108:80"
+    networks:
+      - backend
+  db:
+    container_name: mysql-database
+    image: 'mysql:8.0.33'
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "rootroot"
+      MYSQL_ROOT_PASSWORD: "rootroot"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
