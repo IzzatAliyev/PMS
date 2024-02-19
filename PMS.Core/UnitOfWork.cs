@@ -1,5 +1,6 @@
 ﻿using PMS.Core.Repositories.Repositories;
 using PMS.Infrastructure.Data;
+using PMS.Infrastructure.Entities;
 
 namespace PMS.Core.Repositories
 {
@@ -23,7 +24,7 @@ namespace PMS.Core.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IGenericRepository<T> GenericRepository<T>() where T : class
+        public IGenericRepository<T> GenericRepository<T>() where T : BaseEntity
         {
             IGenericRepository<T> repository = new GenericRepository<T>(_context);
             return repository;

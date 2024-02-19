@@ -50,8 +50,8 @@ public class PMSIdentityDbContext : IdentityDbContext<User>
 
         var roles = new List<IdentityRole>()
             {
-                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-                new IdentityRole { Name = "Employee", NormalizedName = "EMPLOYEE" }
+                new() { Name = "Admin", NormalizedName = "ADMIN" },
+                new() { Name = "Employee", NormalizedName = "EMPLOYEE" }
             };
         builder.Entity<IdentityRole>().HasData(roles);
 

@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMS.Service", "PMS.Service\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMS.Api", "PMS.Api\PMS.Api.csproj", "{12A8DBEA-A18A-46A3-BC0A-F5682E802A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMS.Tests", "PMS.Tests\PMS.Tests.csproj", "{446672E4-FE43-43F4-A25B-18B8A5585DF4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMS.MediaStorage", "PMS.MediaStorage\PMS.MediaStorage.csproj", "{2FF1640A-6CFE-4106-9348-C235D8842555}"
 EndProject
 Global
